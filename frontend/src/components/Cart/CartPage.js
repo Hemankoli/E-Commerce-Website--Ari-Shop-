@@ -8,12 +8,11 @@ const CartPage = () => {
   const [cartItems, setCartItems] = useState({});
   const [auth] = useAuth()
   const navigate = useNavigate()
-  const userId = 1;
   
   // Fetch cart items for the user
   const fetchCartItems = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/cart/${userId}`);
+      const response = await axios.get(`http://localhost:8000/cart/${auth?.user?.user_id}`);
       setCartItems(response?.data);
     } catch (error) {
       console.error('Error fetching cart items:', error);
@@ -35,7 +34,7 @@ const CartPage = () => {
   const addToCart = async (product_id) => {
     try {
       await axios.post('http://localhost:8000/cart', {
-        user_id: userId,
+        user_id: auth?.user?.user_id,
         product_id,
         quantity: 1
     });
@@ -49,7 +48,7 @@ const CartPage = () => {
   const decreaseQuantity = async (product_id) => {
     try {
       await axios.put('http://localhost:8000/cart', {
-        user_id: userId,
+        user_id: auth?.user?.user_id,
         product_id,
       });
       fetchCartItems();
@@ -62,7 +61,7 @@ const CartPage = () => {
   const deleteCartItem = async (product_id) => {
     try {
       await axios.delete('http://localhost:8000/cart', {
-        data: { user_id: userId, product_id },  
+        data: { user_id: auth?.user?.user_id, product_id },  
       });
       fetchCartItems();
     } catch (error) {

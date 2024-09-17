@@ -3,15 +3,15 @@ const pool = require("../../database/connection");
 
 // upload product on admin
 exports.uploadProduct = async (req, res) => {
-    const { productName, brandName, description, image, price, selling, category, quantity } = req.body;
+    const { productName, brandName, description, image, price, selling, category, quantity, showcase } = req.body;
     try {
         // const sessionUser = req.user;
         // if(!uploadProductPermission(sessionUser)){
         //     throw new Error("Permission denied")
         // }
 
-        const sql = `INSERT INTO products (productName, brandName, description, image, price, selling, category, quantity)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO products (productName, brandName, description, image, price, selling, category, quantity, showcase)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         const result = await pool.execute(sql, [
             productName,
@@ -22,6 +22,7 @@ exports.uploadProduct = async (req, res) => {
             selling,
             category,
             quantity,
+            showcase
         ]);
         console.log(result);
 
@@ -53,7 +54,7 @@ exports.getAllProducts = (req, res) => {
 // update product on admin
 exports.updateProduct = (req, res) => {
     try {
-        const { productName, brandName, description, image, price, selling, category, quantity } = req.body;
+        const { productName, brandName, description, image, price, selling, category, quantity, showcase } = req.body;
         const { productId } = req.params;
         const values = [
             productName !== undefined ? productName : null,
@@ -64,9 +65,10 @@ exports.updateProduct = (req, res) => {
             selling !== undefined ? selling : null,
             category !== undefined ? category : null,
             quantity !== undefined ? quantity : null,
+            showcase !== undefined ? showcase : null,
             productId
         ];
-        const query = `UPDATE products SET productName = ?, brandName = ?, description = ?, image = ?, price = ?, selling = ?, category = ?, quantity = ?
+        const query = `UPDATE products SET productName = ?, brandName = ?, description = ?, image = ?, price = ?, selling = ?, category = ?, quantity = ?, showcase = ?
             WHERE product_id = ?`;
         pool.execute(query, values, (err, result) => {
             if (err) {

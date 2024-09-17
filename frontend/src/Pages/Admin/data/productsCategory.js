@@ -5,9 +5,10 @@ const productsCategory =[
     { id: 4, label: "Mobiles", value: "mobiles" },
     { id: 5, label: "Mouse", value: "mouse" },
     { id: 6, label: "Clothes", value: "clothes" },
-    { id: 7, label: "K-drama", value: "kdrama" },
-    { id: 8, label: "K-pop", value: "kpop" },
+    { id: 7, label: "Kdrama", value: "kdrama" },
+    { id: 8, label: "Kpop", value: "kpop" },
 
 ]
+
 
 export default productsCategory;

@@ -18,7 +18,6 @@ const ProductVerticalCard = ({ heading }) => {
     const scrollElement = useRef();
     const [auth] = useAuth(); 
     const navigate = useNavigate();
-    const userId = 1;
 
     const loadingList = new Array(15).fill(null);
 
@@ -57,7 +56,7 @@ const ProductVerticalCard = ({ heading }) => {
         }else{
             try {
                 await axios.post('http://localhost:8000/cart', {
-                    user_id: userId,
+                    user_id: auth?.user?.user_id,
                     product_id,
                     quantity: 1,
                 });
@@ -112,6 +111,9 @@ const ProductVerticalCard = ({ heading }) => {
                                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                                     <img src={product?.image[0]} alt={product?.productName || 'Product Image'}
                                         className='w-full h-full object-cover object-center' />
+
+                                    <p className='absolute top-0 left-0 bg-pink-400 px-1 text-white'>{product?.category}</p>
+
                                 </Link>
 
                                 <div className='flex flex-col mx-2 mt-4 flex-grow'>

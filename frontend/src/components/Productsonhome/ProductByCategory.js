@@ -6,30 +6,30 @@ import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { FaAngleRight, FaAngleLeft, FaSpinner } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
-const ProductCardFirst = ({ heading }) => {
-    const [auth, setAuth] = useAuth();
+const ProductByCategory = ({ heading, category }) => {
+    const [auth] = useAuth();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const scrollElement = useRef();
-    const navigate = useNavigate();
-    const loadingList = new Array(15).fill(null)
+    const loadingList = new Array(15).fill(null);
 
     const handleFetch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8000/get-product');
-            setProducts(response?.data);
+            const response = await axios.get(`http://localhost:8000/category-product/${category}`);
+            console.log('Fetched products:', response.data); // Log the fetched data
+            setProducts(response?.data || []);
         } catch (error) {
             console.error('Error fetching products:', error);
+            toast.error('Failed to fetch products.');
         }
         setLoading(false);
     };
 
     useEffect(() => {
         handleFetch();
-    }, []);
+    }, [category]);
 
     const scrollLeft = () => {
         scrollElement.current.scrollBy({ left: -500, behavior: 'smooth' });
@@ -40,20 +40,20 @@ const ProductCardFirst = ({ heading }) => {
     };
 
     const addToCart = async (product_id) => {
-        if(!auth?.token || !auth?.user){
+        if (!auth?.token || !auth?.user) {
             toast.error('Please login to add product to cart');
-        }else{
-            try {
-                await axios.post('http://localhost:8000/cart', {
-                    user_id: auth?.user?.user_id,
-                    product_id,
-                    quantity: 1,
-                });
-                toast.success("Item added to cart!");
-            } catch (error) {
-                console.error('Error adding to cart:', error);
-                toast.error("Failed to add item to cart.");
-            }
+            return;
+        }
+        try {
+            await axios.post('http://localhost:8000/cart', {
+                user_id: auth.user.user_id,
+                product_id,
+                quantity: 1,
+            });
+            toast.success("Item added to cart!");
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            toast.error("Failed to add item to cart.");
         }
     };
 
@@ -65,42 +65,37 @@ const ProductCardFirst = ({ heading }) => {
                 <div className='flex gap-4 overflow-x-scroll scrollbar-none py-4' ref={scrollElement} >
 
                     {loading ? (
-                        loadingList.map((product, index) => {
-                            return (
-                                <div key={index}
-                                className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
-                                    <div className='relative h-48 md:h-60 w-full flex items-center justify-center cursor-pointer bg-slate-100 animate-pulse'>
-                                        <FaSpinner className='w-full animate-spin'/>
-                                        <div className='absolute top-2 right-2'>
-                                            <button className='cursor-pointer w-full h-full bg-slate-200 animate-pulse p-4 rounded-full'>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className='flex flex-col mx-2 mt-4 flex-grow'>
-                                        <h2 className='text-md text-gray-800 line-clamp-2 bg-slate-200 animate-pulse p-2 mb-2 rounded-full'></h2>
-                                        <h2 className='text-md text-gray-800 line-clamp-2 bg-slate-200 animate-pulse p-2 rounded-full'></h2>
-                                        <div className='flex flex-row gap-4 mt-4'>
-                                            <p className='text-gray-500 text-md font-sans mt-auto bg-slate-200 animate-pulse p-2 w-full rounded-full'></p>
-                                            <p className='text-gray-600 text-xs font-sans flex justify-center items-center line-through bg-slate-200 animate-pulse p-2 w-full rounded-full'></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    ) : (
-                        products.map((product, index) => (
+                        loadingList.map((_, index) => (
                             <div key={index}
                                 className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+                                <div className='relative h-48 md:h-60 w-full flex items-center justify-center cursor-pointer bg-slate-100 animate-pulse'>
+                                    <FaSpinner className='w-full animate-spin' />
+                                    <div className='absolute top-2 right-2'>
+                                        <button className='cursor-pointer w-full h-full bg-slate-200 animate-pulse p-4 rounded-full'>
+                                        </button>
+                                    </div>
+                                </div>
 
-                                <Link to={`/product/${product.productName}`} className='relative h-48 md:h-64 w-full flex items-center justify-center cursor-pointer'
+                                <div className='flex flex-col mx-2 mt-4 flex-grow'>
+                                    <h2 className='text-md text-gray-800 line-clamp-2 bg-slate-200 animate-pulse p-2 mb-2 rounded-full'></h2>
+                                    <h2 className='text-md text-gray-800 line-clamp-2 bg-slate-200 animate-pulse p-2 rounded-full'></h2>
+                                    <div className='flex flex-row gap-4 mt-4'>
+                                        <p className='text-gray-500 text-md font-sans mt-auto bg-slate-200 animate-pulse p-2 w-full rounded-full'></p>
+                                        <p className='text-gray-600 text-xs font-sans flex justify-center items-center line-through bg-slate-200 animate-pulse p-2 w-full rounded-full'></p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        products.map((product) => (
+                            <div key={product.product_id}
+                                className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+
+                                <Link to={`/product/${encodeURIComponent(product.productName)}`} className='relative h-48 md:h-64 w-full flex items-center justify-center cursor-pointer'
                                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
 
                                     <img src={product?.image[0]} alt={product?.productName || 'Product Image'}
                                         className='w-full h-full object-cover object-center' />
-
-                                    <p className='absolute top-0 left-0 bg-pink-400 px-1 text-white'>{product?.category}</p>
-                                    
                                 </Link>
 
                                 <div className='flex flex-col mx-2 mt-4 flex-grow'>
@@ -139,4 +134,4 @@ const ProductCardFirst = ({ heading }) => {
     );
 };
 
-export default ProductCardFirst;
+export default ProductByCategory;

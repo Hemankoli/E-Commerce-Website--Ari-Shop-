@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlineClose } from "react-icons/ai";
-import productsCategory from './productsCategory';
+import productsCategory from './data/productsCategory';
+import productShowcase from './data/productShowcase';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import UploadImage from './UploadImage';
 import ViewImage from './ViewImage';
@@ -159,6 +160,22 @@ return (
               )
             }
           </div>
+
+          <label htmlFor='showcase' className='mt-3'>Showcase :</label>
+          <select
+            name="showcase"
+            value={data.showcase}
+            onChange={handleOnChange}
+            className='p-2 bg-slate-100 border rounded focus:outline-none'>
+            <option value={""}>Select Showcase</option>
+            {
+              productShowcase.map((e, index) => {
+                return (
+                  <option value={e.value} key={e.value + index}>{e.label}</option>
+                )
+              })
+            }
+          </select>
 
           <label htmlFor='price' className='mt-3'>Price :</label>
           <input

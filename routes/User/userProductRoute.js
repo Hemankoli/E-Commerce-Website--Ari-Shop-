@@ -6,7 +6,7 @@ const getProductsByCategory = require('../../controller/User/getProductsByCatego
 const productController = require("../../controller/User/productController")
 
 // get product by category for user
-// router.get("/category-product", getProductsByCategory)
+router.get("/category-product/:category", getProductsByCategory)
 
 // get products for user
 router.get("/get-product", productController.getProducts)

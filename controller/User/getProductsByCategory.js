@@ -1,9 +1,10 @@
 const pool = require("../../database/connection");
 
 const getProductsByCategory = async (req, res)=>{
+    const {category} = req?.params;
+    console.log(category)
     try {
-        const query = "SELECT * FROM products WHERE product_id = ?";
-        const {category} = req?.body || req?.params;
+        const query = "SELECT * FROM products WHERE category = ?";
         pool.query(query, [category], (err, result) => {
             if (err) {
                 console.error(err);

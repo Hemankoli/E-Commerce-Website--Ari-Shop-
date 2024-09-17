@@ -5,6 +5,7 @@ import BannerProduct from '../components/Banner/BannerProduct';
 import ProductCardFirst from '../components/Productsonhome/ProductCardFirst'
 import ProductCardSecond from '../components/Productsonhome/ProductCardSecond';
 import ProductVertcalCard from '../components/Productsonhome/ProductVertcalCard';
+import ProductByCategory from '../components/Productsonhome/ProductByCategory';
 
 const Home = () => {
 
@@ -13,13 +14,14 @@ const Home = () => {
    
       <BannerProduct />
 
+      <ProductByCategory category={"kpop"} heading={"Top K-POP Products"}/>  
 
-      <ProductCardFirst category={"k-pop"} heading={"BestSelling Products"}/>  
+      <ProductCardFirst category={"kpop"} heading={"BestSelling Products"}/>  
 
     
-      <ProductCardSecond category={"k-pop"} heading={"Trending"}/>  
+      <ProductCardSecond category={"kpop"} heading={"Trending"}/>  
 
-      <ProductVertcalCard  category={"k-pop"}  heading={"New Arrivals"}/>  
+      <ProductVertcalCard  category={"kpop"}  heading={"New Arrivals"}/>  
 
 
 

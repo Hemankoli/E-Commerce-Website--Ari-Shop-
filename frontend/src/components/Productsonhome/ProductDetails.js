@@ -17,7 +17,6 @@ const ProductDetails = () => {
     const [auth] = useAuth();
     const { productId } = useParams();
     const navigate = useNavigate();
-    const userId= 1;
 
     const fetchProductDetails = async () => {
         setLoading(true);
@@ -62,7 +61,7 @@ const ProductDetails = () => {
         }else{
             try {
                 await axios.post('http://localhost:8000/cart', {
-                    user_id: userId,
+                    user_id: auth?.user?.user_id,
                     product_id,
                     quantity: 1,
                 });
