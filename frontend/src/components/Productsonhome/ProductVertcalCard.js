@@ -104,7 +104,7 @@ const ProductVerticalCard = ({ heading }) => {
                         products.map((product, index) => (
                             <div key={index}
                             className='relative flex flex-col w-full min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
-                                <Link to={`/product/${product.product_id}`} className='relative h-48 md:h-72 w-full flex items-center justify-center cursor-pointer'
+                                <Link to={`/product/${product.productName}`} className='relative h-48 md:h-72 w-full flex items-center justify-center cursor-pointer'
                                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                                     <img src={product?.image[0]} alt={product?.productName || 'Product Image'}
                                         className='w-full h-full object-cover object-center' />

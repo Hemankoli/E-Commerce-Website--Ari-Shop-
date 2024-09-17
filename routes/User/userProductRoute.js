@@ -12,7 +12,7 @@ const productController = require("../../controller/User/productController")
 router.get("/get-product", productController.getProducts)
 
 // get product details by id for user
-router.get("/product/:productId", productController.getProductDetailsById);
+router.get("/product/:productName", productController.getProductDetailsById);
 
 // get search products
 router.get("/search/:keyword", productController.searchProducts)

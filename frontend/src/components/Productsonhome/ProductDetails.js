@@ -35,7 +35,7 @@ const ProductDetails = () => {
         useEffect(() => {
             if(productId){
                 fetchProductDetails();
-            }
+            } 
         }, [productId]);
 
     

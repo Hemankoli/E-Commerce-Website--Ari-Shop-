@@ -33,10 +33,10 @@ exports.getProducts = async(req, res) => {
 // // get one product on user
 exports.getProductDetailsById = (req, res) => {
     try {
-      const {productId} = req?.params;
-      console.log(productId)
-      const query = "SELECT * FROM products WHERE product_id = ?";
-        pool.execute(query, [productId], (err, result) => {
+      const {productName} = req?.params;
+      console.log(productName)
+      const query = "SELECT * FROM products WHERE productName = ?";
+        pool.execute(query, [productName], (err, result) => {
             if (err) {
                 return res.status(500).json({
                     message: err.message || err,
