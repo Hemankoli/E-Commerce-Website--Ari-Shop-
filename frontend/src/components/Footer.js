@@ -5,8 +5,8 @@ import { FaSquareFacebook, FaSquareTwitter, FaSquareInstagram } from "react-icon
 
 const Footer = () => {
     return (
-        <footer className="container mx-auto">
-            <div className="mx-auto px-4">
+        <footer className="bg-gray-100 mx-auto">
+            <div className="container mx-auto px-4">
                 <div className="md:flex md:flex-wrap md:-mx-4 py-6">
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
                         <h1 className="mb-8 flex items-center text-4xl font-bold" >
@@ -30,10 +30,10 @@ const Footer = () => {
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
                         <h4 className="text-black text-lg font-bold mb-2">Customer Care</h4>
                         <ul>
-                            <li><Link to="/contact" className="text-gray-600 hover:text-purple-500">Contact Us</Link></li>
-                            <li><Link to="/faqs" className="text-gray-600 hover:text-purple-500">FAQs</Link></li>
-                            <li><Link to="/shipping-returns" className="text-gray-600 hover:text-purple-500">Shipping & Returns</Link></li>
-                            <li><Link to="/terms-conditions" className="text-gray-600 hover:text-purple-500">Terms & Conditions</Link></li>
+                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">Contact Us</Link></li>
+                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">FAQs</Link></li>
+                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">Shipping & Returns</Link></li>
+                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">Terms & Conditions</Link></li>
                         </ul>
                     </div>
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
