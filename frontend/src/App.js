@@ -20,6 +20,7 @@
   import OrderPage from './Pages/User/OrderPage';
   import CartPage from './components/Cart/CartPage';
   import ErrorPage from './Pages/ErrorPage';
+  import CustomerSupportPage from './Pages/CustomerSupportPage';
 
 
   function App() {
@@ -32,6 +33,7 @@
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="*" element={<ErrorPage />} />
                 <Route path='/cart'  element={<CartPage />} />
+                <Route path='/customer-support'  element={<CustomerSupportPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/product/:productId" element={<ProductDetails />} />
