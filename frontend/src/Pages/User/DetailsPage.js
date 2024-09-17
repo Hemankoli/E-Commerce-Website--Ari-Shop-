@@ -23,16 +23,17 @@ const DetailsPage = () => {
     setPhoneNumber(phoneNumber)
     setPassword(password)
   }, [auth?.user]);
+  
+
+  useEffect(() => {
+    if (!auth?.token && !auth?.user) {
+      navigate('/login');
+    }
+  }, [auth, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    if (!auth?.token || !auth?.user) {
-      toast.error('User not authenticated');
-      setLoading(false);
-      return;
-    }
 
     try {
       const response = await axios.put('http://localhost:8000/details', { name, email, phoneNumber, password }, {

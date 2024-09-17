@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {useAuth} from '../../Context/index'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {FaCircleMinus, FaCirclePlus} from 'react-icons/fa6'
 
 const CartPage = () => {
@@ -20,11 +20,11 @@ const CartPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (!auth?.token && !auth?.user) {
-  //     navigate('/login');
-  //   }
-  // }, [auth, navigate]);
+  useEffect(() => {
+    if (!auth?.token && !auth?.user) {
+      navigate('/login');
+    }
+  }, [auth, navigate]);
 
   useEffect(() => {
       fetchCartItems();
@@ -71,7 +71,7 @@ const CartPage = () => {
   };
 
   return (
-      <div className='mx-auto mt-8'>
+      <div className='mx-auto'>
         <div className='relative mb-10'>
             <h1 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] uppercase text-white text-lg md:text-3xl font-bold mb-6 text-center">
               {`Welcome ${auth?.token && auth?.user?.name ? "to the shopping cart" : "Guest"}`}
@@ -88,13 +88,17 @@ const CartPage = () => {
                     {
                       Array.isArray(cartItems) && cartItems.map((item) => (
                         <div key={item.product_id} className="bg-white shadow-md p-4 mb-4 rounded-md flex">
-                          
-                          <img src={Array.isArray(item?.image) && item?.image.length > 0 ? item?.image[0] : 'fallback_image_url'}
+                                                      
+                          <Link to={`/product/${item.productName}`} >
+                            <img src={Array.isArray(item?.image) && item?.image.length > 0 ? item?.image[0] : 'fallback_image_url'}
                             alt={item?.productName || "Product Image"}
                             className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-md"/>
+                          </Link>
                           
                           <div className="ml-4 flex-1">
-                            <h2 className="text-sm md:text-lg font-semibold line-clamp-2">{item?.productName || "Product Name"}</h2>
+                            <Link to={`/product/${item.productName}`} >
+                              <h2 className="text-sm md:text-lg font-semibold line-clamp-2">{item?.productName || "Product Name"}</h2>
+                            </Link>
                             <div className="flex space-x-2 mt-2">
                               <button className="text-gray-500 text-xs py-1 hover:text-red-400"
                                 onClick={() => deleteCartItem(item.product_id)}>

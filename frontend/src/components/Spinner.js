@@ -15,8 +15,8 @@ const Spinner = ({path = 'login'}) => {
 
   return (
     <div className="flex flex-col space-y-2  items-center h-96 justify-center">
-      <h1 className='text-center text-4xl text-purple-500'>Access Denied</h1>
-        <p className='text-center text-2xl'>Redirecting to you in {count} seconds </p>
+      <h1 className='text-center text-2xl text-purple-500'>Please Login or Register First</h1>
+        <p className='text-center text-xl'>Redirecting to you in {count} seconds </p>
       <div className="w-8 h-8 border-4 ml-2 border-purple-500 border-t-transparent border-solid rounded-full animate-spin">
       </div>
     </div>

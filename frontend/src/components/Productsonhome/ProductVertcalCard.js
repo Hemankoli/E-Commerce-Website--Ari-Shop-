@@ -52,16 +52,20 @@ const ProductVerticalCard = ({ heading }) => {
     }, [page]);
 
     const addToCart = async (product_id) => {
-        try {
-            await axios.post('http://localhost:8000/cart', {
-                user_id: userId,
-                product_id,
-                quantity: 1,
-            });
-            toast.success("Item added to cart!");
-        } catch (error) {
-            console.error('Error adding to cart:', error);
-            toast.error("Failed to add item to cart.");
+        if(!auth?.token || !auth?.user){
+            toast.error('Please login to add product to cart');
+        }else{
+            try {
+                await axios.post('http://localhost:8000/cart', {
+                    user_id: userId,
+                    product_id,
+                    quantity: 1,
+                });
+                toast.success("Item added to cart!");
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                toast.error("Failed to add item to cart.");
+            }
         }
     };
 
