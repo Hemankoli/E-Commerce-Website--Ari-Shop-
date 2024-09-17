@@ -19,6 +19,7 @@
   import DetailsPage from './Pages/User/DetailsPage';
   import OrderPage from './Pages/User/OrderPage';
   import CartPage from './components/Cart/CartPage';
+  import ErrorPage from './Pages/ErrorPage';
 
 
   function App() {
@@ -29,6 +30,7 @@
             <main>
               <Routes>
                 <Route exact path="/" element={<Home />} />
+                <Route exact path="*" element={<ErrorPage />} />
                 <Route path='/cart'  element={<CartPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
