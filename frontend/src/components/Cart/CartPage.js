@@ -3,18 +3,17 @@ import axios from 'axios';
 import {useAuth} from '../../Context/index'
 import { useNavigate, useParams } from 'react-router-dom';
 import {FaCircleMinus, FaCirclePlus} from 'react-icons/fa6'
-import BannerProduct from '../Banner/BannerProduct';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState({});
   const [auth] = useAuth()
   const navigate = useNavigate()
-
+  const userId = 1;
   
   // Fetch cart items for the user
   const fetchCartItems = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/cart/${1}`);
+      const response = await axios.get(`http://localhost:8000/cart/${userId}`);
       setCartItems(response?.data);
     } catch (error) {
       console.error('Error fetching cart items:', error);
@@ -36,10 +35,10 @@ const CartPage = () => {
   const addToCart = async (product_id) => {
     try {
       await axios.post('http://localhost:8000/cart', {
-        user_id: auth?.user?.user_id,
+        user_id: userId,
         product_id,
-        quantity: 1,
-      });
+        quantity: 1
+    });
       fetchCartItems();
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -50,7 +49,7 @@ const CartPage = () => {
   const decreaseQuantity = async (product_id) => {
     try {
       await axios.put('http://localhost:8000/cart', {
-        user_id: auth?.user?.user_id,
+        user_id: userId,
         product_id,
       });
       fetchCartItems();
@@ -63,10 +62,7 @@ const CartPage = () => {
   const deleteCartItem = async (product_id) => {
     try {
       await axios.delete('http://localhost:8000/cart', {
-        data: {
-          user_id: auth?.user?.user_id,
-          product_id,
-        },
+        data: { user_id: userId, product_id },  
       });
       fetchCartItems();
     } catch (error) {
@@ -95,10 +91,10 @@ const CartPage = () => {
                           
                           <img src={Array.isArray(item?.image) && item?.image.length > 0 ? item?.image[0] : 'fallback_image_url'}
                             alt={item?.productName || "Product Image"}
-                            className="w-24 h-24 object-cover rounded-md"/>
+                            className="w-16 h-16 md:w-24 md:h-24 object-cover rounded-md"/>
                           
                           <div className="ml-4 flex-1">
-                            <h2 className="text-lg font-semibold">{item?.itemroductName || "Product Name"}</h2>
+                            <h2 className="text-sm md:text-lg font-semibold line-clamp-2">{item?.productName || "Product Name"}</h2>
                             <div className="flex space-x-2 mt-2">
                               <button className="text-gray-500 text-xs py-1 hover:text-red-400"
                                 onClick={() => deleteCartItem(item.product_id)}>
@@ -108,15 +104,17 @@ const CartPage = () => {
                           </div>
 
                           <div className='flex-1'>
-                            <p className="text-gray-500">Price: ₹<strong>{item?.price || "0.00"}</strong></p>
-                            <p className="text-gray-500">Quantity: {item?.quantity || 0}</p>
+                            <p className="text-gray-500 text-sm md:text-lg">Price: ₹<strong>{item?.price || "0.00"}</strong></p>
+                            <p className="text-gray-500 text-sm md:text-lg">Quantity: {item?.quantity || 0}</p>
                             <div className='flex'>
                               <button onClick={() => decreaseQuantity(item.product_id, 'decrement')} disabled={item.quantity <= 1} 
-                                  className="text-xl mr-4 disabled:opacity-50">
+                                  className="text-md md:text-xl mr-4 disabled:opacity-50">
                                   <FaCircleMinus />
                               </button>
-                              <span className="px-3 mr-4 py-1 bg-gray-100 rounded-md">{item?.quantity || 0}</span>
-                              <button onClick={() => addToCart(item.product_id, 'increment')} className="text-xl">
+                              <span className="px-2 md:px-3 py-0 md:py-1 mr-4 text-md md:text-xl bg-gray-100 rounded-md">
+                                {item?.quantity || 0}
+                              </span>
+                              <button onClick={() => addToCart(item.product_id, 'increment')} className="text-md md:text-xl">
                                 <FaCirclePlus />
                               </button>
                             </div>
@@ -131,7 +129,7 @@ const CartPage = () => {
                     <p className="text-md font-md mb-4">Total Items : <strong>{cartItems.length}</strong></p>
                     <div className="flex justify-between mb-2">
                       <span>Subtotal:</span>
-                      <span>₹<strong>{cartItems.reduce((total, item) => total + (item.itemrice || 0) * (item.quantity || 0), 0)}</strong></span>
+                      <span>₹<strong>{cartItems.reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0)}</strong></span>
                     </div>  
                     <div className="flex justify-between mb-4">
                       <span>Shipping:</span>  
