@@ -18,7 +18,6 @@ router.get('/orders/:id/products', orderController.getProductsByOrder);
 router.put('/orders/:id', orderController.updateOrder);
 
 // get Order By User Id
-// error
 router.get('/customers/:userId/orders', orderController.getOrdersByUser);
 
 module.exports = router;

@@ -18,4 +18,5 @@ router.delete('/cart', cartController.removeItemFromCart)
 // Route to update item to cart
 router.put('/cart', cartController.updateItemInCart)
 
+
 module.exports = router;
