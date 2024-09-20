@@ -18,8 +18,7 @@ const ProductByCategory = ({ heading, category }) => {
         setLoading(true);
         try {
             const response = await axios.get(`http://localhost:8000/category-product/${category}`);
-            console.log('Fetched products:', response.data); // Log the fetched data
-            setProducts(response?.data || []);
+                setProducts(response?.data || []);
         } catch (error) {
             console.error('Error fetching products:', error);
             toast.error('Failed to fetch products.');

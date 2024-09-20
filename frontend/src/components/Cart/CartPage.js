@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import {useAuth} from '../../Context/index'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {FaCircleMinus, FaCirclePlus} from 'react-icons/fa6'
+import toast from 'react-hot-toast';
+
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState({});
   const [auth] = useAuth()
   const navigate = useNavigate()
+  const quantity = 1;
   
   // Fetch cart items for the user
   const fetchCartItems = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/cart/${auth?.user?.user_id}`);
-      setCartItems(response?.data);
+      const response = await fetch(`http://localhost:8000/cart/${auth?.user?.user_id}`,{
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      const responseData = await response.json()
+      setCartItems(responseData);
     } catch (error) {
       console.error('Error fetching cart items:', error);
     }
@@ -27,31 +36,43 @@ const CartPage = () => {
 
   useEffect(() => {
       fetchCartItems();
-    
   }, []);
+
 
   // Add or update cart item
   const addToCart = async (product_id) => {
+    console.log(product_id)
     try {
-      await axios.post('http://localhost:8000/cart', {
-        user_id: auth?.user?.user_id,
-        product_id,
-        quantity: 1
+      const response = await fetch('http://localhost:8000/cart', {
+        method: 'POST',
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ product_id, user_id: auth?.user?.user_id, quantity: quantity  })
     });
-      fetchCartItems();
+    const responseData = await response.json()
+    fetchCartItems()
+    toast.success("Product Added Successfully")
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error('Error adding to Cart:', error);
     }
   };
 
   // Decrease cart item quantity
   const decreaseQuantity = async (product_id) => {
     try {
-      await axios.put('http://localhost:8000/cart', {
-        user_id: auth?.user?.user_id,
-        product_id,
+      const response = await fetch('http://localhost:8000/cart', {
+        method: 'PUT',
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ product_id: product_id, user_id: auth?.user?.user_id, quantity: quantity })
       });
-      fetchCartItems();
+      const responseData =  await response.json()
+      fetchCartItems()
+      toast.success("Qauntity Removed Successfully")
     } catch (error) {
       console.error('Error decreasing quantity:', error);
     }
@@ -60,10 +81,17 @@ const CartPage = () => {
   // Delete cart item
   const deleteCartItem = async (product_id) => {
     try {
-      await axios.delete('http://localhost:8000/cart', {
-        data: { user_id: auth?.user?.user_id, product_id },  
+      const response = await fetch('http://localhost:8000/cart', {
+        method: "DELETE",
+        credentials: "include",
+        headers:{
+          "content-type" : 'application/json'
+        },
+        body: JSON.stringify({ user_id: auth?.user?.user_id, product_id: product_id })
       });
-      fetchCartItems();
+      const responseData =  await response.json()
+      fetchCartItems()
+      toast.success("Product Deleted Successfully")
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }
@@ -85,8 +113,8 @@ const CartPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-2">
                     {
-                      Array.isArray(cartItems) && cartItems.map((item) => (
-                        <div key={item.product_id} className="bg-white shadow-md p-4 mb-4 rounded-md flex">
+                      Array.isArray(cartItems) && cartItems.map((item, index) => (
+                        <div key={index} className="bg-white shadow-md p-4 mb-4 rounded-md flex">
                                                       
                           <Link to={`/product/${item.productName}`} >
                             <img src={Array.isArray(item?.image) && item?.image.length > 0 ? item?.image[0] : 'fallback_image_url'}
@@ -127,7 +155,7 @@ const CartPage = () => {
                     }
                   </div>
 
-                  <div className="bg-white shadow-md p-4 rounded-md">
+                  <div className="bg-white shadow-md p-4 mb-24 rounded-md">
                     <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
                     <p className="text-md font-md mb-4">Total Items : <strong>{cartItems.length}</strong></p>
                     <div className="flex justify-between mb-2">
@@ -139,17 +167,18 @@ const CartPage = () => {
                       <span>Free</span>
                     </div>
                     <div className="border-t pt-2 flex justify-between font-bold">
-                      <span>Total: ₹<strong>{cartItems.reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0)}</strong></span>
+                      <span>Total: </span> 
+                      <span>₹<strong>{cartItems.reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0)}</strong></span>
                     </div>
                     <button
                       onClick={() => navigate(auth?.token ? '/checkout' : '/login')}
                       className="w-full mt-4 bg-purple-600 text-white font-semibold py-2 rounded-md hover:bg-purple-700">
                       {auth?.token ? 'Proceed to Checkout' : 'Login to Checkout'}
                     </button>
-                    <button
+                    {/* <button onClick={clearCart}
                       className="w-full mt-4 bg-red-500 text-white font-semibold py-2 rounded-md hover:bg-red-600">
                       Clear Cart
-                    </button>
+                    </button> */}
                   </div>  
                 </div>
               ) : (

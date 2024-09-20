@@ -3,10 +3,11 @@ const router = express.Router();
 
 // const getSingleProductByCategory = require('../../controller/User/getSingleProductByCategory')
 const getProductsByCategory = require('../../controller/User/getProductsByCategory')
-const productController = require("../../controller/User/productController")
+const productController = require("../../controller/User/productController");
+
 
 // get product by category for user
-router.get("/category-product/:category", getProductsByCategory)
+router.get("/category-product/:category",  getProductsByCategory)
 
 // get products for user
 router.get("/get-product", productController.getProducts)
@@ -18,4 +19,4 @@ router.get("/product/:productName", productController.getProductDetailsById);
 router.get("/search/:keyword", productController.searchProducts)
 
 
-module.exports = router;
+module.exports = router;    

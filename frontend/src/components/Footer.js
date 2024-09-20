@@ -11,10 +11,12 @@ const Footer = () => {
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
                         <h1 className="mb-8 flex items-center text-4xl font-bold" >
                             <img src='https://1000logos.net/wp-content/uploads/2021/12/Akatsuki-Logo.png' alt='logo' className='h-8 md:h-10 items-center' />
-                            <span className=''>Ari</span>
+                            <span className='flex items-center text-3xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-400 bg-clip-text text-transparent'>
+                                AriZon
+                            </span>
                             </h1>
                         <h4 className="text-black text-lg font-bold mb-2">About Us</h4>
-                        <p className="text-gray-600">Ditto is your go-to online store for all things fashion. We offer the latest trends and styles at affordable prices.</p>
+                        <p className="text-gray-600">AriZon is your go-to online store for all things fashion. We offer the latest trends and styles at affordable prices.</p>
                     </div>
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
                         <h4 className="text-black text-lg font-bold mb-2">Categories</h4>

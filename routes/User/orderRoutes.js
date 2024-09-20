@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const orderController = require('../../controller/User/orderController');
+const { checkAuthenticated } = require('../../middleware/middleware');
 
 
 
@@ -20,4 +21,4 @@ router.put('/orders/:id', orderController.updateOrder);
 // get Order By User Id
 router.get('/customers/:userId/orders', orderController.getOrdersByUser);
 
-module.exports = router;
+module.exports = router;    

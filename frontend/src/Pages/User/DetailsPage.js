@@ -12,16 +12,18 @@ const DetailsPage = () => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const {email, name, phoneNumber, password} = auth?.user
+    const {email, name, phoneNumber, password, confirmPassword} = auth?.user
     setName(name)
     setEmail(email)
     setPhoneNumber(phoneNumber)
     setPassword(password)
+    setConfirmPassword(confirmPassword)
   }, [auth?.user]);
   
 
@@ -31,25 +33,35 @@ const DetailsPage = () => {
     }
   }, [auth, navigate]);
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords don't match");
+      setLoading(false);
+      return; 
+    }
     setLoading(true);
 
     try {
-      const response = await axios.put('http://localhost:8000/details', { name, email, phoneNumber, password }, {
+      const response = await axios.put('http://localhost:8000/details', 
+        { user_id:auth?.user?.user_id, name, email, phone_number: phoneNumber, password, confirmpassword: confirmPassword }, {
+        withCredentials: true, 
         headers: {
           Authorization: `Bearer ${auth.token}`,
         },
       });
-      if(response?.error){
-        toast.error(response?.error)
+      const dataResponse = response.data;
+      console.log(dataResponse)
+      if(dataResponse?.error){
+        toast.error(dataResponse?.error)
       }else{
-        setAuth({...auth, user: response?.data})
-        let  ls = localStorage.getItem("auth")
-        ls = JSON.stringify(ls)
-        localStorage.setItem("auth", JSON.stringify(ls))
+        setAuth((prevAuth) => ({
+          ...prevAuth,
+          user: { ...prevAuth.user, ...dataResponse.data },
+        }));
+        localStorage.setItem("auth", JSON.stringify({ ...auth, user: dataResponse.data }));
         toast.success('Profile updated successfully');
-        // navigate(`/details/${auth?.user?.id}`);
       }
     } catch (error) {
       console.error('Error updating profile', error);
@@ -108,7 +120,7 @@ const DetailsPage = () => {
                   id="phoneNumber"
                   name="phoneNumber"
                   value={phoneNumber}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                   className="w-full py-2 px-3"
                   placeholder="phone Number"
                 />
@@ -128,6 +140,7 @@ const DetailsPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full py-2 px-3"
                   placeholder="Password"
+                  required
                 />
                 <div className="flex items-center px-2 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
                   <span className="text-lg">
@@ -136,6 +149,30 @@ const DetailsPage = () => {
               </div>
               </div>
             </div>
+
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+                Confirm Password
+              </label>
+              <div className="flex shadow border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full py-2 px-3"
+                  placeholder="Confirm Password"
+                  required
+                />
+                <div className="flex items-center px-2 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
+                  <span className="text-lg">
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+              </div>
+              </div>
+            </div>
+            
             <div className="flex items-center justify-center">
               <button
                 type="submit"

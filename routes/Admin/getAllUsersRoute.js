@@ -1,5 +1,6 @@
 const getUsersController = require('../../controller/Admin/getUsersController');
 const express = require('express');
+const { isAdmin, checkAuthenticated } = require('../../middleware/middleware');
 const router = express.Router();
 
 //ADMIN

@@ -7,7 +7,6 @@ exports.getProducts = async(req, res) => {
         const query = `SELECT * FROM products`; 
             pool.execute(query, (err, results) => {
                 if (err) {
-                  console.error(err.message);
                   return res.status(500).send({
                     success: false,
                     message: "Error in getting products",
@@ -34,7 +33,6 @@ exports.getProducts = async(req, res) => {
 exports.getProductDetailsById = (req, res) => {
     try {
       const {productName} = req?.params;
-      console.log(productName)
       const query = "SELECT * FROM products WHERE productName = ?";
         pool.execute(query, [productName], (err, result) => {
             if (err) {

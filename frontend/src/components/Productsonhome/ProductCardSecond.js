@@ -22,7 +22,7 @@ const ProductCardSecond = ({ heading }) => {
         setLoading(true);
         try {
             const response = await axios.get('http://localhost:8000/get-product');
-            setProducts(response?.data);
+            setProducts(response?.data || []);
         } catch (error) {
             console.error('Error fetching products:', error);
         }

@@ -48,7 +48,7 @@ const AllUsers = () => {
           <tbody className="bg-white divide-y divide-purple-600"> 
               {Array.isArray(allUsers) && allUsers.length > 0 ? (
                   allUsers.map((user, index) => (
-                      <tr key={user.id} className="hover:bg-gray-100">
+                      <tr key={index} className="hover:bg-gray-100">
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{index + 1}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-900">{user?.name}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{user?.email}</td>

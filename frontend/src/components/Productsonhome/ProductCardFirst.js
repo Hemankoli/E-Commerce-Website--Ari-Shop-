@@ -9,18 +9,25 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const ProductCardFirst = ({ heading }) => {
-    const [auth, setAuth] = useAuth();
+    const [auth] = useAuth();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const scrollElement = useRef();
     const navigate = useNavigate();
     const loadingList = new Array(15).fill(null)
 
+    console.log(auth)    
+
     const handleFetch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8000/get-product');
+            const response = await axios.get('http://localhost:8000/get-product',{
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                  }
+            });
             setProducts(response?.data);
+            console.log(response?.data)
         } catch (error) {
             console.error('Error fetching products:', error);
         }

@@ -2,10 +2,9 @@
     import { Link, useNavigate } from 'react-router-dom';
     import { MdMenu, MdClose } from 'react-icons/md';
     import { CiUser, CiSearch } from "react-icons/ci";
-    import { FaUser } from "react-icons/fa";
     import { FaHome, FaTv, FaTshirt } from 'react-icons/fa';
     import { PiUserCircleThin, PiShoppingBagLight, PiCodesandboxLogoThin, PiPhoneThin } from "react-icons/pi";
-    import { IoIosLogOut, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+    import { IoIosLogOut } from "react-icons/io";
     import { IoSearch, IoBookSharp } from "react-icons/io5";
     import { MdOutlineKitchen } from 'react-icons/md';
     import { GiClothes } from 'react-icons/gi';
@@ -20,9 +19,15 @@
         const [showDropdown, setShowDropdown] = useState(false);
         const dropdownRef = useRef(null);
         const [auth, setAuth] = useAuth();
+        const [cartItems, setCartItems] = useState(0);
         const [values, setValues] = useSearch();
         const navigate = useNavigate();
 
+
+        useEffect(() => {
+            const items = JSON.parse(localStorage.getItem('cartItems')) || [];
+            setCartItems(items?.length);
+        }, []);
 
 
         const toggleMobileMenu = () => {
@@ -110,7 +115,9 @@
                         <Link to="/">
                             <h1 className="flex text-3xl font-bold" >
                                 <img src='https://1000logos.net/wp-content/uploads/2021/12/Akatsuki-Logo.png' alt='logo' className='h-8' />
-                                <span className=''>Ari</span>
+                                <span className='flex items-center text-3xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-400 bg-clip-text text-transparent'>
+                                    AriZon
+                                </span>
                             </h1>
                         </Link>
                     </div>
@@ -152,7 +159,7 @@
                         <Link to="/cart" className="mx-2 relative hover:scale-110 transition-transform">
                             <PiShoppingBagLight className="w-6 h-6 hover:text-purple-500" />
                             <span className="absolute -top-2 -right-1 bg-red-400 p-1 rounded-full h-5 text-white text-md flex justify-center items-center">
-                                0
+                                {cartItems}
                             </span>
                         </Link>
 

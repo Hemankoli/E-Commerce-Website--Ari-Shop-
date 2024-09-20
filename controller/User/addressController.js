@@ -13,7 +13,7 @@ exports.createAddress = async (req, res) => {
           console.log(err);
           return res.status(400).json({ message: 'Error creating address' });
         }
-        return res.status(201).json({ message: 'Address created successfully' });
+        return res.status(201).json(result);
       }
     );
   } catch (error) {
@@ -23,34 +23,36 @@ exports.createAddress = async (req, res) => {
 };
 
 exports.updateAddress = async (req, res) => {
-  const {id} = req?.params;
-  const { address_line1, address_line2, city, state, postal_code, country } = req.body;
+  const {addressId} = req?.params;
+  const {  address_line1, address_line2, city, state, postal_code, country } = req?.body;
   try {
-    pool.query(
-      'UPDATE addresses SET address_line1 = ?, address_line2 = ?, city = ?, state = ?, postal_code = ?, country = ? WHERE address_id = ?',
-      [address_line1, address_line2, city, state, postal_code, country, id],
+    pool.query(`UPDATE addresses SET address_line1 = ?, address_line2 = ?, city = ?, state = ?, postal_code = ?, country = ? WHERE address_id = ?;`,
+      [address_line1, address_line2, city, state, postal_code, country, addressId],
       (err, result) => {
         if (err) {
           console.log(err);
           return res.status(400).json({ message: 'Error updating address' });
         }
-        return res.status(200).json({ message: 'Address updated successfully' });
+        return res.status(200).json({ message: 'Address updated successfully', data: result });
       }  
     );
   } catch (error) {
     console.error('Error updating address:', error);
-    res.status(500).json({ message: 'Error updating address' });
+    res.status(500).json({ message: 'Error updating address' });  
   }
 };
 
 exports.deleteAddress = async (req, res) => {
-  const {id} = req?.params;
+  const {addressId} = req?.params;
   try {
-    pool.query('DELETE FROM addresses WHERE address_id = ?', [id],
-      (err, result) => {
+    pool.query('DELETE FROM addresses WHERE address_id = ?', [addressId],
+      (err, result) => {  
         if (err) {
           console.log(err);
           return res.status(400).json({ message: 'Error Deleting address' });
+        }
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ message: 'Address not found' });
         }
         console.log(result)
         return res.status(200).json(result);
@@ -69,7 +71,7 @@ exports.getAddresses = async (req, res) => {
         if (err) {
           console.log(err); 
           return res.status(400).json({ message: 'Error fetching addresses' });
-        }
+        } 
         return res.status(200).json(result);
     });
   } catch (error) {

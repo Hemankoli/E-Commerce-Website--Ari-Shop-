@@ -38,13 +38,13 @@ router.get('/logout', (req, res) => {
 
 // user authentication
 // if user try to enter dashboard without login
-router.get("/user-auth", checkAuthenticated, (req, res) => {
+router.get("/user-auth",  (req, res) => {
     res.status(200).send({ ok: true });
 });
 
 // ADMIN AUTHENTICATION
 // if ADMIN try to enter dashboard without login
-router.get("/admin-auth", checkAuthenticated,  (req, res) => {
+router.get("/admin-auth",  isAdmin, (req, res) => {
     res.status(200).send({ ok: true });
 });
 
@@ -53,5 +53,8 @@ router.put("/details", userController.updateProfile, (req, res) => {
     res.send("update profile");
 })
 
+// Get User Profile
 
-module.exports = router;
+
+
+module.exports = router;                                                                                                                                        
