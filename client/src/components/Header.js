@@ -23,10 +23,21 @@
         const [values, setValues] = useSearch();
         const navigate = useNavigate();
 
+        console.log(auth?.user?.user_id)
 
+        const fetchCartItems = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/cart/${auth?.user?.user_id}`);
+                const total = response.data.reduce((sum, item) => sum + item.quantity, 0);
+                console.log(total)
+                setCartItems(total);
+            } catch (error) {
+                console.error('Error fetching cart items:', error);
+            }
+        };
+    
         useEffect(() => {
-            const items = JSON.parse(localStorage.getItem('cartItems')) || [];
-            setCartItems(items?.length);
+            fetchCartItems();
         }, []);
 
 
