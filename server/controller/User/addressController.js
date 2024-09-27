@@ -21,7 +21,7 @@ exports.createAddress = async (req, res) => {
     res.status(500).json({ message: 'Error creating address' });
   }
 };
-
+  
 exports.updateAddress = async (req, res) => {
   const {addressId} = req?.params;
   const {  address_line1, address_line2, city, state, postal_code, country } = req?.body;

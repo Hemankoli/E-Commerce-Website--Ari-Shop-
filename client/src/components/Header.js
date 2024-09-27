@@ -1,5 +1,6 @@
     import React, { useState, useEffect, useRef } from 'react';
     import { Link, useNavigate } from 'react-router-dom';
+    import logo from '../assets/logo.png';
     import { MdMenu, MdClose } from 'react-icons/md';
     import { CiUser, CiSearch } from "react-icons/ci";
     import { FaHome, FaTv, FaTshirt } from 'react-icons/fa';
@@ -113,7 +114,7 @@
 
         return (
             <div>
-            <nav className="p-2 bg-main relative">
+            <nav className="py-2 px-4 bg-main relative">
                 <div className="mx-auto flex justify-between">
                     <div className="flex items-center">
                         <div className="lg:hidden">
@@ -122,16 +123,15 @@
                             </button>
                         </div>
                     </div>
-                    <div className="">
-                        <Link to="/">
-                            <h1 className="flex text-3xl font-bold" >
-                                <img src='https://1000logos.net/wp-content/uploads/2021/12/Akatsuki-Logo.png' alt='logo' className='h-8' />
-                                <span className='flex items-center text-3xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-400 bg-clip-text text-transparent'>
-                                    AriZon
-                                </span>
+                    <div className="flex items-center justify-between px-4 py-2">
+                        <Link to="/" className="flex items-center space-x-2">
+                            <img src={logo} alt="logo" className="h-8 w-8" />
+                            <h1 className="text-3xl  font-bold text-gray-800">
+                                <span className="tracking-wide">eTail</span>
                             </h1>
                         </Link>
                     </div>
+
                     <div className='container hidden my-auto lg:block'>
                         <div className='flex justify-center space-x-8'>
                             <Link to={'/'} className='flex items-center gap-1 py-1 px-2 rounded cursor-pointer text-purple-500'>
