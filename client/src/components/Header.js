@@ -11,6 +11,7 @@
     import { GiClothes } from 'react-icons/gi';
     import { useAuth } from '../Context/index';
     import { useSearch } from '../Context/search';
+    import { useCart } from '../Context/cart';
     import toast from 'react-hot-toast';
     import axios from 'axios';
 
@@ -20,27 +21,19 @@
         const [showDropdown, setShowDropdown] = useState(false);
         const dropdownRef = useRef(null);
         const [auth, setAuth] = useAuth();
-        const [cartItems, setCartItems] = useState(0);
+        const { cartItems, fetchCartItems } = useCart();
         const [values, setValues] = useSearch();
         const navigate = useNavigate();
 
         console.log(auth?.user?.user_id)
 
-        const fetchCartItems = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8000/cart/${auth?.user?.user_id}`);
-                const total = response.data.reduce((sum, item) => sum + item.quantity, 0);
-                console.log(total)
-                setCartItems(total);
-            } catch (error) {
-                console.error('Error fetching cart items:', error);
-            }
-        };
-    
         useEffect(() => {
-            fetchCartItems();
-        }, []);
-
+            if (auth?.user?.user_id) {
+              fetchCartItems(auth.user.user_id);
+            }else{
+              navigate('/login')
+            }
+        }, [auth, fetchCartItems, navigate]);
 
         const toggleMobileMenu = () => {
             setShowMobileMenu(!showMobileMenu);
@@ -169,9 +162,11 @@
 
                         <Link to="/cart" className="mx-2 relative hover:scale-110 transition-transform">
                             <PiShoppingBagLight className="w-6 h-6 hover:text-purple-500" />
-                            <span className="absolute -top-2 -right-1 bg-red-400 p-1 rounded-full h-5 text-white text-md flex justify-center items-center">
-                                {cartItems}
-                            </span>
+                            {cartItems.length > 0 && (
+                                <span className="absolute -top-2 -right-1 bg-red-400 p-1 rounded-full h-5 w-5 text-white text-xs flex justify-center items-center">
+                                {cartItems.length}
+                                </span>
+                            )}
                         </Link>
 
                         <div className="flex items-center relative" ref={dropdownRef}>

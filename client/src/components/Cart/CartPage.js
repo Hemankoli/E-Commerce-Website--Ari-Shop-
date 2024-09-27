@@ -1,44 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import {useAuth} from '../../Context/index'
+import {useAuth} from '../../Context/index';
+import {useCart} from '../../Context/cart';
 import { Link, useNavigate } from 'react-router-dom';
 import {FaCircleMinus, FaCirclePlus} from 'react-icons/fa6'
 import toast from 'react-hot-toast';
 
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState({});
+  const { cartItems, fetchCartItems } = useCart();
   const [auth] = useAuth()
   const navigate = useNavigate()
   const quantity = 1;
   
   // Fetch cart items for the user
-  const fetchCartItems = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/cart/${auth?.user?.user_id}`,{
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-      const responseData = await response.json()
-      setCartItems(responseData);
-    } catch (error) {
-      console.error('Error fetching cart items:', error);
-    }
-  };
-
   useEffect(() => {
-    if (!auth?.token && !auth?.user) {
-      navigate('/login');
+    if (auth?.user?.user_id) {
+      fetchCartItems(auth.user.user_id);
+    }else{
+      navigate('/login')
     }
-  }, [auth, navigate]);
+  }, [auth, fetchCartItems, navigate]);
 
-  useEffect(() => {
-      fetchCartItems();
-  }, []);
-
-
+  
   // Add or update cart item
   const addToCart = async (product_id) => {
     console.log(product_id)
