@@ -25,8 +25,6 @@
         const [values, setValues] = useSearch();
         const navigate = useNavigate();
 
-        console.log(auth?.user?.user_id)
-
         useEffect(() => {
             if (auth?.user?.user_id) {
               fetchCartItems(auth.user.user_id);

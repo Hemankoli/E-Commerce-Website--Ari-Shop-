@@ -1,5 +1,20 @@
 const pool = require("../../database/connection");
 
+
+//  Checkout Orders 
+exports.ckeckOutOrders = async (req, res) => {
+    const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } = req.body;
+    try {
+        const query = `INSERT INTO orders (user_id, total_price, shipping_address, payment_method) VALUES (?, ?, ?, ?)`;
+        const [orderResult] = await pool.query(query, [userId, totalPrice, shippingAddress, paymentMethod]);
+        const orderId = orderResult.insertId;
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create order' });
+    }
+}
+
 // Get All Order
 exports.getAllOrders = async (req, res) => {
     try {

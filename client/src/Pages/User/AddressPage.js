@@ -170,7 +170,7 @@ const AddressPage = () => {
         </div>
 
         {/* Display Addresses */}
-        <div className='-mt-2 bg-white shadow-lg w-full px-2 rounded-md'>
+        <div className='-mt-2 bg-white shadow-lg w-full px-2 rounded-md' address={addresses}>
           <h2 className="text-xl font-semibold mb-4 mt-2 text-center">Your Addresses</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2" >
               {

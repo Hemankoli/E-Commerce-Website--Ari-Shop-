@@ -1,16 +1,30 @@
-// src/Home.js
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import BannerProduct from '../components/Banner/BannerProduct';
 import ProductCardFirst from '../components/Productsonhome/ProductCardFirst'
 import ProductCardSecond from '../components/Productsonhome/ProductCardSecond';
 import ProductVertcalCard from '../components/Productsonhome/ProductVertcalCard';
 import ProductByCategory from '../components/Productsonhome/ProductByCategory';
+import { useParams } from 'react-router-dom';
 
 const Home = () => {
 
-  return (
+  const { productId } = useParams();
+  const product = { name: 'E-Tail', description: 'A great product', image: 'product-image-url.jpg' }; // Replace with actual product fetching logic
+
+
+  return (  
     <div>
+      
+      <Helmet>
+        <title>{product.name} - Buy Now at Best Prices</title>
+        <meta name="description" content={product.description} />
+        <meta name="keywords" content={`${product.name}, buy online, ecommerce`} />
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.description} />
+        <meta property="og:image" content={product.image} />
+        <link rel="canonical" href={`https://yourwebsite.com/product/${productId}`} />
+      </Helmet>
    
       <BannerProduct />
 

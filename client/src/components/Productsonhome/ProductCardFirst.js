@@ -16,8 +16,6 @@ const ProductCardFirst = ({ heading }) => {
     const navigate = useNavigate();
     const loadingList = new Array(15).fill(null)
 
-    console.log(auth)    
-
     const handleFetch = async () => {
         setLoading(true);
         try {
@@ -27,7 +25,6 @@ const ProductCardFirst = ({ heading }) => {
                   }
             });
             setProducts(response?.data);
-            console.log(response?.data)
         } catch (error) {
             console.error('Error fetching products:', error);
         }
