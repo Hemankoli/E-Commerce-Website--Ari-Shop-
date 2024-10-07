@@ -4,6 +4,8 @@ const orderController = require('../../controller/User/orderController');
 const { checkAuthenticated } = require('../../middleware/middleware');
 
 
+router.post('/create-order', orderController.createOrder);
+router.post('/update-order', orderController.updateOrder);
 
 // Get all orders
 router.get('/orders', orderController.getAllOrders);
@@ -12,11 +14,10 @@ router.get('/orders', orderController.getAllOrders);
 router.get('/orders/:id', orderController.getOrderById);
 
 // get products by order
-// error
 router.get('/orders/:id/products', orderController.getProductsByOrder);
 
-// Update order status
-router.put('/orders/:id', orderController.updateOrder);
+// // Update order status
+// router.put('/orders/:id', orderController.updateOrder);
 
 // get Order By User Id
 router.get('/customers/:userId/orders', orderController.getOrdersByUser);

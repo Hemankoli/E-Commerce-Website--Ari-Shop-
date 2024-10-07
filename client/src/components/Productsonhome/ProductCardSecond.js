@@ -15,13 +15,16 @@ const ProductCardSecond = ({ heading }) => {
     const [auth] = useAuth(); 
     const navigate = useNavigate();
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
+
     const loadingList = new Array(15).fill(null)
 
     // Fetch products from API
     const handleFetch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8000/get-product');
+            const response = await axios.get(`${baseurl}/get-product`);
             setProducts(response?.data || []);
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -49,7 +52,7 @@ const ProductCardSecond = ({ heading }) => {
             toast.error('Please login to add product to cart');
         }else{
             try {
-                await axios.post('http://localhost:8000/cart', {
+                await axios.post(`${baseurl}/cart`, {
                     user_id: auth?.user?.user_id,
                     product_id,
                     quantity: 1,

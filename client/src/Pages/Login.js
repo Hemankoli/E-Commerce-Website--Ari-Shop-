@@ -13,11 +13,13 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (email && password) {
             try {
-                const response = await axios.post('http://localhost:8000/login', {
+                const response = await axios.post(`${baseurl}/login`, {
                     email,
                     password,
                 });

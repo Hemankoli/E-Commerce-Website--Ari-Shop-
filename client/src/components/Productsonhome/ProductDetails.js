@@ -20,12 +20,14 @@ const ProductDetails = () => {
     const { productId } = useParams();
     const navigate = useNavigate();
 
-    const productHemlet = { name: 'Sample Product', description: 'A great product', image: 'product-image-url.jpg' };
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
+    const productHemlet = { name: 'E-Tail', description: 'A great product', image: 'product-image-url.jpg' };
 
     const fetchProductDetails = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:8000/product/${productId}`);
+            const response = await axios.get(`${baseurl}/product/${productId}`);
             setProduct(response?.data?.data[0]);
             setActiveImage(response?.data?.data[0]?.image?.[0] || 'defaultImageURL');
         } catch (error) {
@@ -64,7 +66,7 @@ const ProductDetails = () => {
             toast.error('Please login to add product to cart');
         }else{
             try {
-                await axios.post('http://localhost:8000/cart', {
+                await axios.post(`${baseurl}/cart`, {
                     user_id: auth?.user?.user_id,
                     product_id,
                     quantity: 1,
@@ -123,7 +125,7 @@ const ProductDetails = () => {
     return (
         <>
             <Helmet>
-                <title>{productHemlet.name} - Buy Now at Best Prices</title>
+                <title>{productHemlet.name} - {product.productName}</title>
                 <meta name="description" content={productHemlet.description} />
                 <meta name="keywords" content={`${productHemlet.name}, buy online, ecommerce`} />
                 <meta property="og:title" content={productHemlet.name} />

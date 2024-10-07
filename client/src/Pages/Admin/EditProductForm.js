@@ -28,6 +28,9 @@ const EditProductForm = ({onClose, productData, fetchData}) => {
     const [openImage, setOpenImage] = useState(false);
     const [showImage, setShowImage] = useState("");
     
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
+
     const handleOnChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
@@ -61,7 +64,7 @@ const EditProductForm = ({onClose, productData, fetchData}) => {
         return
       }
         e.preventDefault();
-        const response = await axios.put(`http://localhost:8000/update-product/${data?.product_id}`, data);
+        const response = await axios.put(`${baseurl}/update-product/${data?.product_id}`, data);
         if (response.status === 200) {
           toast.success(response?.data?.message);
           onClose();

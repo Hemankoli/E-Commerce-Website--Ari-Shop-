@@ -17,6 +17,8 @@ const DetailsPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     const {email, name, phoneNumber, password, confirmPassword} = auth?.user
     setName(name)
@@ -44,7 +46,7 @@ const DetailsPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.put('http://localhost:8000/details', 
+      const response = await axios.put(`${baseurl}/details`, 
         { user_id:auth?.user?.user_id, name, email, phone_number: phoneNumber, password, confirmpassword: confirmPassword }, {
         withCredentials: true, 
         headers: {

@@ -8,10 +8,11 @@ const Order = () => {
     const [orders, setOrders] = useState([])
     const [auth, setAuth] = useAuth()
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
 
     const getOrders = async (req, res) => {
         try {
-            const response = await axios.get("http://localhost:8000/orders")
+            const response = await axios.get(`${baseurl}/orders`)
             setOrders(response)
         } catch (error) {
             console.log(error)

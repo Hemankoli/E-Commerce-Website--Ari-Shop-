@@ -19,12 +19,14 @@ const ProductVerticalCard = ({ heading }) => {
     const [auth] = useAuth(); 
     const navigate = useNavigate();
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
     const loadingList = new Array(15).fill(null);
 
     const handleFetch = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:8000/get-product?page=${page}`);
+            const response = await axios.get(`${baseurl}/get-product?page=${page}`);
             if (response?.data?.length > 0) {
                 const newProducts = response.data;
                 setProducts(prevProducts => {
@@ -55,7 +57,7 @@ const ProductVerticalCard = ({ heading }) => {
             toast.error('Please login to add product to cart');
         }else{
             try {
-                await axios.post('http://localhost:8000/cart', {
+                await axios.post(`${baseurl}/cart`, {
                     user_id: auth?.user?.user_id,
                     product_id,
                     quantity: 1,

@@ -16,10 +16,12 @@ const ProductCardFirst = ({ heading }) => {
     const navigate = useNavigate();
     const loadingList = new Array(15).fill(null)
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
     const handleFetch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8000/get-product',{
+            const response = await axios.get(`${baseurl}/get-product`,{
                 headers: {
                     Authorization: `Bearer ${auth.token}`,
                   }
@@ -48,7 +50,7 @@ const ProductCardFirst = ({ heading }) => {
             toast.error('Please login to add product to cart');
         }else{
             try {
-                await axios.post('http://localhost:8000/cart', {
+                await axios.post(`${baseurl}/cart`, {
                     user_id: auth?.user?.user_id,
                     product_id,
                     quantity: 1,

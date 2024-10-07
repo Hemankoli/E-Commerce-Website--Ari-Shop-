@@ -15,13 +15,16 @@ const SearchProductCard = ({ loading, products = [] }) => {
     const [auth] = useAuth(); 
     const navigate = useNavigate();
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
+
     // Add to Cart functionality
     const addToCart = async (product_id) => {
         if(!auth?.token || !auth?.user){
             toast.error('Please login to add product to cart');
         }else{
             try {
-                await axios.post('http://localhost:8000/cart', {
+                await axios.post(`${baseurl}/cart`, {
                     user_id: auth?.user?.user_id,
                     product_id,
                     quantity: 1,

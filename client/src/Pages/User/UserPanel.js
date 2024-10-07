@@ -8,6 +8,7 @@ const UserPanel = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [auth] = useAuth();
   
+  
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (

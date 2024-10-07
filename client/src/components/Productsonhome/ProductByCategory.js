@@ -12,12 +12,15 @@ const ProductByCategory = ({ heading, category }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const scrollElement = useRef();
+
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
     const loadingList = new Array(15).fill(null);
 
     const handleFetch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:8000/category-product/${category}`);
+            const response = await axios.get(`${baseurl}/category-product/${category}`);
                 setProducts(response?.data || []);
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -44,7 +47,7 @@ const ProductByCategory = ({ heading, category }) => {
             return;
         }
         try {
-            await axios.post('http://localhost:8000/cart', {
+            await axios.post(`${baseurl}/cart`, {
                 user_id: auth.user.user_id,
                 product_id,
                 quantity: 1,

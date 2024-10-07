@@ -12,6 +12,8 @@ const CartPage = () => {
   const [auth] = useAuth()
   const navigate = useNavigate()
   const quantity = 1;
+
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
   
   const { productId } = useParams();
   const product = { name: 'E-Tail', description: 'A great product', image: 'product-image-url.jpg' }; // Replace with actual product fetching logic
@@ -30,7 +32,7 @@ const CartPage = () => {
   // Add or update cart item
   const addToCart = async (product_id) => {
     try {
-      const response = await fetch('http://localhost:8000/cart', {
+      const response = await fetch(`${baseurl}/cart`, {
         method: 'POST',
         credentials: "include",
         headers: {
@@ -49,7 +51,7 @@ const CartPage = () => {
   // Decrease cart item quantity
   const decreaseQuantity = async (product_id) => {
     try {
-      const response = await fetch('http://localhost:8000/cart', {
+      const response = await fetch(`${baseurl}/cart`, {
         method: 'PUT',
         credentials: "include",
         headers: {
@@ -68,7 +70,7 @@ const CartPage = () => {
   // Delete cart item
   const deleteCartItem = async (product_id) => {
     try {
-      const response = await fetch('http://localhost:8000/cart', {
+      const response = await fetch(`${baseurl}/cart`, {
         method: "DELETE",
         credentials: "include",
         headers:{

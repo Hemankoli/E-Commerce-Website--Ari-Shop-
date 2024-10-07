@@ -9,11 +9,13 @@ const SearchProduct = () => {
     const [loading, setLoading] = useState(false);
     const [auth] = useAuth(); 
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:8000/search/${values?.keyword}`);
+                const response = await axios.get(`${baseurl}/search/${values?.keyword}`);
                 setValues({ ...values, results: response?.data?.data });
             } catch (error) {
                 console.error('Error fetching search results:', error);

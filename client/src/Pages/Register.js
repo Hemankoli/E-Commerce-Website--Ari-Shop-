@@ -14,13 +14,15 @@ const Register = () => {
 
     const navigate = useNavigate();
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (name && email && password && confirmPassword ) {
             if (password === confirmPassword) {
                 if (password.length >= 6 && confirmPassword.length >= 6) {
                     try {
-                        const response = await axios.post('http://localhost:8000/register', {
+                        const response = await axios.post(`${baseurl}/register`, {
                             name,
                             email,
                             password,

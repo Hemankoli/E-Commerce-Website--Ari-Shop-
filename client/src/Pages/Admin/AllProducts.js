@@ -10,8 +10,10 @@ const AllProducts = () => {
   const[getProduct, setGetProduct] = useState([])
   const [editProduct, setEditProduct] = useState(false);
 
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
+
   const getAllProducts = async() => {
-    const response = await fetch("http://localhost:8000/get-product")
+    const response = await fetch(`${baseurl}/get-product`)
     const dataResponse = await response.json()  
     console.log("res",response)
     console.log(dataResponse)  
@@ -24,7 +26,7 @@ const AllProducts = () => {
       return;
     }    
     try {
-      const response = await axios.delete(`http://localhost:8000/delete-product/${productId}`)
+      const response = await axios.delete(`${baseurl}/delete-product/${productId}`)
         if (response.status === 200) {
           setGetProduct(getProduct.filter(product => product.product_id !== productId))
         }

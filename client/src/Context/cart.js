@@ -9,9 +9,11 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
+
   const fetchCartItems = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:8000/cart/${userId}`, {
+      const response = await fetch(`${baseurl}/cart/${userId}`, {
         method: "GET",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

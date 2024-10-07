@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 
 const CreateProducts = ({ onClose, fetchData }) => {
 
+  
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -24,6 +25,8 @@ const CreateProducts = ({ onClose, fetchData }) => {
 
   const [openImage, setOpenImage] = useState(false);
   const [showImage, setShowImage] = useState("");
+
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
 
   const handleOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -54,7 +57,7 @@ const CreateProducts = ({ onClose, fetchData }) => {
   // Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/upload-product", {
+    const response = await fetch(`${baseurl}/upload-product`, {
       method: "POST",
       credentials: 'include',
       headers: {

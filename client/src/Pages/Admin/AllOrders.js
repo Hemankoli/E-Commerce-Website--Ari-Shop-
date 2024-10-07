@@ -6,10 +6,13 @@ const AllOrders = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
+
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/orders'); 
+        const response = await axios.get(`${baseurl}/orders`); 
         setOrders(response?.data);
       } catch (error) {
         setError("Error fetching orders");
@@ -23,7 +26,7 @@ const AllOrders = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`http://localhost:8000/order-status/${orderId}`, { status: newStatus });
+      await axios.put(`${baseurl}/order-status/${orderId}`, { status: newStatus });
       setOrders(prevOrders =>
         prevOrders.map(order =>
           order.id === orderId ? { ...order, status: newStatus } : order

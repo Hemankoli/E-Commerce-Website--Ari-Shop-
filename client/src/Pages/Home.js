@@ -17,7 +17,7 @@ const Home = () => {
     <div>
       
       <Helmet>
-        <title>{product.name} - Buy Now at Best Prices</title>
+        <title>{product.name} - Home</title>
         <meta name="description" content={product.description} />
         <meta name="keywords" content={`${product.name}, buy online, ecommerce`} />
         <meta property="og:title" content={product.name} />

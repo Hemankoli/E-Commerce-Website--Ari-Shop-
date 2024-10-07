@@ -5,9 +5,11 @@ import axios from 'axios';
 const AllUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
 
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
+
   const fetchAllUsers = async () => {
     try {
-        const response = await axios.get('http://localhost:8000/all-users', {
+        const response = await axios.get(`${baseurl}/all-users`, {
             withCredentials: true,
         });
 

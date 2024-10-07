@@ -25,6 +25,8 @@
         const [values, setValues] = useSearch();
         const navigate = useNavigate();
 
+        const baseurl = process.env.REACT_APP_BACKEND_URL;
+
         useEffect(() => {
             if (auth?.user?.user_id) {
               fetchCartItems(auth.user.user_id);
@@ -43,7 +45,7 @@
         };
 
         const handleLogout = async () => {
-            await axios.post('http://localhost:8000/logout');
+            await axios.post(`${baseurl}/logout`);
             setAuth({
                 ...auth,
                 user: null, token: ""
@@ -63,7 +65,7 @@
             e.preventDefault();
             if (values.keyword.trim()) { 
                 try {
-                    const response = await axios.get(`http://localhost:8000/search/${values.keyword}`);
+                    const response = await axios.get(`${baseurl}/search/${values.keyword}`);
                     setValues({ ...values, results: response.data.data });
                     navigate('/search');
                 } catch (error) {
@@ -160,7 +162,7 @@
 
                         <Link to="/cart" className="mx-2 relative hover:scale-110 transition-transform">
                             <PiShoppingBagLight className="w-6 h-6 hover:text-purple-500" />
-                            {cartItems.length > 0 && (
+                            {auth?.user && (
                                 <span className="absolute -top-2 -right-1 bg-red-400 p-1 rounded-full h-5 w-5 text-white text-xs flex justify-center items-center">
                                 {cartItems.length}
                                 </span>

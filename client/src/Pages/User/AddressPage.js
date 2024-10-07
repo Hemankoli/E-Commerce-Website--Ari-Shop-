@@ -15,11 +15,12 @@ const AddressPage = () => {
   });
   const [editingAddress, setEditingAddress] = useState(null);
 
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/addresses/${auth?.user?.user_id}`);
+        const response = await axios.get(`${baseurl}/addresses/${auth?.user?.user_id}`);
         setAddresses(response?.data);
       } catch (error) {
         console.error('Error fetching addresses:', error);
@@ -39,7 +40,7 @@ const AddressPage = () => {
   // Add new address
   const addAddress = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/addresses', { user_id: auth?.user?.user_id, ...form});
+      const response = await axios.post(`${baseurl}/addresses`, { user_id: auth?.user?.user_id, ...form});
       setAddresses([...addresses, response?.data]);
       setForm({
         address_line1: '',
@@ -71,7 +72,7 @@ const AddressPage = () => {
   // Update an address
   const updateAddress = async () => {
     try {
-      const response = await axios.put(`http://localhost:8000/addresses/${editingAddress.address_id}`, form);
+      const response = await axios.put(`${baseurl}/addresses/${editingAddress.address_id}`, form);
       setAddresses(addresses.map((addr) => (addr.address_id === editingAddress.address_id ? response.data : addr)));
       setEditingAddress(null);
       setForm({
@@ -90,7 +91,7 @@ const AddressPage = () => {
   // Delete an address
   const deleteAddress = async (address_id) => {
     try {
-      await axios.delete(`http://localhost:8000/addresses/${address_id}`);
+      await axios.delete(`${baseurl}/addresses/${address_id}`);
       setAddresses(addresses.filter((address) => address.address_id !== address_id));
     } catch (error) {
       console.error('Error deleting address:', error);

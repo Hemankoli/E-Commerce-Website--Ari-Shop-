@@ -8,10 +8,12 @@ const PrivateRoute = () => {
     const [auth] = useAuth()
     const [ok, setOk] = useState(false)
 
+    const baseurl = process.env.REACT_APP_BACKEND_URL;
+
     useEffect(() => {
         const authCheck = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/user-auth', {
+                const response = await axios.get(`${baseurl}/user-auth`, {
                     headers: {
                         Authorization: `Bearer ${auth?.token}`
                     }

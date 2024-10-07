@@ -9,10 +9,13 @@ const OrderPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('');
   const userId = 1; 
 
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
+
+
     // Fetch all orders
   const fetchAllOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/orders');
+      const response = await axios.get(`${baseurl}/orders`);
       setOrders(response?.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -26,7 +29,7 @@ const OrderPage = () => {
   // Fetch order by ID
   const fetchOrderById = async (orderId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/orders/${orderId}`);
+      const response = await axios.get(`${baseurl}/orders/${orderId}`);
       setSelectedOrder(response.data);
     } catch (error) {
       console.error('Error fetching order:', error);
@@ -36,7 +39,7 @@ const OrderPage = () => {
   // Fetch products by order
   const fetchProductsByOrder = async (orderId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/orders/${orderId}/products`);
+      const response = await axios.get(`${baseurl}/orders/${orderId}/products`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products for order:', error);
@@ -46,7 +49,7 @@ const OrderPage = () => {
   // Update order
   const updateOrder = async (orderId) => {
     try {
-      await axios.put(`http://localhost:8000/orders/${orderId}`, {
+      await axios.put(`${baseurl}/orders/${orderId}`, {
         status,
         payment_method: paymentMethod,
       });
@@ -60,7 +63,7 @@ const OrderPage = () => {
   // Fetch past orders by customer ID
   const fetchPastOrdersByCustomerId = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/customers/${userId}/orders`);
+      const response = await axios.get(`${baseurl}/customers/${userId}/orders`);
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching customer orders:', error);
