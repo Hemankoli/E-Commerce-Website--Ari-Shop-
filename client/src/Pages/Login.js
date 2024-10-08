@@ -17,10 +17,15 @@ const Login = () => {
     console.log(auth?.token)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
+        console.log(token)
         if (email && password) {
             try {
                 const response = await axios.post(`${baseurl}/login`, {
-                    email,
+                    headers: {
+                        'Authorization': `Bearer ${token}`, 
+                      },
+                    email,  
                     password,
                 });
                 if (response.status === 200 ) {
