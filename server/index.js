@@ -12,7 +12,6 @@ const getAllUsersRoute = require('./routes/Admin/getAllUsersRoute')
 const userProductRoute = require('./routes/User/userProductRoute')
 const cartRoute = require('./routes/User/cartRoute')
 const addressRoutes = require('./routes/User/addressRoutes')
-const orderRoutesUser = require('./routes/User/orderRoutes')
 const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
 
@@ -35,7 +34,6 @@ app.use('/', orderRoutesAdmin)
 app.use("/", userProductRoute)
 app.use("/", cartRoute)
 app.use("/", addressRoutes)
-app.use("/", orderRoutesUser)
 
 // PORT CONNECTED
 app.listen(process.env.PORT, () => {
