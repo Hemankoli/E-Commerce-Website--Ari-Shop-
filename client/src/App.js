@@ -42,7 +42,7 @@ function App() {
         <main>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="*" element={<ErrorPage />} />
+            <Route path="*" element={<ErrorPage />} />
             <Route path='/cart' element={<CartPage />} />
             <Route path='/check_out' element={<Checkout />} />
             <Route path='/customer-support' element={<CustomerSupportPage />} />
