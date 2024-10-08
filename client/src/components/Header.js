@@ -107,8 +107,8 @@
 
         return (
             <div>
-            <nav className="py-2 px-4 bg-main relative">
-                <div className="mx-auto flex justify-between">
+            <nav className="py-2 px-4 bg-main z-50 shadow-lg">
+                <div className="mx-auto container flex justify-between">
                     <div className="flex items-center">
                         <div className="lg:hidden">
                             <button onClick={toggleMobileMenu} className="focus:outline-none">
@@ -120,39 +120,9 @@
                         <Link to="/" className="flex items-center space-x-2">
                             <img src={logo} alt="logo" className="h-8 w-8" />
                             <h1 className="text-3xl  font-bold text-gray-800">
-                                <span className="tracking-wide">eTail</span>
+                                <span className="tracking-wide">E-Tail</span>
                             </h1>
                         </Link>
-                    </div>
-
-                    <div className='container hidden my-auto lg:block'>
-                        <div className='flex justify-center space-x-8'>
-                            <Link to={'/'} className='flex items-center gap-1 py-1 px-2 rounded cursor-pointer text-purple-500'>
-                                <FaHome className=''/>
-                                <span className=''>Home</span>
-                            </Link>
-                            <Link className='flex items-center gap-1 py-1 px-2 rounded cursor-pointer hover:text-purple-500'>
-                                <MdOutlineKitchen className=''/>
-                                <span className=''>Accessories</span>
-                            </Link>
-                            <Link className='flex items-center gap-1 py-1 px-2 rounded cursor-pointer hover:text-purple-500'>
-                                <FaTshirt className=''/>
-                                <span className=''>K-pop</span>
-                            </Link>
-                            <Link className='flex items-center gap-1 py-1 px-2 rounded cursor-pointer hover:text-purple-500'>
-                                <GiClothes className=''/>
-                                <span className=''>Clothes</span>
-                            </Link>
-                            <Link className='flex items-center gap-1 py-1 px-2 rounded cursor-pointer hover:text-purple-500'>
-                                <FaTv className=''/>
-                                <span className=''>K-drama</span>
-                            </Link>
-                            <Link className='flex items-center gap-1  py-1 px-2 rounded cursor-pointer hover:text-purple-500'>
-                                <IoBookSharp className=' '/>
-                                <span className=''>Books</span>
-                            </Link>
-
-                        </div>
                     </div>
                     
                     <div className='flex items-center space-x-2 lg:space-x-4'>
@@ -163,9 +133,18 @@
                         <Link to="/cart" className="mx-2 relative hover:scale-110 transition-transform">
                             <PiShoppingBagLight className="w-6 h-6 hover:text-purple-500" />
                             {auth?.user && (
-                                <span className="absolute -top-2 -right-1 bg-red-400 p-1 rounded-full h-5 w-5 text-white text-xs flex justify-center items-center">
-                                {cartItems.length}
-                                </span>
+                                <div>
+                                    {
+                                        cartItems?.length > 0 ? (
+                                            <span className="absolute -top-3 -right-2 p-1 bg-yellow-300 shadow-lg rounded-full h-5 w-5 text-purple-500 text-xs flex justify-center items-center">
+                                                {cartItems.length}
+                                            </span>
+                                        ) : (
+                                            <p>{null}</p>
+                                        )
+                                    }
+                                </div>
+                                
                             )}
                         </Link>
 
@@ -279,21 +258,7 @@
                         <Link to="/customer-support" onClick={handleLinkClick} className="flex text-lg items-center px-4 py-2 hover:bg-gray-100 mb-1">
                             <PiPhoneThin className='mx-2 w-5 h-5 text-purple-500' /> Customer-support Support 24x7
                         </Link>
-                        
-                        <hr className='h-1 border-gray-200'></hr>
-
-                        <div className='mx-2'>
-                            <Link className='flex text-lg items-center px-4 py-2 hover:bg-gray-100'>
-                                Kpop 
-                            </Link>
-                            <Link className='flex text-lg items-center px-4 py-2 hover:bg-gray-100'>Kdrama</Link>
-                            <Link className='flex text-lg items-center px-4 py-2 hover:bg-gray-100'>Accessories</Link>
-                            <Link className='flex text-lg items-center px-4 py-2 hover:bg-gray-100'>Kids</Link>
-                            <Link className='flex text-lg items-center px-4 py-2 hover:bg-gray-100'>Mens</Link>
-                            <Link className='flex text-lg items-center px-4 py-2 hover:bg-gray-100'>Womens</Link>
-                            <Link className='flex text-lg items-center px-4 py-2 hover:bg-gray-100'>Shirts</Link>
-                        </div>
-                        
+                                                
                         {auth?.user ? (
                             <div className="mt-auto">    
                                 <div onClick={handleLinkClick}>

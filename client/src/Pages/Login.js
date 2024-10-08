@@ -14,7 +14,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
-
+    console.log(auth?.token)
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (email && password) {

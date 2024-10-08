@@ -27,7 +27,7 @@ import Checkout from './components/Checkout/Checkout';
 function App() {
   return (
     <HelmetProvider>
-      <>
+      <>  
         <Helmet>
           <title>E-Tail</title>
           <meta name="description" content="Welcome to the best e-commerce store for all your needs." />

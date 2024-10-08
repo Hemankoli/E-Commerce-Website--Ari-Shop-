@@ -10,14 +10,14 @@ import { useParams } from 'react-router-dom';
 const Home = () => {
 
   const { productId } = useParams();
-  const product = { name: 'E-Tail', description: 'A great product', image: 'product-image-url.jpg' }; // Replace with actual product fetching logic
+  const product = { name: 'Home', description: 'A great product', image: 'product-image-url.jpg' }; // Replace with actual product fetching logic
 
 
   return (  
     <div>
       
       <Helmet>
-        <title>{product.name} - Home</title>
+        <title>{product.name} - E-Tail</title>
         <meta name="description" content={product.description} />
         <meta name="keywords" content={`${product.name}, buy online, ecommerce`} />
         <meta property="og:title" content={product.name} />

@@ -16,7 +16,8 @@ const CartPage = () => {
   const baseurl = process.env.REACT_APP_BACKEND_URL;
   
   const { productId } = useParams();
-  const product = { name: 'E-Tail', description: 'A great product', image: 'product-image-url.jpg' }; // Replace with actual product fetching logic
+
+  const product = { name: 'Cart', description: 'A great product', image: 'product-image-url.jpg' }; 
 
 
   // Fetch cart items for the user
@@ -89,7 +90,7 @@ const CartPage = () => {
   return (
       <>
         <Helmet>
-          <title>{product.name} - Buy Now at Best Prices</title>
+          <title>{product.name} - E-Tail</title>
           <meta name="description" content={product.description} />
           <meta name="keywords" content={`${product.name}, buy online, ecommerce`} />
           <meta property="og:title" content={product.name} />
