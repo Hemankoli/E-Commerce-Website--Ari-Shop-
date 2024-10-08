@@ -35,7 +35,6 @@ const CartPage = () => {
     try {
       const response = await fetch(`${baseurl}/cart`, {
         method: 'POST',
-        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
         },
@@ -54,7 +53,6 @@ const CartPage = () => {
     try {
       const response = await fetch(`${baseurl}/cart`, {
         method: 'PUT',
-        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
         },
@@ -73,7 +71,6 @@ const CartPage = () => {
     try {
       const response = await fetch(`${baseurl}/cart`, {
         method: "DELETE",
-        credentials: "include",
         headers:{
           "content-type" : 'application/json'
         },
