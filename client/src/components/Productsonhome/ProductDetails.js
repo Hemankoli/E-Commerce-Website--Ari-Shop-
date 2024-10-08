@@ -134,7 +134,7 @@ const ProductDetails = () => {
                 <link rel="canonical" href={`https://yourwebsite.com/product/${productId}`} />
             </Helmet>
         
-            <div className='container mx-auto py-4 px-6 lg:py-6 lg:px-10'>
+            <div className='max-w-7xl mx-auto py-4 px-6 lg:py-6 lg:px-10'>
                 <div className='min-h-[200px] flex flex-col md:flex-row lg:flex-row'>
                     {/* Image details */}
                     <div className='h-96 flex flex-col md:flex-row-reverse lg:flex-row-reverse gap-4'>

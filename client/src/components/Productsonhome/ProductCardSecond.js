@@ -66,7 +66,7 @@ const ProductCardSecond = ({ heading }) => {
     };
 
     return (
-        <div className='container mx-auto px-4 my-12 max-w-full'>
+        <div className='max-w-7xl mx-auto px-4 my-12'>
             <h1 className='text-2xl font-bold text-center mb-12 transition-all'>{heading}</h1>
 
             <div className='relative'>

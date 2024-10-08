@@ -38,7 +38,7 @@ const SearchProductCard = ({ loading, products = [] }) => {
     };
 
     return (
-        <div className='container mx-auto relative'>
+        <div className='max-w-7xl mx-auto relative'>
 
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:py-6 px-6 lg::px-20 gap-6'>
                 {loading ? (

@@ -46,11 +46,8 @@
 
         const handleLogout = async () => {
             await axios.post(`${baseurl}/logout`);
-            setAuth({
-                ...auth,
-                user: null, token: ""
-            });
-            localStorage.removeItem("token")
+            setAuth({ user: null, token: "" });
+            localStorage.removeItem("auth")
             toast.success("Logout Successfully")
             navigate('/login');
         };
@@ -276,7 +273,7 @@
 
                 {/* SHOW SEARCH FORM FOR MOBILE VERSION */}
                 {showSearchForm && (
-                    <div className={`absolute top-0 left-0 w-full shadow-lg p-2 bg-white z-40 transition-transform duration-300 ease-in-out ${showSearchForm ? 'translate-y-0' : '-translate-y-full'}`}>
+                    <div className={`absolute top-0 left-0 w-full shadow-lg p-4 bg-white z-40 transition-transform duration-300 ease-in-out ${showSearchForm ? 'translate-y-0' : '-translate-y-full'}`}>
                         <form className="max-w-3xl mx-auto flex items-center" onSubmit={handleSearch}>
                             <div className="relative flex items-center w-full">
                                 <CiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2" />

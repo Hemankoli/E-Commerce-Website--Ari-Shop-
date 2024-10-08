@@ -3,7 +3,6 @@ const pool = require("../../database/connection");
 
 exports.getCartItems = async (req, res) => {
   const { userId } = req?.params;
-  
    const query = `SELECT ci.cart_item_id, ci.product_id, ci.user_id, ci.quantity, p.productName, p.image, p.price 
                  FROM cart_items ci
                  JOIN products p ON ci.product_id = p.product_id

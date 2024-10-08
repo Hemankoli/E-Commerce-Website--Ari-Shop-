@@ -47,7 +47,7 @@ exports.checkAuthenticated = async (req, res, next) => {
 };
 
 exports.isAdmin = async (req, res, next) => {
-  const token = verifyToken(req); // Get token from headers
+  const token = verifyToken(req); 
 
   if (token) {
     jwt.verify(token, process.env.SECRET_KEY, async (err, decodedToken) => {

@@ -3,7 +3,6 @@ import {useAuth} from '../../Context/index';
 import {useCart} from '../../Context/cart';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {FaCircleMinus, FaCirclePlus} from 'react-icons/fa6'
-import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 
 
@@ -42,7 +41,6 @@ const CartPage = () => {
     });
     const responseData = await response.json()
     fetchCartItems()
-    toast.success("Product Added Successfully")
     } catch (error) {
       console.error('Error adding to Cart:', error);
     }
@@ -60,7 +58,6 @@ const CartPage = () => {
       });
       const responseData =  await response.json()
       fetchCartItems()
-      toast.success("Qauntity Removed Successfully")
     } catch (error) {
       console.error('Error decreasing quantity:', error);
     }
@@ -78,7 +75,6 @@ const CartPage = () => {
       });
       const responseData =  await response.json()
       fetchCartItems()
-      toast.success("Product Deleted Successfully")
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }

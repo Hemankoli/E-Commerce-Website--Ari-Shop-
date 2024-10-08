@@ -17,6 +17,11 @@ export const CartProvider = ({ children }) => {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
+      
+      if (!response.ok) {
+        throw new Error(`Error fetching cart items: ${response.statusText}`);
+      }
+      
       const data = await response.json();
       setCartItems(data);
     } catch (error) {

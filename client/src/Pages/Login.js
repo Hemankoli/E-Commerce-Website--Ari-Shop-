@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -14,7 +14,8 @@ const Login = () => {
     const navigate = useNavigate();
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
-    console.log(auth?.token)
+
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
@@ -31,11 +32,7 @@ const Login = () => {
                 if (response.status === 200 ) {
                     toast.success('Login Successfully');
                     console.log(response)
-                    setAuth({
-                        ...auth,
-                        user: response.data.user,
-                        token: response.data.token
-                    })
+                    setAuth({ user: response.data.user, token: response.data.token })
                     localStorage.setItem('auth', JSON.stringify(response.data))
                     navigate('/');
                 }
@@ -53,6 +50,8 @@ const Login = () => {
             toast.error('Please enter both email and password');
         }
     };
+
+    
 
     return (
         <div className="flex items-center justify-center min-h-80 p-12">

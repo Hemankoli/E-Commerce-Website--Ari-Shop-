@@ -34,7 +34,7 @@ const BannerProduct = () => {
       }, []);
 
     return (
-        <div className='overflow-hidden'>
+        <div className='overflow-hidden max-w-7xl mx-auto'>
             <a href={links[currentImageIndex]} target="_blank" rel="noopener noreferrer">
                 <div className='h-40 md:h-80 w-full'>
                     {

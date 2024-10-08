@@ -25,7 +25,7 @@ const Home = () => {
         <meta property="og:image" content={product.image} />
         <link rel="canonical" href={`https://yourwebsite.com/product/${productId}`} />
       </Helmet>
-   
+      
       <BannerProduct />
 
       <ProductByCategory category={"kpop"} heading={"Top K-POP Products"}/>  
