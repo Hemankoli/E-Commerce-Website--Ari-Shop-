@@ -104,7 +104,7 @@
 
         return (
             <div>
-            <nav className="py-2 px-4 bg-main z-50 shadow-lg">
+            <nav className="py-2 px-4 bg-main z-50">
                 <div className="mx-auto container flex justify-between">
                     <div className="flex items-center">
                         <div className="lg:hidden">
