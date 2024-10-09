@@ -34,10 +34,10 @@ const CartPage = () => {
     try {
       const response = await fetch(`${baseurl}/cart`, {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ product_id, user_id: auth?.user?.user_id, quantity: quantity  })
     });
     const responseData = await response.json()
