@@ -16,7 +16,11 @@ const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
 
 
-app.use(cors());
+app.use(cors({
+    origin : ["https://e-commerce-website-ari-shop.onrender.com"],
+    credentials: true 
+}       
+));
 app.use(express.json());
 app.use(cookieParser());
 
