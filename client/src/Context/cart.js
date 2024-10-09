@@ -15,6 +15,7 @@ export const CartProvider = ({ children }) => {
     try {
       const response = await fetch(`${baseurl}/cart/${userId}`, {
         method: "GET",
+        credentials: 'include',
         headers: { "Content-Type": "application/json" },
       });
       
