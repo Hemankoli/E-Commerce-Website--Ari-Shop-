@@ -16,7 +16,8 @@ const AdminRoute = () => {
                 const response = await axios.get(`${baseurl}/admin-auth`, {
                     headers: {
                         Authorization: `Bearer ${auth?.token}`
-                    }
+                    },
+                    withCredentials: true
                 });
                 if (response.data.ok) {
                     setOk(true);

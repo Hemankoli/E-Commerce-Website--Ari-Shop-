@@ -16,7 +16,8 @@ const PrivateRoute = () => {
                 const response = await axios.get(`${baseurl}/user-auth`, {
                     headers: {
                         Authorization: `Bearer ${auth?.token}`
-                    }
+                    },
+                    withCredentials: true
                 });
                 if (response.data.ok) {
                     setOk(true);
