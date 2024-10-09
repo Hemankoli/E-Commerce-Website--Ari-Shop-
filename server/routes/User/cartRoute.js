@@ -16,7 +16,5 @@ router.delete('/cart',cartController.removeItemFromCart)
 // Route to update item to cart
 router.put('/cart',cartController.updateItemInCart)
 
-// rout to clear cart
-// router.delete('/cart', cartController.clearCart)
 
 module.exports = router;

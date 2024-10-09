@@ -3,6 +3,7 @@ const pool = require("../../database/connection");
 
 exports.getCartItems = async (req, res) => {
   const { userId } = req?.params;
+  console.log(userId)
    const query = `SELECT ci.cart_item_id, ci.product_id, ci.user_id, ci.quantity, p.productName, p.image, p.price 
                  FROM cart_items ci
                  JOIN products p ON ci.product_id = p.product_id
@@ -107,14 +108,3 @@ exports.updateItemInCart = (req, res) => {
     }
   });
 };
-
-// exports.clearCart = (req, res) => {
-//   const { user_id } = req?.body;
-//   pool.query('DELETE FROM cart_items WHERE user_id = ?', [user_id], (err,result) => {
-//     if (err) {
-//       return res.status(500).json({ message: 'Error clearing cart', error: err });
-//     }
-//     req.result = []
-//     return res.status(200).json({ message: 'Cart cleared successfully' });
-//   })
-// }

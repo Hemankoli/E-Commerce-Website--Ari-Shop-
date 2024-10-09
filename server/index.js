@@ -14,10 +14,9 @@ const cartRoute = require('./routes/User/cartRoute')
 const addressRoutes = require('./routes/User/addressRoutes')
 const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
-
-
 app.use(cors({
-    origin: 'https://e-tail-shop.vercel.app'
+    origin: ["https://e-tail-ecommerce.vercel.app"],
+    credentials: true
 }));
 app.use(express.json());
 app.use(cookieParser());
