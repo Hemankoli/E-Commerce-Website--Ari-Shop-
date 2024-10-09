@@ -16,7 +16,9 @@ const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
 
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://e-tail-shop.vercel.app'
+}));
 app.use(express.json());
 app.use(cookieParser());
 
