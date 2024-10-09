@@ -1,6 +1,14 @@
 # E-Tail Ecommerce 
 This eCommerce website is built on the MERN stack (MongoDB, Express.js, React.js, Node.js) combined with MySQL for relational database management, providing a robust and scalable solution for online shopping.
-![image](https://github.com/user-attachments/assets/cce0f4d4-eaaf-414f-848c-d764a1a1cecc)
+![WhatsApp Image 2024-10-09 at 5 04 34 PM](https://github.com/user-attachments/assets/6c70b766-a812-4859-bf6f-cf141790932f)
+
+![WhatsApp Image 2024-10-09 at 5 03 49 PM](https://github.com/user-attachments/assets/6253a105-3bb5-4b76-8e40-38afe716f952)
+
+![WhatsApp Image 2024-10-09 at 5 05 00 PM](https://github.com/user-attachments/assets/c51767dc-8f6f-4dc3-ae6c-1524fdd4f679)
+
+![WhatsApp Image 2024-10-09 at 5 05 30 PM](https://github.com/user-attachments/assets/69884236-8107-4970-97f5-69bd15c5166f)
+
+
 
 Key Features:
 Product Listing:
