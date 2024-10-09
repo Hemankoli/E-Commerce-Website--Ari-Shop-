@@ -16,11 +16,13 @@ const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
 
 
-app.use(cors());
+app.use(cors({
+    origin : ["https://e-tail-ecommerce.vercel.app"],
+    credentials : true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
-// Increase payload size limit to 10MB
 app.use(bodyParser.json());
 
 app.use("/", userRoutes);
