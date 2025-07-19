@@ -6,14 +6,12 @@ import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { FaAngleRight, FaAngleLeft, FaSpinner } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
 const ProductCardFirst = ({ heading }) => {
-    const [auth] = useAuth();
+    const {auth} = useAuth()
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const scrollElement = useRef();
-    const navigate = useNavigate();
     const loadingList = new Array(15).fill(null)
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
