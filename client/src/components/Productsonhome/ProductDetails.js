@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaSpinner, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import curranceySymboy from '../currancySymbol';
 import ProductCardFirst from './ProductCardFirst';
@@ -16,9 +16,8 @@ const ProductDetails = () => {
     const [activeImage, setActiveImage] = useState('');
     const [zoomImageCordinate, setZoomImageCordinate] = useState({ x: 0, y: 0 });
     const [zoomImage, setZoomImage] = useState(false);
-    const [auth] = useAuth();
+    const {auth} = useAuth()
     const { productId } = useParams();
-    const navigate = useNavigate();
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
