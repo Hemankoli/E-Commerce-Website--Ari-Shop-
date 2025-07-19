@@ -3,12 +3,9 @@
     import logo from '../assets/logo.png';
     import { MdMenu, MdClose } from 'react-icons/md';
     import { CiUser, CiSearch } from "react-icons/ci";
-    import { FaHome, FaTv, FaTshirt } from 'react-icons/fa';
     import { PiUserCircleThin, PiShoppingBagLight, PiCodesandboxLogoThin, PiPhoneThin } from "react-icons/pi";
     import { IoIosLogOut } from "react-icons/io";
-    import { IoSearch, IoBookSharp } from "react-icons/io5";
-    import { MdOutlineKitchen } from 'react-icons/md';
-    import { GiClothes } from 'react-icons/gi';
+    import { IoSearch } from "react-icons/io5";
     import { useAuth } from '../Context/index';
     import { useSearch } from '../Context/search';
     import { useCart } from '../Context/cart';
@@ -21,19 +18,11 @@
         const [showDropdown, setShowDropdown] = useState(false);
         const dropdownRef = useRef(null);
         const [auth, setAuth] = useAuth();
-        const { cartItems, fetchCartItems } = useCart();
+        const { cartItems } = useCart();
         const [values, setValues] = useSearch();
         const navigate = useNavigate();
 
         const baseurl = process.env.REACT_APP_BACKEND_URL;
-
-        useEffect(() => {
-            if (auth?.user?.user_id) {
-              fetchCartItems(auth.user.user_id);
-            }else{
-              navigate('/login')
-            }
-        }, [auth, fetchCartItems, navigate]);
 
         const toggleMobileMenu = () => {
             setShowMobileMenu(!showMobileMenu);
@@ -104,8 +93,8 @@
 
         return (
             <div>
-            <nav className="py-2 px-4 bg-main z-50">
-                <div className="mx-auto container flex justify-between">
+            <nav className="py-2 px-4 bg-main z-50 shadow-xl sticky left-0 right-0 top-0">
+                <div className="mx-auto max-w-7xl flex justify-between">
                     <div className="flex items-center">
                         <div className="lg:hidden">
                             <button onClick={toggleMobileMenu} className="focus:outline-none">
