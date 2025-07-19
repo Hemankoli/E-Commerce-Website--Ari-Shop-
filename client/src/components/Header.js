@@ -17,9 +17,9 @@
         const [showSearchForm, setShowSearchForm] = useState(false);
         const [showDropdown, setShowDropdown] = useState(false);
         const dropdownRef = useRef(null);
-        const [auth, setAuth] = useAuth();
+        const { auth, setAuth } = useAuth();
         const { cartItems } = useCart();
-        const [values, setValues] = useSearch();
+        const { values, setValues } = useSearch();
         const navigate = useNavigate();
 
         const baseurl = process.env.REACT_APP_BACKEND_URL;
