@@ -23,7 +23,6 @@ const EditProductForm = ({onClose, productData, fetchData}) => {
         quantity: productData?.quantity,
         product_id: productData?.product_id
     });
-    console.log(data)
     
     const [openImage, setOpenImage] = useState(false);
     const [showImage, setShowImage] = useState("");
@@ -36,11 +35,8 @@ const EditProductForm = ({onClose, productData, fetchData}) => {
     };
     
     const handleUploadImage = async (e) => {
-        const file = e.target.files[0];
-        console.log("File", file);
-    
+        const file = e.target.files[0];    
         const uploadImageCloudinary = await UploadImage(file);
-    
         setData((prev) => ({
           ...prev,
           image: [...prev.image, uploadImageCloudinary.url]
@@ -60,7 +56,6 @@ const EditProductForm = ({onClose, productData, fetchData}) => {
     // Submission 
     const handleSubmit = async (e) => {
       if(!data?.product_id){
-        console.log("product id missing");
         return
       }
         e.preventDefault();
