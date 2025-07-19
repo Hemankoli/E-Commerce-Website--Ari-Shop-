@@ -7,7 +7,6 @@ import { FaChevronDown } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../Context/index';  
-import { useNavigate } from 'react-router-dom';
 
 const ProductVerticalCard = ({ heading }) => {
     const [products, setProducts] = useState([]);
@@ -16,8 +15,7 @@ const ProductVerticalCard = ({ heading }) => {
     const [hasMore, setHasMore] = useState(true); 
     const [noMoreProductsShown, setNoMoreProductsShown] = useState(false); 
     const scrollElement = useRef();
-    const [auth] = useAuth(); 
-    const navigate = useNavigate();
+    const {auth} = useAuth() 
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
