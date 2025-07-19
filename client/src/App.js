@@ -41,7 +41,7 @@ function App() {
         <Header />
         <main>
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path='/cart' element={<CartPage />} />
             <Route path='/check_out' element={<Checkout />} />
