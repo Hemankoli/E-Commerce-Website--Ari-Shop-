@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../Context/index'; // Assuming you have an auth context
+import { useAuth } from '../../Context/index';
 import { useCart } from '../../Context/cart';
 import RazorpayMock from './RazorpayMock';
 
 const CheckoutPage = () => {
-  const [auth] = useAuth();
+  const {auth} = useAuth()
   const { cartItems } = useCart();
   const [addresses, setAddresses] = useState([]);
   const [showAddressForm, setShowAddressForm] = useState(false);
