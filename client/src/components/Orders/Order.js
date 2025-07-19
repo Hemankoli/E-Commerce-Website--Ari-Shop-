@@ -6,7 +6,7 @@ import axios from 'axios'
 const Order = () => {
 
     const [orders, setOrders] = useState([])
-    const [auth, setAuth] = useAuth()
+    const {auth} = useAuth()
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
