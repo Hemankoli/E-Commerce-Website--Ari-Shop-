@@ -6,14 +6,12 @@ import { FaAngleRight, FaAngleLeft, FaSpinner } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../Context/index';  
-import { useNavigate } from 'react-router-dom';
 
 const ProductCardSecond = ({ heading }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const scrollElement = useRef();
-    const [auth] = useAuth(); 
-    const navigate = useNavigate();
+    const {auth} = useAuth()
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
