@@ -4,7 +4,6 @@ import currancySymbol from '../currancySymbol';
 import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { FaSpinner } from "react-icons/fa6";
 import { useAuth } from '../../Context/index';  
-import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
@@ -12,8 +11,7 @@ import axios from 'axios';
 const SearchProductCard = ({ loading, products = [] }) => {
     const loadingList = new Array(15).fill(null);
 
-    const [auth] = useAuth(); 
-    const navigate = useNavigate();
+    const {auth} = useAuth() 
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
