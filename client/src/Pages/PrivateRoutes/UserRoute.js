@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
 
 const PrivateRoute = () => {
-    const [auth] = useAuth()
+    const { auth } = useAuth()
     const [ok, setOk] = useState(false)
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
@@ -17,7 +17,6 @@ const PrivateRoute = () => {
                     headers: {
                         Authorization: `Bearer ${auth?.token}`
                     },
-                    withCredentials: true
                 });
                 if (response.data.ok) {
                     setOk(true);
