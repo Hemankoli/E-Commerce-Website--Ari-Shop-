@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useAuth} from '../../Context/index'
 
 const AddressPage = () => {
-  const[auth] = useAuth();
+  const { auth } = useAuth()
   const [addresses, setAddresses] = useState([]);
   const [form, setForm] = useState({
     address_line1: '',
