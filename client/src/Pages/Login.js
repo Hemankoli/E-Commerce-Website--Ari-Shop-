@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -9,7 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false)
-    const [auth, setAuth] = useAuth();
+    const { auth, setAuth } = useAuth();
 
     const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const Login = () => {
                     toast.success('Login Successfully');
                     console.log(response)
                     setAuth({ user: response.data.user, token: response.data.token })
-                    localStorage.setItem('auth', JSON.stringify(response.data))
+                    localStorage.setItem('auth', JSON.stringify(response.data.data))
                     navigate('/');
                 }
             } catch (error) {
