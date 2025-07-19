@@ -5,9 +5,9 @@ import axios from 'axios';
 import { useAuth } from '../Context/index';  
 
 const SearchProduct = () => {
-    const [values, setValues] = useSearch();
+    const { values, setValues } = useSearch();
     const [loading, setLoading] = useState(false);
-    const [auth] = useAuth(); 
+    const { auth } = useAuth(); 
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
