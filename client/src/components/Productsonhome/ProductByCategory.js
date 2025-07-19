@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const ProductByCategory = ({ heading, category }) => {
-    const [auth] = useAuth();
+    const {auth} = useAuth()
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const scrollElement = useRef();
