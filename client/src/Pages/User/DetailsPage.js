@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const DetailsPage = () => {
-  const [auth, setAuth] = useAuth();
+  const {auth, setAuth} = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
