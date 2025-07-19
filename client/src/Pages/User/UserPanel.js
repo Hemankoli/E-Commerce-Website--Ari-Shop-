@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import {useAuth} from '../../Context/index'
 
 const UserPanel = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [auth] = useAuth();
   
   
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -17,7 +14,7 @@ const UserPanel = () => {
             <h1 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] uppercase text-white text-lg md:text-3xl font-bold mb-6 text-center">
                 Profile
             </h1>
-            <img src='https://koala.sh/api/image/v2-8qlwm-3qfid.jpg?width=1344&height=768&dream' 
+            <img src='https://koala.sh/api/image/v2-8qlwm-3qfid.jpg?width=1344&height=768&dream'  alt='PrfileImage
             className='w-full h-24 md:h-32 object-cover' />
       </div>
       <div className="container  px-4 mx-auto my-8">
