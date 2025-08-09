@@ -3,6 +3,7 @@ const pool = require('../database/connection');
 
 const verifyToken = (req) => {
   const authHeader = req.headers.authorization;
+  console.log('Auth Header:', authHeader);
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1]; 
     return token;
