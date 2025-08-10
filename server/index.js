@@ -17,12 +17,15 @@ const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
 
 app.use(cors({
+    origin : ["https://e-tail-ecommerce.vercel.app/"],
     credentials : true
 }));
 app.use(express.json());
 app.use(cookieParser());
 
 app.use(bodyParser.json());
+
+app.set('trust proxy', 1);
 
 app.use("/", userRoutes);
 
@@ -36,10 +39,17 @@ app.use("/", userProductRoute)
 app.use("/", cartRoute)
 app.use("/", addressRoutes)
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
 // PORT CONNECTED
 if (require.main === module) {
-    const PORT = process.env.PORT;
+    const PORT = process.env.PORT || 8000;
     app.listen(PORT, () => {
         console.log(`✅ Server running at http://localhost:${PORT}`);
     });
 }
+
+
