@@ -40,7 +40,7 @@ exports.uploadProduct = async (req, res) => {
 
 // get products on admin
 exports.getAllProducts = (req, res) => {
-    pool.query("SELECT * FROM products;", (err, results) => {
+    pool.execute("SELECT * FROM products;", (err, results) => {
         if (err) {
             console.error("Error fetching products:", err);
             return res.status(500).json({ error: "Internal Server Error" });
