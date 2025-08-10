@@ -3,9 +3,9 @@ const pool = require('../database/connection')
 
 const uploadProductPermission = (userId) => {
     try {
-        const sql = `SELECT role FROM users WHERE id = ? `;
+        const sql = `SELECT role FROM users WHERE user_id = ? `;
         const [result] = pool.execute(sql, [userId]);
-        if (result.length > 0 && result[0].role === 'ADMIN') {
+        if (result.length > 0 && result[0].role === 'Admin') {
             return true; 
         }
         return false;
@@ -16,3 +16,4 @@ const uploadProductPermission = (userId) => {
 };
 
 module.exports = uploadProductPermission;
+
