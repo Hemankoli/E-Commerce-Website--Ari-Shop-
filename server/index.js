@@ -1,27 +1,29 @@
 const express = require('express');
-require('dotenv').config()
-const app = express();
 require('dotenv').config();
+const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('./database/connection')
-const userRoutes = require('./routes/userRoutes')
-const productRoute = require('./routes/Admin/productRoute')
-const getAllUsersRoute = require('./routes/Admin/getAllUsersRoute')
-const userProductRoute = require('./routes/User/userProductRoute')
-const cartRoute = require('./routes/User/cartRoute')
-const addressRoutes = require('./routes/User/addressRoutes')
-const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
+// Import your DB connection and routes
+require('./database/connection');
+const userRoutes = require('./routes/userRoutes');
+const productRoute = require('./routes/Admin/productRoute');
+const getAllUsersRoute = require('./routes/Admin/getAllUsersRoute');
+const userProductRoute = require('./routes/User/userProductRoute');
+const cartRoute = require('./routes/User/cartRoute');
+const addressRoutes = require('./routes/User/addressRoutes');
+const orderRoutesAdmin = require('./routes/Admin/orderRoute');
 
-
+// Allowed origins for CORS
 const allowedOrigins = ["https://e-tail-ecommerce.vercel.app"];
 
+// Setup CORS middleware before any routes
 app.use(cors({
-  origin: function(origin, callback){
+  origin: function(origin, callback) {
+    // allow requests with no origin (like curl, Postman)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
+    if (!allowedOrigins.includes(origin)) {
       return callback(new Error('Not allowed by CORS'), false);
     }
     return callback(null, true);
@@ -29,30 +31,47 @@ app.use(cors({
   credentials: true,
 }));
 
+// Handle preflight OPTIONS requests for all routes
+app.options('*', cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
+
+// Built-in and third-party middlewares
 app.use(express.json());
 app.use(cookieParser());
-
 app.use(bodyParser.json());
 
+// Trust proxy if behind reverse proxy (e.g. Render, Heroku)
 app.set('trust proxy', 1);
 
+// Define your routes after CORS setup
 app.use("/", userRoutes);
-
-// ADMIN ROUTES
 app.use("/", productRoute);
 app.use("/", getAllUsersRoute);
-app.use('/', orderRoutesAdmin)
+app.use("/", orderRoutesAdmin);
+app.use("/", userProductRoute);
+app.use("/", cartRoute);
+app.use("/", addressRoutes);
 
-// USER ROUTE
-app.use("/", userProductRoute)
-app.use("/", cartRoute)
-app.use("/", addressRoutes)
+// Simple test route to verify CORS is working
+app.get('/test-cors', (req, res) => {
+  res.json({ message: 'CORS is working!' });
+});
 
-// PORT CONNECTED
+// Error handler middleware
+app.use((err, req, res, next) => {
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({ error: 'CORS Error: This origin is not allowed.' });
+  }
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
+// Start the server
 if (require.main === module) {
-    const PORT = process.env.PORT || 8000;
-    app.listen(PORT, () => {
-        console.log(`✅ Server running at http://localhost:${PORT}`);
-    });
+  const PORT = process.env.PORT || 8000;
+  app.listen(PORT, () => {
+    console.log(`✅ Server running at http://localhost:${PORT}`);
+  });
 }
-
