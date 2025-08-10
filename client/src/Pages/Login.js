@@ -21,12 +21,10 @@ const Login = () => {
         const token = localStorage.getItem('token');
         if (email && password) {
             try {
-                const response = await axios.post(`${baseurl}/login`, {
+                const response = await axios.post(`${baseurl}/login`, { email, password }, {
                     headers: {
                         'Authorization': `Bearer ${token}`, 
                       },
-                    email,  
-                    password,
                 });
                 if (response.status === 200 ) {
                     toast.success('Login Successfully');
