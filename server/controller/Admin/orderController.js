@@ -14,7 +14,7 @@ exports.getAllOrders = async (req, res) => {
         ORDER BY 
           o.created_at DESC;`;
 
-        pool.query(sql, (error, result) => {
+        pool.execute(sql, (error, result) => {
             if (error) {
                 console.log(error);
                 return res.status(500).json({ message: "Error fetching orders" });
