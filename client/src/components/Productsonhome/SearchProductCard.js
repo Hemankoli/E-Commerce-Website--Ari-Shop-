@@ -13,7 +13,7 @@ const SearchProductCard = ({ loading, products = [] }) => {
 
     const {auth} = useAuth() 
 
-    const baseurl = process.env.REACT_APP_BACKEND_URL;
+    const baseurl = process.env.REACT_APP_BACKEND_URL;  
 
 
     // Add to Cart functionality
