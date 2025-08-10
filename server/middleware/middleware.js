@@ -3,11 +3,10 @@ const pool = require('../database/connection');
 
 const verifyToken = (req) => {
   const authHeader = req.headers.authorization;
-  console.log('Auth Header:', authHeader);
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1]; 
     return token;
-  }
+  } 
   return null; 
 };
 
@@ -20,9 +19,6 @@ exports.checkAuthenticated = async (req, res, next) => {
         console.error('Token verification error:', err);
         return res.status(401).json({ message: 'Invalid or expired token.' });
       }
-
-      console.log('Decoded Token:', decodedToken);
-
       try {
         const [rows] = await pool.promise().execute(
           'SELECT * FROM users WHERE user_id = ?',
@@ -65,7 +61,7 @@ exports.isAdmin = async (req, res, next) => {
 
         if (results.length > 0) {
           const user = results[0];
-          if (user.role === 'ADMIN') {
+          if (user.role === 'Admin') {
             res.locals.user = user;
             next(); 
           } else {
