@@ -17,7 +17,7 @@ const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
 
 app.use(cors({
-    origin : ["https://e-tail-ecommerce.vercel.app"],
+    origin : ["http://localhost:3000"],
     credentials : true
 }));
 app.use(express.json());
@@ -38,6 +38,9 @@ app.use("/", cartRoute)
 app.use("/", addressRoutes)
 
 // PORT CONNECTED
-app.listen(process.env.PORT, () => {
-    console.log(`Server running successfully at http://localhost:${process.env.PORT}`);
-});
+if (require.main === module) {
+    const PORT = process.env.PORT;
+    app.listen(PORT, () => {
+        console.log(`✅ Server running at http://localhost:${PORT}`);
+    });
+}
