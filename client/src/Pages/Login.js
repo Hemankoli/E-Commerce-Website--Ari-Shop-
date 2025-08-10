@@ -19,7 +19,6 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
-        console.log(token)
         if (email && password) {
             try {
                 const response = await axios.post(`${baseurl}/login`, {
@@ -31,9 +30,8 @@ const Login = () => {
                 });
                 if (response.status === 200 ) {
                     toast.success('Login Successfully');
-                    console.log(response)
                     setAuth({ user: response.data.user, token: response.data.token })
-                    localStorage.setItem('auth', JSON.stringify(response.data.data))
+                    localStorage.setItem('auth', JSON.stringify(response.data))
                     navigate('/');
                 }
             } catch (error) {
