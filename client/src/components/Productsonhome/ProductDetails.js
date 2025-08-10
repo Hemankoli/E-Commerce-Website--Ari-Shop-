@@ -130,7 +130,6 @@ const ProductDetails = () => {
                 <meta property="og:title" content={productHemlet.name} />
                 <meta property="og:description" content={productHemlet.description} />
                 <meta property="og:image" content={productHemlet.image} />
-                <link rel="canonical" href={`https://yourwebsite.com/product/${productId}`} />
             </Helmet>
         
             <div className='max-w-7xl mx-auto py-4 px-6 lg:py-6 lg:px-10'>
@@ -194,7 +193,7 @@ const ProductDetails = () => {
                         </div>
                         
                         <div className='flex items-center gap-3'>
-                            <Link to={'check_out'}>
+                            <Link to={'/check_out'}>
                                 <button className='border-2 border-purple-500 hover:border-purple-600 px-10 py-2 rounded-lg min-w-[120px] bg-purple-500 hover:bg-purple-600 text-white font-semibold'>
                                     Buy
                                 </button>
