@@ -92,7 +92,7 @@ exports.updateProfile = async (req, res) => {
         const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
         
         if( password && confirmpassword)
-        pool.query('SELECT * FROM users WHERE user_id = ?;', [user_id], (error, checkresult) => {
+        pool.execute('SELECT * FROM users WHERE user_id = ?;', [user_id], (error, checkresult) => {
             if (error) {
                 console.error('Error fetching user:', error);
                 return res.status(500).json({ message: 'Error fetching user' });
@@ -101,7 +101,7 @@ exports.updateProfile = async (req, res) => {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            pool.query('SELECT * FROM users WHERE email = ? AND user_id != ?;', [email, user_id], (emailCheckError, emailCheckResult) => {
+            pool.execute('SELECT * FROM users WHERE email = ? AND user_id != ?;', [email, user_id], (emailCheckError, emailCheckResult) => {
                 if (emailCheckError) {
                     console.error('Error checking email:', emailCheckError);
                     return res.status(500).json({ message: 'Error checking email' });
@@ -110,7 +110,7 @@ exports.updateProfile = async (req, res) => {
                     return res.status(400).json({ error: 'Email already in use by another account.' });
                 }
 
-                pool.query('UPDATE users SET name = ?, email = ?, phone_number = ?, password = ?, confirmpassword = ? WHERE user_id = ?', [name, email, phone_number, hashedPassword, confirmpassword, user_id],
+                pool.execute('UPDATE users SET name = ?, email = ?, phone_number = ?, password = ?, confirmpassword = ? WHERE user_id = ?', [name, email, phone_number, hashedPassword, confirmpassword, user_id],
                     (err, result) => {
                         if (err) {
                             console.error('Error updating profile:', err);
