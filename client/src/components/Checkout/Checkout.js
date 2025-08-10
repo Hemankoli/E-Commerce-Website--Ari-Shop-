@@ -23,6 +23,8 @@ const CheckoutPage = () => {
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
+  
+  const baseurl = process.env.REACT_APP_BACKEND_URL;
 
   const handleSelectAddress = (addressId) => {
     setSelectedAddressId(addressId);
@@ -38,7 +40,7 @@ const CheckoutPage = () => {
     const fetchAddresses = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/addresses/${auth?.user?.user_id}`
+          `${baseurl}/addresses/${auth?.user?.user_id}`
         );
         setAddresses(response.data);
       } catch (error) {
@@ -63,7 +65,7 @@ const CheckoutPage = () => {
       if (editingAddress) {
         // Update address
         const response = await axios.put(
-          `http://localhost:8000/addresses/${editingAddress.address_id}`,
+          `${baseurl}/addresses/${editingAddress.address_id}`,
           form
         );
         setAddresses(
@@ -75,7 +77,7 @@ const CheckoutPage = () => {
         );
       } else {
         // Add new address
-        const response = await axios.post('http://localhost:8000/addresses', {
+        const response = await axios.post('${baseurl}/addresses', {
           user_id: auth?.user?.user_id,
           ...form,
         });
@@ -116,7 +118,7 @@ const CheckoutPage = () => {
   // Delete an address
   const deleteAddress = async (address_id) => {
     try {
-      await axios.delete(`http://localhost:8000/addresses/${address_id}`);
+      await axios.delete(`${baseurl}/addresses/${address_id}`);
       setAddresses(
         addresses.filter((address) => address.address_id !== address_id)
       );
