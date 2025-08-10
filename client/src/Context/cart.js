@@ -20,7 +20,7 @@ export const CartProvider = ({ children }) => {
       });
       
       if (!response.ok) {
-        throw new Error(`Error fetching cart items: ${response.statusText}`);
+        console.error("Error fetching cart items:", response);
       }
       
       const data = await response.json();
