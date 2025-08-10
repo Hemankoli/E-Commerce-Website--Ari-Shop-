@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet-async';
 
 const CartPage = () => {
   const { cartItems, fetchCartItems } = useCart();
-  const [auth] = useAuth()
+  const { auth } = useAuth()
   const navigate = useNavigate()
   const quantity = 1;
 
@@ -20,13 +20,7 @@ const CartPage = () => {
 
 
   // Fetch cart items for the user
-  useEffect(() => {
-    if (auth?.user?.user_id) {
-      fetchCartItems(auth.user.user_id);
-    }else{
-      navigate('/login')
-    }
-  }, [auth, fetchCartItems, navigate]);
+  
 
   
   // Add or update cart item
@@ -40,8 +34,9 @@ const CartPage = () => {
         credentials: 'include',
         body: JSON.stringify({ product_id, user_id: auth?.user?.user_id, quantity: quantity  })
     });
-    const responseData = await response.json()
-    fetchCartItems()
+    fetchCartItems(auth?.user?.user_id)
+    const responseData =  await response.json()
+    return responseData;
     } catch (error) {
       console.error('Error adding to Cart:', error);
     }
@@ -58,8 +53,9 @@ const CartPage = () => {
         },
         body: JSON.stringify({ product_id: product_id, user_id: auth?.user?.user_id, quantity: quantity })
       });
+      fetchCartItems(auth?.user?.user_id)
       const responseData =  await response.json()
-      fetchCartItems()
+      return responseData;
     } catch (error) {
       console.error('Error decreasing quantity:', error);
     }
@@ -76,8 +72,9 @@ const CartPage = () => {
         },
         body: JSON.stringify({ user_id: auth?.user?.user_id, product_id: product_id })
       });
+      fetchCartItems(auth?.user?.user_id)
       const responseData =  await response.json()
-      fetchCartItems()
+      return responseData;
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }
@@ -92,10 +89,9 @@ const CartPage = () => {
           <meta property="og:title" content={product.name} />
           <meta property="og:description" content={product.description} />
           <meta property="og:image" content={product.image} />
-          <link rel="canonical" href={`https://yourwebsite.com/product/${productId}`} />
         </Helmet>
 
-        <div className='mx-auto'>
+        <div className='max-w-7xl mx-auto px-4 my-12'>
           <div className='relative mb-10'>
               <h1 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] uppercase text-white text-lg md:text-3xl font-bold mb-6 text-center">
                 {`Welcome ${auth?.token && auth?.user?.name ? "to the shopping cart" : "Guest"}`}
@@ -104,7 +100,7 @@ const CartPage = () => {
               className='w-full h-24 md:h-32 object-cover' />
           </div>
           
-          <div className='container p-2 mx-auto mb-20'>
+          <div className='py-2 mx-auto mb-20'>
               { 
                 cartItems?.length > 0 ? (
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
