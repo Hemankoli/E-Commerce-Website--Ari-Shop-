@@ -6,7 +6,7 @@ exports.createAddress = async (req, res) => {
     return res.status(400).json({ message: 'User ID is required' });
   }
   try {
-    pool.query('INSERT INTO addresses (user_id, address_line1, address_line2, city, state, postal_code, country) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    pool.execute('INSERT INTO addresses (user_id, address_line1, address_line2, city, state, postal_code, country) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [user_id, address_line1, address_line2, city, state, postal_code, country],
       (err, result) =>{
         if (err) {
@@ -26,7 +26,7 @@ exports.updateAddress = async (req, res) => {
   const {addressId} = req?.params;
   const {  address_line1, address_line2, city, state, postal_code, country } = req?.body;
   try {
-    pool.query(`UPDATE addresses SET address_line1 = ?, address_line2 = ?, city = ?, state = ?, postal_code = ?, country = ? WHERE address_id = ?;`,
+    pool.execute(`UPDATE addresses SET address_line1 = ?, address_line2 = ?, city = ?, state = ?, postal_code = ?, country = ? WHERE address_id = ?;`,
       [address_line1, address_line2, city, state, postal_code, country, addressId],
       (err, result) => {
         if (err) {
@@ -45,7 +45,7 @@ exports.updateAddress = async (req, res) => {
 exports.deleteAddress = async (req, res) => {
   const {addressId} = req?.params;
   try {
-    pool.query('DELETE FROM addresses WHERE address_id = ?', [addressId],
+    pool.execute('DELETE FROM addresses WHERE address_id = ?', [addressId],
       (err, result) => {  
         if (err) {
           console.log(err);
@@ -66,7 +66,7 @@ exports.deleteAddress = async (req, res) => {
 exports.getAddresses = async (req, res) => {
   const { userId } = req?.params;
   try {
-    pool.query('SELECT * FROM addresses WHERE user_id = ?', [userId],
+    pool.execute('SELECT * FROM addresses WHERE user_id = ?', [userId],
       (err, result) => {
         if (err) {
           console.log(err); 
