@@ -15,11 +15,27 @@ const addressRoutes = require('./routes/User/addressRoutes')
 const orderRoutesAdmin = require('./routes/Admin/orderRoute')
 
 
+const allowedOrigins = ['https://e-tail-ecommerce.vercel.app'];
 
 app.use(cors({
-    origin : ["https://e-tail-ecommerce.vercel.app/"],
-    credentials : true
+  origin: function(origin, callback){
+    // allow requests with no origin like mobile apps or curl requests
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,  // allow cookies/auth headers
 }));
+
+// Also explicitly handle OPTIONS requests
+app.options('*', cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -51,5 +67,3 @@ if (require.main === module) {
         console.log(`✅ Server running at http://localhost:${PORT}`);
     });
 }
-
-
