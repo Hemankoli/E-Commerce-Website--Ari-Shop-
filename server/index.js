@@ -21,9 +21,10 @@ app.use(cors({
   origin: function(origin, callback){
     // allow requests with no origin like mobile apps or curl requests
     if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
+    if (!allowedOrigins.includes(normalizedOrigin)) {
+    const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+    return callback(new Error(msg), false);
     }
     return callback(null, true);
   },
@@ -55,10 +56,11 @@ app.use("/", userProductRoute)
 app.use("/", cartRoute)
 app.use("/", addressRoutes)
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+app.use((req, res, next) => {
+  console.log('Incoming Origin:', req.headers.origin);
+  next();
 });
+
 
 // PORT CONNECTED
 if (require.main === module) {
