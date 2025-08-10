@@ -8,7 +8,7 @@ exports.getCartItems = async (req, res) => {
                  JOIN products p ON ci.product_id = p.product_id
                  WHERE ci.user_id = ?`;
   try {
-    pool.query(query, [userId] , (error, result) => {
+    pool.execute(query, [userId] , (error, result) => {
       if (error) {
         console.log(error);
         return res.status(500).json({ message: "Error fetching cart items" });
@@ -60,14 +60,14 @@ exports.removeItemFromCart = (req, res) => {
   if (!user_id || !product_id) {
     return res.status(400).json({ message: "User ID and Product ID are required." });
   }
-  pool.query("SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?", [product_id, user_id], (err, result) => {
+  pool.execute("SELECT * FROM cart_items WHERE product_id = ? AND user_id = ?", [product_id, user_id], (err, result) => {
     if (err) {
       return res.status(500).json({ message: "Error checking item existence", error: err });
     }
     if (result.length === 0) {
       return res.status(404).json({ message: "Item does not exist in the cart" });
     }
-    pool.query("DELETE FROM cart_items WHERE product_id = ? AND user_id = ?", [product_id, user_id], (err, result) => {
+    pool.execute("DELETE FROM cart_items WHERE product_id = ? AND user_id = ?", [product_id, user_id], (err, result) => {
       if (err) {
         return res.status(500).json({ message: "Error removing item from cart", error: err });
       }
@@ -79,7 +79,7 @@ exports.removeItemFromCart = (req, res) => {
 
 exports.updateItemInCart = (req, res) => {
   const { user_id, product_id } = req?.body;
-  pool.query('SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?', [user_id, product_id], (error, result) => {
+  pool.execute('SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?', [user_id, product_id], (error, result) => {
     if (error) {
       return res.status(500).json({ message: 'Error fetching cart item' });
     }
@@ -90,14 +90,14 @@ exports.updateItemInCart = (req, res) => {
     if (currentQuantity > 1) {
       const newQuantity = currentQuantity - 1;
 
-      pool.query('UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?', [newQuantity, user_id, product_id], (updateErr) => {
+      pool.execute('UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?', [newQuantity, user_id, product_id], (updateErr) => {
         if (updateErr) {
           return res.status(500).json({ message: 'Error decreasing quantity' });
         }
         return res.status(200).json({ message: 'Quantity decreased' });
       });
     } else {
-      pool.query('DELETE FROM cart_items WHERE user_id = ? AND product_id = ?', [user_id, product_id], (deleteErr) => {
+      pool.execute('DELETE FROM cart_items WHERE user_id = ? AND product_id = ?', [user_id, product_id], (deleteErr) => {
         if (deleteErr) {
           return res.status(500).json({ message: 'Error removing product from cart' });
         }
