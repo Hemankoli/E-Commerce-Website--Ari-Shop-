@@ -24,8 +24,6 @@ exports.uploadProduct = async (req, res) => {
             quantity,
             showcase
         ]);
-        console.log(result);
-
         res.status(201).json({
             message: 'Product uploaded successfully',
             success: true,
