@@ -8,12 +8,12 @@ require('dotenv').config();
     user : process.env.MYSQL_USER,
     password : process.env.MYSQL_PASSWORD,
     database : process.env.MYSQL_DATABASE,
-    port : 33065
+    port : 3306
 });
 
 pool.connect((err) => {
     if (err) {
-      console.error(err.message);
+      console.error('Not Connected', err.message);
       return;
     }
     console.log('Connected to MySQL');
@@ -21,4 +21,6 @@ pool.connect((err) => {
 
 
 module.exports = pool;
+
+
 
