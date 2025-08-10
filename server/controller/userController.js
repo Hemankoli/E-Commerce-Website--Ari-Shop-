@@ -8,19 +8,22 @@ const pool = require("../database/connection");
 exports.register =  async (req, res) => {
     const { name, email, password, confirmpassword } = req.body;
     if (password !== confirmpassword) {
-        res.status(400).json({ message: 'Passwords do not match' });
+        return res.status(400).json({ message: 'Passwords do not match' });
     }
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const salt = await bcrypt?.genSalt(10);
+    const hashedPassword = await bcrypt?.hash(password, salt);
     pool.execute('SELECT email FROM users WHERE email = ?', [email], (err, results) => {
         if (err) return res.status(500).json({ message: 'Database error' });
         if (results.length > 0) {
             return res.status(400).json({ message: 'User already registered' });
         }else{
-            pool.execute('INSERT INTO users (name, email, password, confirmpassword) VALUES (?, ?, ?, ?)', [name, email, hashedPassword, confirmpassword],
+            pool.execute('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword],
                 (err) => {
-                    if (err) return res.status(500).json({ message: 'Error registering user' });  
-                    res.status(201).json({user: { name, email, hashedPassword, confirmpassword }});
+                    if (err) {
+                        return res.status(500).json({ message: 'Error registering user' }); 
+                    } 
+                    return res.status(201).json({user: { name, email, hashedPassword }});
                 }
             );
         }
