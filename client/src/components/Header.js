@@ -18,7 +18,7 @@
         const [showDropdown, setShowDropdown] = useState(false);
         const dropdownRef = useRef(null);
         const { auth, setAuth } = useAuth();
-        const { cartItems } = useCart();
+        const { cartItems, fetchCartItems } = useCart();
         const { values, setValues } = useSearch();
         const navigate = useNavigate();
 
@@ -90,6 +90,12 @@
                 document.removeEventListener('mousedown', handleClickOutside);
             };
         }, [showDropdown]);
+
+          useEffect(() => {
+            if (auth?.user) {
+              fetchCartItems(auth.user.user_id);
+            }
+          }, [auth, fetchCartItems]);
 
         return (
             <div>
@@ -181,9 +187,13 @@
                                     </div>
 
                                     <hr className='border border-gray-200'></hr>
-                                    
-                                    <Link to={`/dashboard/${auth?.user?.role === 'ADMIN' ? 'admin/baners' : 'user/details'}`} onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
-                                        <CiUser className='mx-2 w-5 h-5' />{auth?.user?.role === 'ADMIN' ? 'Admin Dashboard' : 'Profile'}
+                                    {auth?.user?.role === 'Admin' && (
+                                        <Link to="/dashboard/admin/baners" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                                            <CiUser className='mx-2 w-5 h-5' />Admin Dashboard
+                                        </Link>)
+                                    }
+                                    <Link to="/dashboard/user/details" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                                        <CiUser className='mx-2 w-5 h-5' />Profile
                                     </Link>
 
                                 
@@ -235,8 +245,13 @@
                                 )
                             }    
                         </div>     
-                        <Link to={`/dashboard/${auth?.user?.role === 'ADMIN' ? 'admin/baners' : 'user/details'}`} onClick={handleLinkClick} className="flex text-lg items-center px-4 py-2 hover:bg-gray-100">
-                            <CiUser className='mx-2 w-5 h-5 text-purple-500' />Profile
+                        {auth?.user?.role === 'Admin' && 
+                            <Link to="/dashboard/admin/baners" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                                <CiUser className='mx-2 w-5 h-5' />Admin Dashboard
+                            </Link>
+                        }
+                        <Link to="/dashboard/user/details" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                            <CiUser className='mx-2 w-5 h-5' />Profile
                         </Link>
                         <Link to="/dashboard/user/orders" onClick={handleLinkClick} className="flex text-lg items-center px-4 py-2 hover:bg-gray-100">
                             <PiCodesandboxLogoThin className='mx-2 w-5 h-5 text-purple-500' /> Orders
