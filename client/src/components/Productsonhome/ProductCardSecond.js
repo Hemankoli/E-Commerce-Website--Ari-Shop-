@@ -6,6 +6,7 @@ import { FaAngleRight, FaAngleLeft, FaSpinner } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../Context/index';  
+import ArrowButton from '../Buttons/ArrowButton';
 
 const ProductCardSecond = ({ heading }) => {
     const [products, setProducts] = useState([]);
@@ -51,7 +52,7 @@ const ProductCardSecond = ({ heading }) => {
         }else{
             try {
                 await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?.user_id,
+                    user_id: auth?.user?._id,
                     product_id,
                     quantity: 1,
                 });
@@ -64,7 +65,7 @@ const ProductCardSecond = ({ heading }) => {
     };
 
     return (
-        <div className='max-w-7xl mx-auto px-4 my-12'>
+        <div className='md:px-10 px-4 my-12'>
             <h1 className='text-2xl font-bold text-center mb-12 transition-all'>{heading}</h1>
 
             <div className='relative'>
@@ -121,7 +122,7 @@ const ProductCardSecond = ({ heading }) => {
                                         </p>
                                     </div>
                                     <div className='absolute top-2 right-2'>
-                                        <button  onClick={() => addToCart(product.product_id)}
+                                        <button  onClick={() => addToCart(product._id)}
                                         className='bg-purple-500 hover:bg-red-400 p-2 rounded-full cursor-pointer'>
                                             <PiShoppingCartSimpleFill className='text-white text-lg' />
                                         </button>
@@ -132,16 +133,8 @@ const ProductCardSecond = ({ heading }) => {
                     )}
                         
                 </div>
-
-                <button onClick={scrollLeft}
-                    className='bg-purple-500 hover:bg-red-500 text-white font-bold shadow-lg rounded-full p-3 text-xl hidden md:block absolute top-1/2 left-2 transform -translate-y-1/2'>
-                    <FaAngleLeft />
-                </button>
-
-                <button onClick={scrollRight}
-                    className='bg-purple-500 hover:bg-red-500 text-white font-bold shadow-lg rounded-full p-3 text-xl hidden md:block absolute top-1/2 right-2 transform -translate-y-1/2'>
-                    <FaAngleRight />
-                </button>
+                <ArrowButton method={scrollLeft} icon={<FaAngleLeft />} className='left-2 absolute top-1/2 p-3 transform -translate-y-1/2' />
+                <ArrowButton method={scrollRight} icon={<FaAngleRight />} className='right-2 absolute top-1/2 p-3 transform -translate-y-1/2' />
             </div>
         </div>
     );

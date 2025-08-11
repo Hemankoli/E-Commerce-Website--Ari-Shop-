@@ -93,14 +93,14 @@
 
           useEffect(() => {
             if (auth?.user) {
-              fetchCartItems(auth.user.user_id);
+              fetchCartItems(auth.user._id);
             }
-          }, [auth, fetchCartItems]);
+          }, [auth?.user, fetchCartItems]);
 
         return (
             <div>
-            <nav className="py-2 px-4 bg-main z-50 shadow-xl sticky left-0 right-0 top-0">
-                <div className="mx-auto max-w-7xl flex justify-between">
+            <nav className="py-2 px-4 md:px-10 bg-main z-50 shadow-xl sticky left-0 right-0 top-0">
+                <div className="flex justify-between">
                     <div className="flex items-center">
                         <div className="lg:hidden">
                             <button onClick={toggleMobileMenu} className="focus:outline-none">
@@ -188,7 +188,7 @@
 
                                     <hr className='border border-gray-200'></hr>
                                     {auth?.user?.role === 'Admin' && (
-                                        <Link to="/dashboard/admin/baners" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                                        <Link to="/dashboard/admin/all-products" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
                                             <CiUser className='mx-2 w-5 h-5' />Admin Dashboard
                                         </Link>)
                                     }
@@ -246,7 +246,7 @@
                             }    
                         </div>     
                         {auth?.user?.role === 'Admin' && 
-                            <Link to="/dashboard/admin/baners" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                            <Link to="/dashboard/admin/all-products" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
                                 <CiUser className='mx-2 w-5 h-5' />Admin Dashboard
                             </Link>
                         }

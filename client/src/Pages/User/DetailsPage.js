@@ -47,7 +47,7 @@ const DetailsPage = () => {
 
     try {
       const response = await axios.put(`${baseurl}/details`, 
-        { user_id:auth?.user?.user_id, name, email, phone_number: phoneNumber, password, confirmpassword: confirmPassword }, {
+        { user_id:auth?.user?._id, name, email, phone_number: phoneNumber, password, confirmpassword: confirmPassword }, {
         withCredentials: true, 
         headers: {
           Authorization: `Bearer ${auth.token}`,

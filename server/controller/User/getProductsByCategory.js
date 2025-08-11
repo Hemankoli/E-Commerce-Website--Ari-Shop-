@@ -1,23 +1,33 @@
-const pool = require("../../database/connection");
+const Product = require("../../models/Product");
 
-const getProductsByCategory = async (req, res)=>{
-    const {category} = req?.params;
-   try {
-        const query = "SELECT * FROM products WHERE category = ?";
-        pool.execute(query, [category], (err, result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: "Error fetching products" });
-            }
-            return res.json(result);
-        } )         
-    } catch (error) {
-        res.status(200).json({
-            message: error.message || error,
-            error: true,
-            success : false
-        })
+// ============================
+// GET: Products by Category
+// ============================
+exports.getProductsByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+
+    const products = await Product?.find({ category });
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({
+        message: "No products found in this category",
+        error: true,
+        success: false,
+        data: []
+      });
     }
-}
 
-module.exports = getProductsByCategory;
+    res.status(200).json({
+      message: "Products retrieved successfully",
+      success: true,
+      data: products
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false
+    });
+  }
+};

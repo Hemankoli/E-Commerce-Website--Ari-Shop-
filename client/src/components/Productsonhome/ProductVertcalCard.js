@@ -28,8 +28,8 @@ const ProductVerticalCard = ({ heading }) => {
             if (response?.data?.length > 0) {
                 const newProducts = response.data;
                 setProducts(prevProducts => {
-                    const existingProductIds = new Set(prevProducts.map(p => p.product_id));
-                    const filteredProducts = newProducts.filter(product => !existingProductIds.has(product.product_id));
+                    const existingProductIds = new Set(prevProducts.map(p => p._id));
+                    const filteredProducts = newProducts.filter(product => !existingProductIds.has(product._id));
                     return [...prevProducts, ...filteredProducts];
                 });
                 setHasMore(true);
@@ -56,7 +56,7 @@ const ProductVerticalCard = ({ heading }) => {
         }else{
             try {
                 await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?.user_id,
+                    user_id: auth?.user?._id,
                     product_id,
                     quantity: 1,
                 });
@@ -75,7 +75,7 @@ const ProductVerticalCard = ({ heading }) => {
     };
 
     return (
-        <div className='max-w-7xl mx-auto px-4 my-12'>
+        <div className='md:px-10 px-4 my-12'>
             <h1 className='text-2xl font-bold text-center mb-12 transition-all'>{heading}</h1>
 
             <div className='relative'>
@@ -127,7 +127,7 @@ const ProductVerticalCard = ({ heading }) => {
                                         </p>
                                     </div>
                                     <div className='absolute top-2 right-2'>
-                                        <button onClick={() => addToCart(product.product_id)}
+                                        <button onClick={() => addToCart(product._id)}
                                             className='bg-purple-500 hover:bg-red-400 p-2 rounded-full cursor-pointer'>
                                             <PiShoppingCartSimpleFill className='text-white text-lg' />
                                         </button>

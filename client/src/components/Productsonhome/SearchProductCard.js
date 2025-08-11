@@ -23,7 +23,7 @@ const SearchProductCard = ({ loading, products = [] }) => {
         }else{
             try {
                 await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?.user_id,
+                    user_id: auth?.user?._id,
                     product_id,
                     quantity: 1,
                 });
@@ -36,7 +36,7 @@ const SearchProductCard = ({ loading, products = [] }) => {
     };
 
     return (
-        <div className='max-w-7xl mx-auto relative'>
+        <div className='md:px-10 px-4 my-12'>
 
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:py-6 px-6 lg::px-20 gap-6'>
                 {loading ? (
@@ -64,7 +64,7 @@ const SearchProductCard = ({ loading, products = [] }) => {
                 ) : (
                     Array.isArray(products) && products.length > 0 ? (
                         products.map((product) => (
-                            <div key={product?.product_id}
+                            <div key={product?._id}
                             className='relative flex flex-col w-full min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
                                 <Link to={`/product/${product?.productName}`} className='relative h-48 md:h-72 w-full flex items-center justify-center cursor-pointer'
                                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
@@ -86,7 +86,7 @@ const SearchProductCard = ({ loading, products = [] }) => {
                                         </p>
                                     </div>
                                     <div className='absolute top-2 right-2'>
-                                        <button onClick={() => addToCart(product.product_id)}
+                                        <button onClick={() => addToCart(product._id)}
                                             className='bg-purple-500 hover:bg-red-400 p-2 rounded-full cursor-pointer'>
                                             <PiShoppingCartSimpleFill className='text-white text-lg' />
                                         </button>

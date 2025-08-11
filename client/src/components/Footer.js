@@ -1,10 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { FaSquareFacebook, FaSquareTwitter, FaSquareInstagram } from "react-icons/fa6";
 
 
 const Footer = () => {
+
+    const navigate = useNavigate();
+    function handleLogoClick(path) {
+        navigate(path);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     return (
         <footer className="bg-gray-100 mx-auto">
             <div className="container mx-auto px-4">
@@ -13,30 +19,30 @@ const Footer = () => {
                         <h1 className="mb-8 flex items-center text-4xl font-bold space-x-2" >
                             <img src={logo} alt='logo' className='h-8 md:h-10 items-center' />
                             <span className='flex items-center text-3xl font-bold text-gray-800'>
-                            eTail
+                                E-Tail
                             </span>
                             </h1>
                         <h4 className="text-black text-lg font-bold mb-2">About Us</h4>
-                        <p className="text-gray-600">eTail is your go-to online store for all things fashion. We offer the latest trends and styles at affordable prices.</p>
+                        <p className="text-gray-600">E-Tail is your go-to online store for all things fashion. We offer the latest trends and styles at affordable prices.</p>
                     </div>
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
                         <h4 className="text-black text-lg font-bold mb-2">Categories</h4>
                         <ul>
-                            <li><Link to="/men" className="text-gray-600 hover:text-purple-500">Men</Link></li>
-                            <li><Link to="/women" className="text-gray-600 hover:text-purple-500">Women</Link></li>
-                            <li><Link to="/kids" className="text-gray-600 hover:text-purple-500">Kids</Link></li>
-                            <li><Link to="/accessories" className="text-gray-600 hover:text-purple-500">Accessories</Link></li>
-                            <li><Link to="/new-arrivals" className="text-gray-600 hover:text-purple-500">New Arrivals</Link></li>
-                            <li><Link to="/sale" className="text-gray-600 hover:text-purple-500">Sale</Link></li>
+                            <li><button onClick={()=>handleLogoClick('/')} className="text-gray-600 hover:text-purple-500">Men</button></li>
+                            <li><button onClick={()=>handleLogoClick('/')} className="text-gray-600 hover:text-purple-500">Women</button></li>
+                            <li><button onClick={()=>handleLogoClick('/')} className="text-gray-600 hover:text-purple-500">Kids</button></li>
+                            <li><button onClick={()=>handleLogoClick('/')} className="text-gray-600 hover:text-purple-500">Accessories</button></li>
+                            <li><button onClick={()=>handleLogoClick('/')} className="text-gray-600 hover:text-purple-500">New Arrivals</button></li>
+                            <li><button onClick={()=>handleLogoClick('/')} className="text-gray-600 hover:text-purple-500">Sale</button></li>
                         </ul>
                     </div>
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
                         <h4 className="text-black text-lg font-bold mb-2">Customer Care</h4>
                         <ul>
-                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">Contact Us</Link></li>
-                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">FAQs</Link></li>
-                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">Shipping & Returns</Link></li>
-                            <li><Link to="/customer-support" className="text-gray-600 hover:text-purple-500">Terms & Conditions</Link></li>
+                            <li><button onClick={()=>handleLogoClick('/customer-support')} className="text-gray-600 hover:text-purple-500">Contact Us</button></li>
+                            <li><button onClick={()=>handleLogoClick('/customer-support')} className="text-gray-600 hover:text-purple-500">FAQs</button></li>
+                            <li><button onClick={()=>handleLogoClick('/customer-support')} className="text-gray-600 hover:text-purple-500">Shipping & Returns</button></li>
+                            <li><button onClick={()=>handleLogoClick('/customer-support')} className="text-gray-600 hover:text-purple-500">Terms & Conditions</button></li>
                         </ul>
                     </div>
                     <div className="md:w-1/4 md:px-4 mb-6 md:mb-0">
@@ -64,7 +70,7 @@ const Footer = () => {
             </div>
             <div className="border-t border-gray-700 mt-6">
                 <div className="container mx-auto px-4 pt-6">
-                    <p className="text-gray-600 text-center">&copy; {new Date().getFullYear()} Ditto All rights reserved.</p>
+                    <p className="text-gray-600 text-center">&copy; {new Date().getFullYear()} E-Tail All rights reserved.</p>
 
                 </div>
             </div>

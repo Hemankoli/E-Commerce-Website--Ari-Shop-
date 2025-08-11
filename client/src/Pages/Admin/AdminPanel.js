@@ -48,11 +48,10 @@ const AdminPanel = () => {
 
           <div className='p-4'>
             <nav className='flex flex-col space-y-1'>
-
-                <Link to={'baners'} onClick={closeMenu} className='flex gap-6 md:w-full items-center mx-auto py-2 px-2 rounded-lg text-white hover:text-black  hover:bg-white'>
+                {/* <Link to={'baners'} onClick={closeMenu} className='flex gap-6 md:w-full items-center mx-auto py-2 px-2 rounded-lg text-white hover:text-black  hover:bg-white'>
                     <CiImageOn className='text-lg lg:text-xl' />
                     <span className='text-lg lg:text-lg font-semibold'>Banners</span>
-                </Link>
+                </Link> */}
 
               <Link to={'all-products'} onClick={closeMenu} className='flex gap-6 md:w-full items-center mx-auto py-2 px-2 rounded-lg text-white hover:text-black hover:bg-white'>
                 <CiShoppingBasket className='text-lg lg:text-xl' />

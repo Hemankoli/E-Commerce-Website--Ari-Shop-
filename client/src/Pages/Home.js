@@ -28,7 +28,7 @@ const Home = () => {
       
       <BannerProduct />
     
-      <ProductByCategory category={"kpop"} heading={"Top K-POP Products"}/>  
+      {/* <ProductByCategory category={"kpop"} heading={"Top K-POP Products"}/>   */}
 
       <ProductCardFirst category={"kpop"} heading={"BestSelling Products"}/>  
 

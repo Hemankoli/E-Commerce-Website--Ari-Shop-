@@ -59,7 +59,6 @@ function App() {
             </Route>
             <Route path='/dashboard' element={<AdminRoute />} >
               <Route path="admin" element={<AdminPanel />} >
-                <Route path='baners' element={<BannerUpload />} />
                 <Route path='all-users' element={<AllUsers />} />
                 <Route path='all-products' element={<AllProducts />} />
                 <Route path='all-orders' element={<AllOrders />} />

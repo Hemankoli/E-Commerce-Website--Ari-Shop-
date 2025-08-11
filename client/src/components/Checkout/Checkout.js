@@ -65,12 +65,12 @@ const CheckoutPage = () => {
       if (editingAddress) {
         // Update address
         const response = await axios.put(
-          `${baseurl}/addresses/${editingAddress.address_id}`,
+          `${baseurl}/addresses/${editingAddress._id}`,
           form
         );
         setAddresses(
           addresses.map((addr) =>
-            addr.address_id === editingAddress.address_id
+            addr._id === editingAddress._id
               ? response.data
               : addr
           )
@@ -78,7 +78,7 @@ const CheckoutPage = () => {
       } else {
         // Add new address
         const response = await axios.post('${baseurl}/addresses', {
-          user_id: auth?.user?.user_id,
+          user_id: auth?.user?._id,
           ...form,
         });
         setAddresses([...addresses, response.data]);
@@ -120,7 +120,7 @@ const CheckoutPage = () => {
     try {
       await axios.delete(`${baseurl}/addresses/${address_id}`);
       setAddresses(
-        addresses.filter((address) => address.address_id !== address_id)
+        addresses.filter((address) => address._id !== address_id)
       );
     } catch (error) {
       console.error('Error deleting address:', error);
@@ -159,9 +159,9 @@ const CheckoutPage = () => {
                     <input
                         type="radio"
                         name="address"
-                        value={address.address_id}
-                        checked={selectedAddressId === address.address_id}
-                        onChange={() => handleSelectAddress(address.address_id)}
+                        value={address._id}
+                        checked={selectedAddressId === address._id}
+                        onChange={() => handleSelectAddress(address._id)}
                         className="mr-2"
                     />
                     <div>
@@ -182,7 +182,7 @@ const CheckoutPage = () => {
                       Edit
                     </button>
                     <button
-                      onClick={() => deleteAddress(address.address_id)}
+                      onClick={() => deleteAddress(address._id)}
                       className="bg-red-500 text-xs sm:text-sm px-2 py-1 text-white rounded hover:bg-red-600"
                     >
                       Delete

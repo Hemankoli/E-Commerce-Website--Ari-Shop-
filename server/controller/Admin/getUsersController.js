@@ -1,11 +1,11 @@
-const pool = require("../../database/connection");
+const User = require("../../models/User");
 
-exports.getAllUsers = (req, res) => {
-    pool.execute("SELECT * FROM users;", (err, results) => {
-        if (err) {
-            console.error("Error fetching users:", err);
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
-        res.json(results);
-    });
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find(); // fetch all users
+    res.status(200).json(users);
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };

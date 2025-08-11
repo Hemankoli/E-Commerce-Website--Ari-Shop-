@@ -15,8 +15,6 @@ const AllProducts = () => {
   const getAllProducts = async() => {
     const response = await fetch(`${baseurl}/get-product`)
     const dataResponse = await response.json()  
-    console.log("res",response)
-    console.log(dataResponse)  
     setGetProduct(dataResponse || [])
   }
 
@@ -28,7 +26,7 @@ const AllProducts = () => {
     try {
       const response = await axios.delete(`${baseurl}/delete-product/${productId}`)
         if (response.status === 200) {
-          setGetProduct(getProduct.filter(product => product.product_id !== productId))
+          setGetProduct(getProduct.filter(product => product?._id !== productId))
         }
       } catch (error) {
         console.error("There was an error deleting the product!", error);
@@ -71,7 +69,7 @@ const AllProducts = () => {
                 <tbody className='divide-y divide-purple-600 bg-white'>
                     { Array.isArray(getProduct) && getProduct.length > 0 ? (
                           getProduct.map((product, index) => (
-                              <tr key={product.product_id}>
+                              <tr key={product?._id}>
                                   <td className='px-4 py-4 whitespace-nowrap text-center text-sm text-gray-500'>
                                       {index + 1}
                                   </td>
@@ -98,7 +96,7 @@ const AllProducts = () => {
                                   </td>
                                   <td className=''>
                                       <button className='bg-red-300 hover:bg-red-500 text-black hover:text-white mx-auto flex p-2 text-sm rounded-full' 
-                                          onClick={() => deleteProduct(product.product_id)}>
+                                          onClick={() => deleteProduct(product?._id)}>
                                           <MdDelete />
                                       </button>
                                   </td>

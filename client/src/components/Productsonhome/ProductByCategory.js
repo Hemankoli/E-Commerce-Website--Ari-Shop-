@@ -6,6 +6,7 @@ import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { FaAngleRight, FaAngleLeft, FaSpinner } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import ArrowButton from '../Buttons/ArrowButton';
 
 const ProductByCategory = ({ heading, category }) => {
     const {auth} = useAuth()
@@ -21,7 +22,7 @@ const ProductByCategory = ({ heading, category }) => {
         setLoading(true);
         try {
             const response = await axios.get(`${baseurl}/category-product/${category}`);
-                setProducts(response?.data || []);
+            setProducts(response?.data || []);
         } catch (error) {
             console.error('Error fetching products:', error);
             toast.error('Failed to fetch products.');
@@ -48,7 +49,7 @@ const ProductByCategory = ({ heading, category }) => {
         }
         try {
             await axios.post(`${baseurl}/cart`, {
-                user_id: auth.user.user_id,
+                user_id: auth?.user?._id,
                 product_id,
                 quantity: 1,
             });
@@ -60,7 +61,7 @@ const ProductByCategory = ({ heading, category }) => {
     };
 
     return (
-        <div className='max-w-7xl mx-auto px-4 my-12 '>
+        <div className='md:px-10 px-4 my-12'>
             <h1 className='text-2xl font-bold text-center mb-12 transition-all'>{heading}</h1>
 
             <div className='relative'>
@@ -90,7 +91,7 @@ const ProductByCategory = ({ heading, category }) => {
                         ))
                     ) : (
                         products.map((product) => (
-                            <div key={product.product_id}
+                            <div key={product?._id}
                                 className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
 
                                 <Link to={`/product/${encodeURIComponent(product.productName)}`} className='relative h-48 md:h-64 w-full flex items-center justify-center cursor-pointer'
@@ -111,7 +112,7 @@ const ProductByCategory = ({ heading, category }) => {
                                         </p>
                                     </div>
                                     <div className='absolute top-2 right-2'>
-                                        <button onClick={() => addToCart(product.product_id)}
+                                        <button onClick={() => addToCart(product?._id)}
                                             className='bg-purple-500 hover:bg-red-400 p-2 rounded-full cursor-pointer'>
                                             <PiShoppingCartSimpleFill className='text-white text-lg' />
                                         </button>
@@ -121,16 +122,8 @@ const ProductByCategory = ({ heading, category }) => {
                         ))
                     )}
                 </div>
-
-                <button onClick={scrollLeft}
-                    className='bg-purple-500 hover:bg-red-500 text-white font-bold shadow-lg rounded-full p-3 text-xl hidden md:block absolute top-1/2 left-2 transform -translate-y-1/2'>
-                    <FaAngleLeft />
-                </button>
-
-                <button onClick={scrollRight}
-                    className='bg-purple-500 hover:bg-red-500 text-white font-bold shadow-lg rounded-full p-3 text-xl hidden md:block absolute top-1/2 right-2 transform -translate-y-1/2'>
-                    <FaAngleRight />
-                </button>
+                <ArrowButton method={scrollLeft} icon={<FaAngleLeft />} className='left-2 absolute top-1/2 p-3 transform -translate-y-1/2' />
+                <ArrowButton method={scrollRight} icon={<FaAngleRight />} className='right-2 absolute top-1/2 p-3 transform -translate-y-1/2' />
             </div>
         </div>
     );
