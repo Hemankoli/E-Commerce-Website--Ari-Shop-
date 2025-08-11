@@ -21,7 +21,7 @@ const EditProductForm = ({onClose, productData, fetchData}) => {
         selling: productData?.selling,
         category: productData?.category,
         quantity: productData?.quantity,
-        product_id: productData?.product_id
+        product_id: productData?._id
     });
     
     const [openImage, setOpenImage] = useState(false);

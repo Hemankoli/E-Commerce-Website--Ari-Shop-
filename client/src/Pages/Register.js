@@ -26,7 +26,7 @@ const Register = () => {
                             name,
                             email,
                             password,
-                            confirmPassword: confirmPassword
+                            confirmPassword
                         });
                         if(response.status === 201){
                             toast.success("Register Successfully")

@@ -1,19 +1,16 @@
-const pool = require('../database/connection')
+const User = require("../models/User");
 
-
-const uploadProductPermission = (userId) => {
-    try {
-        const sql = `SELECT role FROM users WHERE user_id = ? `;
-        const [result] = pool.execute(sql, [userId]);
-        if (result.length > 0 && result[0].role === 'Admin') {
-            return true; 
-        }
-        return false;
-    } catch (error) {
-        console.error('Error checking user role:', error);
-        throw new Error('Could not check user role');
+const uploadProductPermission = async (userId) => {
+  try {
+    const user = await User.findById(userId).select("role"); // Only fetch role
+    if (user && user.role === "Admin") {
+      return true;
     }
+    return false;
+  } catch (error) {
+    console.error("Error checking user role:", error);
+    throw new Error("Could not check user role");
+  }
 };
 
 module.exports = uploadProductPermission;
-

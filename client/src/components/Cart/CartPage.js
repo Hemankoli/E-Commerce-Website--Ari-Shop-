@@ -32,9 +32,9 @@ const CartPage = () => {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ product_id, user_id: auth?.user?.user_id, quantity: quantity  })
+        body: JSON.stringify({ product_id, user_id: auth?.user?._id, quantity: quantity  })
     });
-    fetchCartItems(auth?.user?.user_id)
+    fetchCartItems(auth?.user?._id)
     const responseData =  await response.json()
     return responseData;
     } catch (error) {
@@ -51,9 +51,9 @@ const CartPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ product_id: product_id, user_id: auth?.user?.user_id, quantity: quantity })
+        body: JSON.stringify({ product_id: product_id, user_id: auth?.user?._id, quantity: quantity })
       });
-      fetchCartItems(auth?.user?.user_id)
+      fetchCartItems(auth?.user?._id)
       const responseData =  await response.json()
       return responseData;
     } catch (error) {
@@ -70,9 +70,9 @@ const CartPage = () => {
         headers:{
           "content-type" : 'application/json'
         },
-        body: JSON.stringify({ user_id: auth?.user?.user_id, product_id: product_id })
+        body: JSON.stringify({ user_id: auth?.user?._id, product_id: product_id })
       });
-      fetchCartItems(auth?.user?.user_id)
+      fetchCartItems(auth?.user?._id)
       const responseData =  await response.json()
       return responseData;
     } catch (error) {
@@ -121,7 +121,7 @@ const CartPage = () => {
                               </Link>
                               <div className="flex space-x-2 mt-2">
                                 <button className="text-gray-500 text-xs py-1 hover:text-red-400"
-                                  onClick={() => deleteCartItem(item.product_id)}>
+                                  onClick={() => deleteCartItem(item._id)}>
                                   Remove Item
                                 </button>
                               </div>
@@ -131,14 +131,14 @@ const CartPage = () => {
                               <p className="text-gray-500 text-sm md:text-lg">Price: ₹<strong>{item?.price || "0.00"}</strong></p>
                               <p className="text-gray-500 text-sm md:text-lg">Quantity: {item?.quantity || 0}</p>
                               <div className='flex'>
-                                <button onClick={() => decreaseQuantity(item.product_id, 'decrement')} disabled={item.quantity <= 1} 
+                                <button onClick={() => decreaseQuantity(item._id, 'decrement')} disabled={item.quantity <= 1} 
                                     className="text-md md:text-xl mr-4 disabled:opacity-50">
                                     <FaCircleMinus />
                                 </button>
                                 <span className="px-2 md:px-3 py-0 md:py-1 mr-4 text-md md:text-xl bg-gray-100 rounded-md">
                                   {item?.quantity || 0}
                                 </span>
-                                <button onClick={() => addToCart(item.product_id, 'increment')} className="text-md md:text-xl">
+                                <button onClick={() => addToCart(item._id, 'increment')} className="text-md md:text-xl">
                                   <FaCirclePlus />
                                 </button>
                               </div>

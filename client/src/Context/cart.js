@@ -11,9 +11,9 @@ export const CartProvider = ({ children }) => {
 
   const baseurl = process.env.REACT_APP_BACKEND_URL;
 
-  const fetchCartItems = async (userId) => {
+  const fetchCartItems = async (user_id) => {
     try {
-      const response = await fetch(`${baseurl}/cart/${userId}`, {
+      const response = await fetch(`${baseurl}/cart/${user_id}`, {
         method: "GET",
         credentials: 'include',
         headers: { "Content-Type": "application/json" },
@@ -21,6 +21,7 @@ export const CartProvider = ({ children }) => {
       
       if (!response.ok) {
         console.error("Error fetching cart items:", response);
+        return;
       }
       
       const data = await response.json();

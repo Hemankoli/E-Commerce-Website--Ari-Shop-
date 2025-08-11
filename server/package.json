@@ -21,7 +21,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.6.1",
+    "mongoose": "^7.8.7",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3",
     "razorpay": "^2.9.4",
@@ -31,4 +31,3 @@
     "nodemon": "^3.1.10"
   }
 }
-

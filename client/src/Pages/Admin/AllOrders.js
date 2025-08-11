@@ -4,7 +4,6 @@ import axios from 'axios';
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const baseurl = process.env.REACT_APP_BACKEND_URL;
 
@@ -15,7 +14,6 @@ const AllOrders = () => {
         const response = await axios.get(`${baseurl}/orders`); 
         setOrders(response?.data);
       } catch (error) {
-        setError("Error fetching orders");
         console.error(error);
       }
       setLoading(false);
@@ -38,7 +36,6 @@ const AllOrders = () => {
   };
 
   if (loading) return <p>Loading orders...</p>;
-  if (error) return <p>{error}</p>;
 
   return (
     <div className="container mx-auto">
@@ -67,8 +64,8 @@ const AllOrders = () => {
             {
               Array.isArray(orders) && orders?.length > 0 ? (
                   orders.map(order => (
-                    <tr key={order.id} className="hover:bg-gray-100">
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{order.id}</td>
+                    <tr key={order?._id} className="hover:bg-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{order?._id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{order.buyer_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{order.product_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{order.quantity}</td>
@@ -76,7 +73,7 @@ const AllOrders = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">
                         <select
                           value={order?.status}
-                          onChange={(e) => handleStatusChange(order?.id, e.target.value)}
+                          onChange={(e) => handleStatusChange(order?._id, e.target.value)}
                           className="border border-gray-400 px-2 py-1">
                           <option className="bg-yellow-500 text-white px-4 py-2 rounded" value="Processing">
                             Processing

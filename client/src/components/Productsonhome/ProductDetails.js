@@ -66,7 +66,7 @@ const ProductDetails = () => {
         }else{
             try {
                 await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?.user_id,
+                    user_id: auth?.user?._id,
                     product_id,
                     quantity: 1,
                 });
@@ -81,7 +81,7 @@ const ProductDetails = () => {
 
     if (loading) {
         return (
-            <div className='py-4 px-6 lg:py-6 lg:px-10'>
+            <div className='py-4 px-4 lg:py-6 lg:px-10'>
                 <div className='flex flex-col lg:flex-row'>
                     <div className='h-full flex flex-col lg:flex-row-reverse gap-4'>
                         <div className='relative h-[300px] w-[300px] lg:h-96 lg:w-96 bg-slate-200 rounded'>
@@ -199,7 +199,7 @@ const ProductDetails = () => {
                                 </button>
                             </Link>
                             
-                            <button onClick={() => addToCart(product.product_id)} 
+                            <button onClick={() => addToCart(product._id)} 
                             className='border-2 border-purple-500 md:px-4 px-4 py-2 rounded-lg min-w-[120px] text-black hover:bg-purple-500 hover:text-white'>
                                 Add To Cart
                             </button>

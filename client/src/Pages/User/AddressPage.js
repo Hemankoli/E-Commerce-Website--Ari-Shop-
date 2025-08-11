@@ -20,14 +20,14 @@ const AddressPage = () => {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await axios.get(`${baseurl}/addresses/${auth?.user?.user_id}`);
+        const response = await axios.get(`${baseurl}/addresses/${auth?.user?._id}`);
         setAddresses(response?.data);
       } catch (error) {
         console.error('Error fetching addresses:', error);
       }
     };
     fetchAddresses();
-  }, [auth?.user?.user_id]);
+  }, [auth?.user]);
 
   // Handle form input change
   const handleInputChange = (e) => {
@@ -40,7 +40,7 @@ const AddressPage = () => {
   // Add new address
   const addAddress = async () => {
     try {
-      const response = await axios.post(`${baseurl}/addresses`, { user_id: auth?.user?.user_id, ...form});
+      const response = await axios.post(`${baseurl}/addresses`, { user_id: auth?.user?._id, ...form});
       setAddresses([...addresses, response?.data]);
       setForm({
         address_line1: '',
@@ -72,8 +72,8 @@ const AddressPage = () => {
   // Update an address
   const updateAddress = async () => {
     try {
-      const response = await axios.put(`${baseurl}/addresses/${editingAddress.address_id}`, form);
-      setAddresses(addresses.map((addr) => (addr.address_id === editingAddress.address_id ? response.data : addr)));
+      const response = await axios.put(`${baseurl}/addresses/${editingAddress._id}`, form);
+      setAddresses(addresses.map((addr) => (addr._id === editingAddress._id ? response.data : addr)));
       setEditingAddress(null);
       setForm({
         address_line1: '',
@@ -92,7 +92,7 @@ const AddressPage = () => {
   const deleteAddress = async (address_id) => {
     try {
       await axios.delete(`${baseurl}/addresses/${address_id}`);
-      setAddresses(addresses.filter((address) => address.address_id !== address_id));
+      setAddresses(addresses.filter((address) => address._id !== address_id));
     } catch (error) {
       console.error('Error deleting address:', error);
     }
@@ -187,7 +187,7 @@ const AddressPage = () => {
                         Edit
                       </button>
                       <button
-                        onClick={() => deleteAddress(address.address_id)}
+                        onClick={() => deleteAddress(address._id)}
                         className="bg-red-500 text-white hover:bg-red-400 font-semibold px-2 py-1 rounded"
                       >
                         Delete

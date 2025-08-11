@@ -55,7 +55,7 @@ const AllUsers = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-900">{user?.name}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{user?.email}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{user?.role}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{new Date(user?.created_at).toLocaleDateString()}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600">{new Date(user?.createdAt).toLocaleDateString()}</td>
                       </tr>
                   ))
               ) : (

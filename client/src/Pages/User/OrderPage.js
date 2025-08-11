@@ -76,17 +76,17 @@ const OrderPage = () => {
         <ul className="space-y-4">
           {
             orders.map((order) => (
-              <li key={order.id} className="p-4 border rounded">
-                <p>Order ID: {order.id}</p>
+              <li key={order._id} className="p-4 border rounded">
+                <p>Order ID: {order._id}</p>
                 <p>Status: {order.status}</p>
                 <p>Total: {order.total_amount}</p>
-                <button onClick={() => fetchOrderById(order.id)} className="text-blue-500">
+                <button onClick={() => fetchOrderById(order._id)} className="text-blue-500">
                   View Details
                 </button>
-                <button onClick={() => fetchProductsByOrder(order.id)} className="text-green-500">
+                <button onClick={() => fetchProductsByOrder(order._id)} className="text-green-500">
                   View Products
                 </button>
-                <button onClick={() => updateOrder(order.id)} className="text-yellow-500">
+                <button onClick={() => updateOrder(order._id)} className="text-yellow-500">
                   Update Order
                 </button>
               </li>
@@ -98,7 +98,7 @@ const OrderPage = () => {
           selectedOrder && (
             <div className="mt-4 p-4 border rounded bg-gray-50">
               <h2 className="text-xl font-bold">Order Details</h2>
-              <p>Order ID: {selectedOrder.id}</p>
+              <p>Order ID: {selectedOrder._id}</p>
               <p>Status: {selectedOrder.status}</p>
               <p>Total: {selectedOrder.total_amount}</p>
 
@@ -117,7 +117,7 @@ const OrderPage = () => {
                   onChange={(e) => setPaymentMethod(e.target.value)}
                   className="p-2 border rounded"
                 />
-                <button onClick={() => updateOrder(selectedOrder.id)} className="bg-blue-500 text-white p-2 rounded">
+                <button onClick={() => updateOrder(selectedOrder._id)} className="bg-blue-500 text-white p-2 rounded">
                   Update
                 </button>
               </div>
@@ -133,7 +133,7 @@ const OrderPage = () => {
               <ul className="space-y-2">
                 {
                   products.map((product) => (
-                    <li key={product.product_id}>{product.productName}</li>
+                    <li key={product._id}>{product.productName}</li>
                   ))
                 }
               </ul>

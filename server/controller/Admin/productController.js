@@ -1,112 +1,106 @@
-// const uploadProductPermission = require('../../helpers/permission');
-const pool = require("../../database/connection");
+const Product = require("../../models/Product");
 
-// upload product on admin
+// Upload product
 exports.uploadProduct = async (req, res) => {
-    const { productName, brandName, description, image, price, selling, category, quantity, showcase } = req.body;
-    try {
-        // const sessionUser = req.user;
-        // if(!uploadProductPermission(sessionUser)){
-        //     throw new Error("Permission denied")
-        // }
+  try {
+    const {
+      productName,
+      brandName,
+      description,
+      image,
+      price,
+      selling,
+      category,
+      quantity,
+      showcase
+    } = req.body;
 
-        const sql = `INSERT INTO products (productName, brandName, description, image, price, selling, category, quantity, showcase)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-        const result = await pool.execute(sql, [
-            productName,
-            brandName,
-            description,
-            JSON.stringify(image),
-            price,
-            selling,
-            category,
-            quantity,
-            showcase
-        ]);
-        res.status(201).json({
-            message: 'Product uploaded successfully',
-            success: true,
-            products: result[0] 
-        });
-    } catch (error) {
-        res.status(400).json({
-            message: error.message || error,
-            error: true,
-            success: false
-        })
-    }
-}
-
-// get products on admin
-exports.getAllProducts = (req, res) => {
-    pool.execute("SELECT * FROM products;", (err, results) => {
-        if (err) {
-            console.error("Error fetching products:", err);
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
-        res.json(results);
+    const newProduct = new Product({
+      productName,
+      brandName,
+      description,
+      image, // should be an array of URLs or file paths
+      price,
+      selling,
+      category,
+      quantity,
+      showcase
     });
+
+    const savedProduct = await newProduct.save();
+
+    res.status(201).json({
+      message: "Product uploaded successfully",
+      success: true,
+      product: savedProduct
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message || error,
+      error: true,
+      success: false
+    });
+  }
 };
 
-// update product on admin
-exports.updateProduct = (req, res) => {
-    try {
-        const { productName, brandName, description, image, price, selling, category, quantity, showcase } = req.body;
-        const { productId } = req.params;
-        const values = [
-            productName !== undefined ? productName : null,
-            brandName !== undefined ? brandName : null,
-            description !== undefined ? description : null,
-            image !== undefined ? image : null,
-            price !== undefined ? price : null,
-            selling !== undefined ? selling : null,
-            category !== undefined ? category : null,
-            quantity !== undefined ? quantity : null,
-            showcase !== undefined ? showcase : null,
-            productId
-        ];
-        const query = `UPDATE products SET productName = ?, brandName = ?, description = ?, image = ?, price = ?, selling = ?, category = ?, quantity = ?, showcase = ?
-            WHERE product_id = ?`;
-        pool.execute(query, values, (err, result) => {
-            if (err) {
-                console.error('Error updating product:', err.message);
-                return res.status(500).json({ success: false, message: 'Error updating product' });
-            } else {
-                res.status(200).json({ success: true, message: 'Product updated successfully', result });
-            }
-        });
-    } catch (error) {
-        console.error('Unexpected error:', error.message); 
-        res.status(500).json({
-            message: error.message || 'Unexpected error occurred',
-            error: true,
-            success: false
-        });
-    }
+// Get all products
+exports.getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
-// update product on admin
-exports.deleteProduct = (req, res) => {
-    const {productId} = req.params;
-    if (!productId) {
-        return res.status(400).send({ success: false, message: 'Product ID is required' });
-    }
-    try {
-        pool.execute("DELETE FROM products WHERE product_id = ?", [productId], (err, result) => {
-            if (err) {
-                console.error(err.message);
-                res.status(500).send("Error deleting product.");
-            } else {
-                res.send(result);
-            }
-        });
+// Update product
+exports.updateProduct = async (req, res) => {
+  try {
+    const { productId } = req.params;
 
-    } catch (error) {
-        res.status(400).json({
-            message: error.message || error,
-            error: true,
-            success: false
-        });
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ success: false, message: "Product not found" });
     }
-}
+
+    res.status(200).json({
+      success: true,
+      message: "Product updated successfully",
+      product: updatedProduct
+    });
+  } catch (error) {
+    console.error("Error updating product:", error.message);
+    res.status(500).json({
+      message: error.message || "Unexpected error occurred",
+      error: true,
+      success: false
+    });
+  }
+};
+
+// Delete product
+exports.deleteProduct = async (req, res) => {
+  try {
+    const { productId } = req.params;
+
+    const deletedProduct = await Product.findByIdAndDelete(productId);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+    }
+
+    res.status(200).json({ success: true, message: "Product deleted successfully" });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message || error,
+      error: true,
+      success: false
+    });
+  }
+};
