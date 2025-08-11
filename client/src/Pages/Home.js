@@ -1,10 +1,9 @@
-import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import BannerProduct from '../components/Banner/BannerProduct';
 import ProductCardFirst from '../components/Productsonhome/ProductCardFirst'
 import ProductCardSecond from '../components/Productsonhome/ProductCardSecond';
 import ProductVertcalCard from '../components/Productsonhome/ProductVertcalCard';
-import ProductByCategory from '../components/Productsonhome/ProductByCategory';
+// import ProductByCategory from '../components/Productsonhome/ProductByCategory';
 import { useParams } from 'react-router-dom';
 
 const Home = () => {
@@ -14,7 +13,7 @@ const Home = () => {
 
 
   return (  
-    <div>
+    <div className='py-[68px]'>
       
       <Helmet>
         <title>{product.name} - E-Tail</title>

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import {useAuth} from '../../Context/index';
 import {useCart} from '../../Context/cart';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {FaCircleMinus, FaCirclePlus} from 'react-icons/fa6'
 import { Helmet } from 'react-helmet-async';
 
@@ -14,7 +13,6 @@ const CartPage = () => {
 
   const baseurl = process.env.REACT_APP_BACKEND_URL;
   
-  const { productId } = useParams();
 
   const product = { name: 'Cart', description: 'A great product', image: 'product-image-url.jpg' }; 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearch } from '../Context/search';
 import SearchProductCard from '../components/Productsonhome/SearchProductCard';
 import axios from 'axios';
@@ -27,7 +27,7 @@ const SearchProduct = () => {
         if (values?.keyword) {
             fetchProducts();
         }
-    }, [values?.keyword, setValues]);
+    }, [values?.keyword, values, setValues, baseurl]);
 
     return (
         <div>

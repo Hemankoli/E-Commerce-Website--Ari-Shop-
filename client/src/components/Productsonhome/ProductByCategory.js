@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../Context/index';
 import axios from 'axios';
-import currancySymbol from '../currancySymbol';
-import { PiShoppingCartSimpleFill } from "react-icons/pi";
-import { FaAngleRight, FaAngleLeft, FaSpinner } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 import toast from 'react-hot-toast';
 import ArrowButton from '../Buttons/ArrowButton';
+import ProductCard from '../Cards/ProductCard';
+import ProductEmpty from '../Cards/ProductEmpty';
 
 const ProductByCategory = ({ heading, category }) => {
     const {auth} = useAuth()
@@ -18,7 +17,7 @@ const ProductByCategory = ({ heading, category }) => {
 
     const loadingList = new Array(15).fill(null);
 
-    const handleFetch = async () => {
+    const handleFetch = useCallback(async () => {
         setLoading(true);
         try {
             const response = await axios.get(`${baseurl}/category-product/${category}`);
@@ -28,11 +27,11 @@ const ProductByCategory = ({ heading, category }) => {
             toast.error('Failed to fetch products.');
         }
         setLoading(false);
-    };
+    }, [baseurl, category]);
 
     useEffect(() => {
         handleFetch();
-    }, [category]);
+    }, [handleFetch]);
 
     const scrollLeft = () => {
         scrollElement.current.scrollBy({ left: -500, behavior: 'smooth' });
@@ -69,56 +68,11 @@ const ProductByCategory = ({ heading, category }) => {
 
                     {loading ? (
                         loadingList.map((_, index) => (
-                            <div key={index}
-                                className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
-                                <div className='relative h-48 md:h-60 w-full flex items-center justify-center cursor-pointer bg-slate-100 animate-pulse'>
-                                    <FaSpinner className='w-full animate-spin' />
-                                    <div className='absolute top-2 right-2'>
-                                        <button className='cursor-pointer w-full h-full bg-slate-200 animate-pulse p-4 rounded-full'>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className='flex flex-col mx-2 mt-4 flex-grow'>
-                                    <h2 className='text-md text-gray-800 line-clamp-2 bg-slate-200 animate-pulse p-2 mb-2 rounded-full'></h2>
-                                    <h2 className='text-md text-gray-800 line-clamp-2 bg-slate-200 animate-pulse p-2 rounded-full'></h2>
-                                    <div className='flex flex-row gap-4 mt-4'>
-                                        <p className='text-gray-500 text-md font-sans mt-auto bg-slate-200 animate-pulse p-2 w-full rounded-full'></p>
-                                        <p className='text-gray-600 text-xs font-sans flex justify-center items-center line-through bg-slate-200 animate-pulse p-2 w-full rounded-full'></p>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProductEmpty key={index} />
                         ))
                     ) : (
                         products.map((product) => (
-                            <div key={product?._id}
-                                className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
-
-                                <Link to={`/product/${encodeURIComponent(product.productName)}`} className='relative h-48 md:h-64 w-full flex items-center justify-center cursor-pointer'
-                                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-
-                                    <img src={product?.image[0]} alt={product?.productName || 'Product Image'}
-                                        className='w-full h-full object-cover object-center' />
-                                </Link>
-
-                                <div className='flex flex-col mx-2 mt-4 flex-grow'>
-                                    <h2 className='text-md text-gray-800 line-clamp-2'>{product?.productName}</h2>
-                                    <div className='flex flex-row mt-4 gap-4'>
-                                        <p className='text-gray-500 text-md font-sans mt-auto'>
-                                            {currancySymbol(product?.price)}
-                                        </p>
-                                        <p className='text-gray-600 text-xs font-sans flex justify-center items-center line-through'>
-                                            {currancySymbol(product?.selling)}
-                                        </p>
-                                    </div>
-                                    <div className='absolute top-2 right-2'>
-                                        <button onClick={() => addToCart(product?._id)}
-                                            className='bg-purple-500 hover:bg-red-400 p-2 rounded-full cursor-pointer'>
-                                            <PiShoppingCartSimpleFill className='text-white text-lg' />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProductCard key={product?._id} product={product} addToCart={addToCart} />
                         ))
                     )}
                 </div>

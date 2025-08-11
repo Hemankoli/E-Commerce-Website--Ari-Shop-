@@ -14,7 +14,7 @@ const orderRoutesAdmin = require('./routes/Admin/orderRoute');
 const connectDB = require('./database/connection');
 
 // Allowed origins for CORS
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [process.env.FRONTEND_URL];
 
 // Setup CORS middleware before any routes
 app.use(cors({

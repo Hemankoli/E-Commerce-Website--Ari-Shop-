@@ -20,7 +20,7 @@ const AllOrders = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [baseurl]);
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {useAuth} from "../../Context/index"
 import axios from 'axios'
 
@@ -10,20 +10,20 @@ const Order = () => {
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
-    const getOrders = async (req, res) => {
+    const getOrders = useCallback(async () => {
         try {
             const response = await axios.get(`${baseurl}/orders`)
             setOrders(response)
         } catch (error) {
             console.log(error)
         }
-    }
+    }, [auth?.token, baseurl])
 
     useEffect(() => {
         if(auth?.token){
             getOrders()
         }
-    },[auth?.token])
+    },[auth?.token, getOrders])
 
   return (
     <div className='container'>

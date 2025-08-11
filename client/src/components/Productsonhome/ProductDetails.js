@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaSpinner, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import curranceySymboy from '../currancySymbol';
@@ -23,24 +23,24 @@ const ProductDetails = () => {
 
     const productHemlet = { name: 'E-Tail', description: 'A great product', image: 'product-image-url.jpg' };
 
-    const fetchProductDetails = async () => {
+    const fetchProductDetails = useCallback(async () => {
         setLoading(true);
         try {
             const response = await axios.get(`${baseurl}/product/${productId}`);
-            setProduct(response?.data?.data[0]);
-            setActiveImage(response?.data?.data[0]?.image?.[0] || 'defaultImageURL');
+            setProduct(response?.data?.data);
+            setActiveImage(response?.data?.data?.image?.[0] || 'defaultImageURL');
         } catch (error) {
             console.error('Error fetching product de    tails:', error);
             toast.error('Failed to fetch product details.');
         }
         setLoading(false);
-    };
+    }, [baseurl, productId]);
 
         useEffect(() => {
             if(productId){
                 fetchProductDetails();
             } 
-        }, [productId]);
+        }, [productId, fetchProductDetails]);
 
     
     const handleChangeImage = (imgUrl) => {
@@ -81,7 +81,7 @@ const ProductDetails = () => {
 
     if (loading) {
         return (
-            <div className='py-4 px-4 lg:py-6 lg:px-10'>
+            <div className='py-4 px-4 lg:py-6 md:px-10'>
                 <div className='flex flex-col lg:flex-row'>
                     <div className='h-full flex flex-col lg:flex-row-reverse gap-4'>
                         <div className='relative h-[300px] w-[300px] lg:h-96 lg:w-96 bg-slate-200 rounded'>
@@ -99,7 +99,7 @@ const ProductDetails = () => {
                     <div className='flex flex-col gap-4 w-full lg:mt-0 lg:mx-10 mt-10'>
                         <div className='grid gap-4'>
                             <p className='bg-slate-200 animate-pulse h-6 w-full rounded-full'></p>
-                            <h2 className='bg-slate-200 animate-pulse h-6 w-full rounded-full'></h2>
+                            <p className='bg-slate-200 animate-pulse h-6 w-full rounded-full'></p>
                             <p className='bg-slate-200 animate-pulse h-6 rounded-full'></p>
                             <div className='bg-slate-200 animate-pulse h-6 rounded-full'></div> 
                             <div className='flex gap-4'>
@@ -132,7 +132,7 @@ const ProductDetails = () => {
                 <meta property="og:image" content={productHemlet.image} />
             </Helmet>
         
-            <div className='max-w-7xl mx-auto py-4 px-6 lg:py-6 lg:px-10'>
+            <div className='py-4 px-4 lg:py-6 md:px-10 mt-20'>
                 <div className='min-h-[200px] flex flex-col md:flex-row lg:flex-row'>
                     {/* Image details */}
                     <div className='h-96 flex flex-col md:flex-row-reverse lg:flex-row-reverse gap-4'>

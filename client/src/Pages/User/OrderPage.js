@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 const OrderPage = () => {
@@ -7,24 +7,23 @@ const OrderPage = () => {
   const [products, setProducts] = useState([]);
   const [status, setStatus] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
-  const userId = 1; 
 
   const baseurl = process.env.REACT_APP_BACKEND_URL;
 
 
     // Fetch all orders
-  const fetchAllOrders = async () => {
+  const fetchAllOrders = useCallback(async () => {
     try {
       const response = await axios.get(`${baseurl}/orders`);
       setOrders(response?.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
-  };
+  }, [baseurl]);
 
   useEffect(() => {
     fetchAllOrders();
-  }, []);
+  }, [fetchAllOrders]);
 
   // Fetch order by ID
   const fetchOrderById = async (orderId) => {
@@ -60,15 +59,6 @@ const OrderPage = () => {
     }
   };
 
-  // Fetch past orders by customer ID
-  const fetchPastOrdersByCustomerId = async () => {
-    try {
-      const response = await axios.get(`${baseurl}/customers/${userId}/orders`);
-      setOrders(response.data);
-    } catch (error) {
-      console.error('Error fetching customer orders:', error);
-    }
-  };
 
   return (
     <div className="bg-gray-100 rounded-md p-6">

@@ -48,7 +48,7 @@ const BannerProduct = () => {
         }, 3000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [slides?.length]);
 
     return (
         <div className='overflow-hidden mx-auto relative'>

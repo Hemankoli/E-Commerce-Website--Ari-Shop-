@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import CreateProducts from './CreateProducts'
 import { MdEdit, MdDelete } from "react-icons/md";
 import currancySymbol from '../../components/currancySymbol';
@@ -12,11 +12,11 @@ const AllProducts = () => {
 
   const baseurl = process.env.REACT_APP_BACKEND_URL;
 
-  const getAllProducts = async() => {
+  const getAllProducts = useCallback(async () => {
     const response = await fetch(`${baseurl}/get-product`)
     const dataResponse = await response.json()  
     setGetProduct(dataResponse || [])
-  }
+  }, [baseurl])
 
   const deleteProduct = async (productId) => {
     if (!productId) {
@@ -35,7 +35,7 @@ const AllProducts = () => {
 
   useEffect(() => {  
     getAllProducts() 
-  },[])
+  },[getAllProducts])
  
   useEffect(() => {
     document.body.classList.toggle('no-scroll', opencreateproducts);

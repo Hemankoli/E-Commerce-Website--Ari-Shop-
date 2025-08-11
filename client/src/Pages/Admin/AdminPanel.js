@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { LuLayoutDashboard } from "react-icons/lu";
 import { PiUsersFourThin } from "react-icons/pi";
 import { IoMenu, IoClose } from "react-icons/io5";
-import { CiShoppingBasket, CiImageOn } from "react-icons/ci";
+import { CiShoppingBasket } from "react-icons/ci";
 
 import { HiOutlineCheckBadge } from "react-icons/hi2";
 

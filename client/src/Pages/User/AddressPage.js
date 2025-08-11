@@ -27,7 +27,7 @@ const AddressPage = () => {
       }
     };
     fetchAddresses();
-  }, [auth?.user]);
+  }, [auth?.user, baseurl]);
 
   // Handle form input change
   const handleInputChange = (e) => {

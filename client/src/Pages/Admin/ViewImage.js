@@ -1,4 +1,3 @@
-import React from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 
 const ViewImage = ({imgUrl, onClose}) => {
@@ -9,7 +8,7 @@ const ViewImage = ({imgUrl, onClose}) => {
                 <AiOutlineClose />
             </div>
             <div className='flex justify-center p-4 max-w-[80vh] max-h-[100vh]'>
-                <img src={imgUrl} className='w-full h-full' />
+                <img src={imgUrl} alt='' className='w-full h-full' />
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../Context/index';
 import { useCart } from '../../Context/cart';
@@ -40,7 +40,7 @@ const CheckoutPage = () => {
     const fetchAddresses = async () => {
       try {
         const response = await axios.get(
-          `${baseurl}/addresses/${auth?.user?.user_id}`
+          `${baseurl}/addresses/${auth?.user?._id}`
         );
         setAddresses(response.data);
       } catch (error) {
@@ -48,7 +48,7 @@ const CheckoutPage = () => {
       }
     };
     fetchAddresses();
-  }, [auth?.user?.user_id]);
+  }, [auth?.user?._id, baseurl]);
 
   // Handle form input change
   const handleInputChange = (e) => {
@@ -77,7 +77,7 @@ const CheckoutPage = () => {
         );
       } else {
         // Add new address
-        const response = await axios.post('${baseurl}/addresses', {
+        const response = await axios.post(`${baseurl}/addresses`, {
           user_id: auth?.user?._id,
           ...form,
         });
@@ -363,7 +363,7 @@ const CheckoutPage = () => {
               className="mr-2"
             />
             I have read and agree to the website's{' '}
-            <a href="#" className="text-blue-500">
+            <a href="/customer-support" className="text-blue-500">
               terms and conditions
             </a>
             .

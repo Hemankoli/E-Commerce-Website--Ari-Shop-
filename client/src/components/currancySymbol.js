@@ -1,5 +1,3 @@
-import React from 'react'
-
 const currancySymbol = (num) => {
 
     const symbol = new Intl.NumberFormat('en-IN',{

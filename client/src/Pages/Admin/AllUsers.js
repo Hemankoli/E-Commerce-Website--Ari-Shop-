@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ const AllUsers = () => {
 
   const baseurl = process.env.REACT_APP_BACKEND_URL;
 
-  const fetchAllUsers = async () => {
+  const fetchAllUsers = useCallback(async () => {
     try {
         const response = await axios.get(`${baseurl}/all-users`, {
             withCredentials: true,
@@ -23,11 +23,11 @@ const AllUsers = () => {
         console.error('Error fetching users:', error);
         toast.error('Failed to fetch users');
     }
-};
+  }, [baseurl]);
 
   useEffect(() => {
     fetchAllUsers();
-  }, []);
+  }, [fetchAllUsers]);
 
   return (
     <div className="container mx-auto">

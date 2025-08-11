@@ -29,7 +29,7 @@ axios.defaults.headers.common["Authorization"] = auth?.token
         } catch (error) {
             console.error("Error parsing auth data from localStorage:", error)
         }
-    }, []);
+    }, [auth]);
 
     return (
         <AuthContext.Provider value={{auth, setAuth}}>

@@ -13,7 +13,6 @@ import UserRoute from './Pages/PrivateRoutes/UserRoute';
 import AdminRoute from './Pages/PrivateRoutes/AdminRoute';
 import AllUsers from './Pages/Admin/AllUsers';
 import AllProducts from './Pages/Admin/AllProducts';
-import BannerUpload from './Pages/Admin/BannerUpload';
 import AllOrders from './Pages/Admin/AllOrders';
 import ProductDetails from './components/Productsonhome/ProductDetails';
 import SearchProduct from './Pages/SearchProduct';

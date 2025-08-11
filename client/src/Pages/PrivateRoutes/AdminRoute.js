@@ -30,7 +30,7 @@ const AdminRoute = () => {
         };
     
         if (auth?.token) authCheck();
-    }, [auth?.token]);
+    }, [auth?.token, baseurl]);
     
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineClose } from "react-icons/ai";
 import productsCategory from './data/productsCategory';
 import productShowcase from './data/productShowcase';
@@ -139,10 +139,7 @@ return (
                         <div key={index} className='relative'>
                           <img src={e} alt='e' width={80} height={80}
                             className='p-2 bg-slate-100 border cursor-pointer'
-                            onClick={() => (
-                              setOpenImage(true),
-                              setShowImage(e)
-                            )} />
+                            onClick={() => {setOpenImage(true); setShowImage(e)}} />
 
                           <div className='absolute bottom-0 right-0 p-1 text-white bg-purple-500 rounded-full block group-hover:hidden cursor-pointer'
                             onClick={() => handleDeleteImage(index)}>
