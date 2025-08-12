@@ -18,7 +18,7 @@ const orderRoutes = require('./routes/User/orderRoutes');
 const connectDB = require('./database/connection');
 
 // Allowed origins for CORS
-const allowedOrigins = [process.env.FRONTEND_URL];
+const allowedOrigins = process.env.FRONTEND_URL;
 
 // Setup CORS middleware before any routes
 app.use(cors({
