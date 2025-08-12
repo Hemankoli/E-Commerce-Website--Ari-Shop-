@@ -19,6 +19,7 @@ const connectDB = require('./database/connection');
 
 // Allowed origins for CORS
 const allowedOrigins = process.env.FRONTEND_URL;
+console.log('Allowed Origins:', allowedOrigins);
 
 // Setup CORS middleware before any routes
 app.use(cors({
