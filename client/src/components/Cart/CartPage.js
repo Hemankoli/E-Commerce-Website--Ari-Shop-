@@ -38,7 +38,7 @@ const CartPage = () => {
           <meta property="og:image" content={product?.image} />
         </Helmet>
 
-        <div className='max-w-7xl mx-auto px-4 my-12 mt-20'>
+        <div className='max-w-7xl mx-auto px-4 my-12 mt-32'>
           <div className='relative mb-10'>
               <h1 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] uppercase text-white text-lg md:text-3xl font-bold mb-6 text-center">
                 {`Welcome ${auth?.token && auth?.user?.name ? "to the shopping cart" : "Guest"}`}

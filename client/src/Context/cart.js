@@ -54,6 +54,7 @@ export const CartProvider = ({ children }) => {
         quantity: 1,
       });
       toast.success("Item added to cart!");
+      await fetchCartItems(auth?.user?.user_id);
     } catch (error) {
       console.error('Error adding to cart:', error);
       toast.error("Failed to add item to cart.");
@@ -75,8 +76,8 @@ export const CartProvider = ({ children }) => {
         console.error("Failed to update quantity");
         return;
       }
+      await fetchCartItems(auth?.user?.user_id);
       const responseData =  await response.json()
-      setCartItems(responseData?.cart || []);
       return responseData?.cart;
     } catch (error) {
       console.error('Error decreasing quantity:', error);
@@ -94,8 +95,8 @@ export const CartProvider = ({ children }) => {
         },
         body: JSON.stringify({ user_id: auth?.user?.user_id, product_id: product_id })
       });
+      await fetchCartItems(auth?.user?.user_id);
       const responseData =  await response.json()
-      setCartItems(responseData?.cart || []);
       return responseData?.cart;
     } catch (error) {
       console.error('Error deleting cart item:', error);
@@ -104,7 +105,7 @@ export const CartProvider = ({ children }) => {
 
 
   return (
-    <CartContext.Provider value={{ products, setProducts, cartItems, setCartItems, loading, fetchCartItems, addToCart, updateQuantity, deleteCartItem }}>
+    <CartContext.Provider value={{ products, setProducts, cartItems, setCartItems, loading, setLoading, fetchCartItems, addToCart, updateQuantity, deleteCartItem }}>
       {children}
     </CartContext.Provider>
   );

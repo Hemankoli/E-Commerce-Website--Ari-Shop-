@@ -22,6 +22,7 @@ import CartPage from './components/Cart/CartPage';
 import ErrorPage from './Pages/ErrorPage';
 import CustomerSupportPage from './Pages/CustomerSupportPage';
 import Checkout from './components/Checkout/Checkout';
+import MarqueeBanner from './components/Banner/MarqueeBanner';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <meta property="og:url" content="https://yourwebsite.com" />
           <link rel="canonical" href="https://yourwebsite.com" />
         </Helmet>
+        <MarqueeBanner />
         <Header />
         <main>
           <Routes>

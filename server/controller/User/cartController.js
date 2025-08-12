@@ -9,7 +9,7 @@ exports.getCartItems = async (req, res) => {
   try {
     const cartItems = await CartItem?.find({ user_id:userId })
     if (cartItems.length === 0) {
-      return res.status(404).json([]);
+      return res.status(200).json([]);
     }
     return res.status(200).json(cartItems);
   } catch (error) {

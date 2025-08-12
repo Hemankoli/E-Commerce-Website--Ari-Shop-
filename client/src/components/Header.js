@@ -51,7 +51,7 @@
             e.preventDefault();
             if (values.keyword.trim()) { 
                 try {
-                    const response = await axios.get(`${baseurl}/search/${values.keyword}`);
+                    const response = await axios.get(`${baseurl}/search/${values?.keyword}`);
                     setValues({ ...values, results: response.data.data });
                     navigate('/search');
                 } catch (error) {
@@ -64,13 +64,14 @@
             setShowDropdown(!showDropdown);
         };    
 
-        const handleLinkClick = () => {
+        const handleLinkClick = (path) => {
             setShowMobileMenu(false);
             setShowDropdown(false);
             setShowSearchForm(false);
             document.body.classList.remove('no-scroll');
-
-        };
+            navigate(path)
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        };  
 
 
         const handleClickOutside = (event) => {
@@ -80,7 +81,7 @@
         };
 
         useEffect(() => {
-            if (showDropdown) {
+            if (showDropdown)   {
                 document.addEventListener('mousedown', handleClickOutside);
             } else {
                 document.removeEventListener('mousedown', handleClickOutside);
@@ -99,7 +100,7 @@
 
         return (
             <header>
-                <nav className="py-2 px-4 md:px-10 bg-[#fff] z-50 shadow fixed left-0 right-0 top-0">
+                <nav className="py-2 px-4 md:px-10 bg-[#fff] z-50 shadow fixed left-0 right-0 top-8">
                     <div className="flex justify-between">
                         <div className="flex items-center">
                             <div className="lg:hidden">
@@ -109,12 +110,12 @@
                             </div>
                         </div>
                         <div className="flex items-center justify-between px-4 py-2">
-                            <Link to="/" className="flex items-center space-x-2">
+                            <button onClick={()=>handleLinkClick("/")} className="flex items-center space-x-2">
                                 <img src={logo} alt="logo" className="h-8 w-8" />
                                 <h1 className="text-3xl  font-bold text-gray-800">
                                     <span className="tracking-wide">E-Tail</span>
                                 </h1>
-                            </Link>
+                            </button>
                         </div>
                         
                         <div className='flex items-center space-x-2 lg:space-x-4'>
@@ -122,7 +123,7 @@
                                 <CiSearch className="w-6 h-6 hover:text-purple-500" />
                             </button>
 
-                            <Link to="/cart" className="mx-2 relative hover:scale-110 transition-transform">
+                            <button onClick={()=>handleLinkClick("/cart")} className="mx-2 relative hover:scale-110 transition-transform">
                                 <PiShoppingBagLight className="w-6 h-6 hover:text-purple-500" />
                                 {auth?.user && (
                                     <div>
@@ -138,7 +139,7 @@
                                     </div>
                                     
                                 )}
-                            </Link>
+                            </button>
 
                             <div className="flex items-center relative" ref={dropdownRef}>
                                 <div className='hidden lg:block'>
@@ -155,17 +156,17 @@
                                     ) : (
                                         
                                         <button className="flex justify-center items-center">
-                                            <Link to={"/login"} onClick={handleLinkClick} 
-                                            className="px-1 py-1 text-white rounded bg-purple-500 hover:bg-purple-600 font-semibold cursor-pointer flex items-center">
+                                            <button onClick={()=>handleLinkClick("/login")} 
+                                                className="px-1 py-1 text-white rounded bg-purple-500 hover:bg-purple-600 font-semibold cursor-pointer flex items-center">
                                             <PiUserCircleThin className='w-6 h-6 mr-1' /> Login
-                                            </Link>
+                                            </button>
                                         </button>
                                     )}
                                 </div>
 
                                 {showDropdown && (
                                     <div className="absolute bg-white top-12 text-lg left-auto right-0 w-96 max-w-xs lg:max-w-md bg-custom-gray shadow-lg rounded-lg z-50">
-                                        <div  onClick={handleLinkClick} className="px-4 py-4 flex font-semibold items-center">
+                                        <div onClick={()=>handleLinkClick()} className="px-4 py-4 flex font-semibold items-center">
                                             <div className='pr-2'>
                                                 {   
                                                     auth.user && auth.user.name ? (
@@ -181,37 +182,37 @@
                                                 auth?.user ? (
                                                     <span>{auth?.user?.name}</span>
                                                 ) : (
-                                                    <Link to="/login" onClick={handleLinkClick} className="px-2 flex items-center text-white bg-purple-400 ">Login & Register</Link>
+                                                    <button onClick={()=>handleLinkClick("/login")} className="px-2 flex items-center text-white bg-purple-400 ">Login & Register</button>
                                                 )
                                             }                        
                                         </div>
 
                                         <hr className='border border-gray-200'></hr>
                                         {auth?.user?.role === 'Admin' && (
-                                            <Link to="/dashboard/admin/all-products" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                                            <button onClick={()=>handleLinkClick("/dashboard/admin/all-products")} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100 w-full">
                                                 <CiUser className='mx-2 w-5 h-5' />Admin Dashboard
-                                            </Link>)
+                                            </button>)
                                         }
-                                        <Link to="/dashboard/user/details" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                                        <button onClick={()=>handleLinkClick("/dashboard/user/details")} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100 w-full">
                                             <CiUser className='mx-2 w-5 h-5' />Profile
-                                        </Link>
+                                        </button>
 
                                     
-                                        <Link to="/dashboard/user/orders" onClick={handleLinkClick} className="flex items-center px-4 py-2 hover:bg-gray-100">
+                                        <button onClick={()=>handleLinkClick("/dashboard/user/orders")} className="flex items-center px-4 py-2 hover:bg-gray-100 w-full">
                                             <PiCodesandboxLogoThin className='mx-2 w-5 h-5' /> Orders
-                                        </Link>
+                                        </button>
 
-                                        <Link to="/customer-support" onClick={handleLinkClick} className="flex items-center px-4 py-2 hover:bg-gray-100 my-1">
+                                        <button onClick={()=>handleLinkClick("/customer-support")} className="flex items-center px-4 py-2 hover:bg-gray-100 w-full my-1">
                                             <PiPhoneThin className='mx-2 w-5 h-5' /> Customer Support 24x7
-                                        </Link>
+                                        </button>
 
                                         <hr className='border border-gray-200'></hr>
 
                                         { auth.user ? (
-                                            <div onClick={handleLinkClick} >
-                                                <Link onClick={handleLogout} className="flex items-center px-1 py-2 bg-red-400 hover:bg-red-500 w-32 my-2 mx-8 font-semibold rounded-md text-white ">
+                                            <div onClick={()=>handleLinkClick()} >
+                                                <button onClick={handleLogout} className="flex items-center px-1 py-2 bg-red-400 hover:bg-red-500 w-32 my-2 mx-8 font-semibold rounded-md text-white ">
                                                     <IoIosLogOut className='mx-2 w-5 h-5' /> Logout
-                                                </Link>
+                                                </button>
                                             </div>
                                             ) : (null)
                                         }
@@ -239,33 +240,33 @@
                                 { auth?.user ? (
                                         <span className='px-2 items-center flex text-xl'>{auth?.user?.name}</span>
                                     ) : (
-                                        <Link to="/login" onClick={handleLinkClick} className="px-2 text-lg flex items-center ">
-                                            Login & Register
-                                    </Link>
+                                    <button onClick={()=>handleLinkClick("/login")} className="px-2 text-lg flex items-center ">
+                                        Login & Register
+                                    </button>
                                     )
                                 }    
                             </div>     
                             {auth?.user?.role === 'Admin' && 
-                                <Link to="/dashboard/admin/all-products" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                                <button onClick={()=>handleLinkClick("/dashboard/admin/all-products")} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100 w-full">
                                     <CiUser className='mx-2 w-5 h-5' />Admin Dashboard
-                                </Link>
+                                </button>
                             }
-                            <Link to="/dashboard/user/details" onClick={handleLinkClick} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100">
+                            <button onClick={()=>handleLinkClick("/dashboard/user/details")} className="flex items-center px-4 py-2 bg-white hover:bg-gray-100 w-full">
                                 <CiUser className='mx-2 w-5 h-5' />Profile
-                            </Link>
-                            <Link to="/dashboard/user/orders" onClick={handleLinkClick} className="flex text-lg items-center px-4 py-2 hover:bg-gray-100">
+                            </button>
+                            <button onClick={()=>handleLinkClick("/dashboard/user/orders")} className="flex text-lg items-center px-4 py-2 hover:bg-gray-100 w-full">
                                 <PiCodesandboxLogoThin className='mx-2 w-5 h-5 text-purple-500' /> Orders
-                            </Link>
-                            <Link to="/customer-support" onClick={handleLinkClick} className="flex text-lg items-center px-4 py-2 hover:bg-gray-100 mb-1">
+                            </button>
+                            <button onClick={()=>handleLinkClick("/customer-support")} className="flex text-lg items-center px-4 py-2 hover:bg-gray-100 w-full mb-1">
                                 <PiPhoneThin className='mx-2 w-5 h-5 text-purple-500' /> Customer-support Support 24x7
-                            </Link>
+                            </button>
                                                     
                             {auth?.user ? (
                                 <div className="mt-auto">    
-                                    <div onClick={handleLinkClick}>
-                                        <Link onClick={handleLogout} className=" flex text-xl font-semibold items-center px-4 py-2 hover:bg-gray-100 mt-1">
+                                    <div onClick={()=>handleLinkClick()}>
+                                        <button onClick={handleLogout} className=" flex text-xl font-semibold items-center px-4 py-2 hover:bg-gray-100 w-full mt-1">
                                             <IoIosLogOut className='mx-2 w-5 h-5 text-purple-500' /> Logout
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
                             ) : 
@@ -289,7 +290,7 @@
                                         onChange={((e) => setValues({...values, keyword: e.target.value}))}
                                     />
                                     <button type="submit" onClick={handleSearch} className="ml-4 bg-purple-500 text-white rounded-lg px-1 py-1 hover:bg-purple-600">
-                                        <IoSearch onClick={handleLinkClick} className='w-6 h-6' />
+                                        <IoSearch onClick={()=>handleLinkClick()} className='w-6 h-6' />
                                     </button>
                                     <button className="ml-2 bg-purple-500 text-white rounded-lg px-1 py-1 hover:bg-purple-600" onClick={toggleSearchForm}>
                                         <MdClose className="w-6 h-6" />

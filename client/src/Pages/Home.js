@@ -14,7 +14,7 @@ const Home = () => {
 
 
   return (  
-    <div className='py-[68px]'>
+    <div className='py-[100px]'>
       
       <Helmet>
         <title>{product.name} - E-Tail</title>
@@ -32,12 +32,9 @@ const Home = () => {
 
       <ProductCardFirst category={"kpop"} heading={"BestSelling Products"}/>  
 
-    
       <ProductCardSecond category={"kpop"} heading={"Trending"}/>  
 
       <ProductVertcalCard  category={"kpop"}  heading={"New Arrivals"}/>  
-
-
 
     </div>
   );

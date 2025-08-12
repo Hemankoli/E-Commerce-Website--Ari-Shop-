@@ -7,7 +7,7 @@ const CustomerSupportPage = () => {
   
     return (
     
-        <div className="container mx-auto px-4 md:px-10 mt-20 py-4">
+        <div className="container mx-auto px-4 md:px-10 mt-32 py-4">
             {/* Hero Section */}
             <div className="bg-purple-600 text-white p-8 rounded-lg text-center">
                 <h1 className="text-3xl font-bold mb-4">Customer Support - Available 24/7</h1>

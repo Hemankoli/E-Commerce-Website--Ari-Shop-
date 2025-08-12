@@ -3,9 +3,9 @@ import ProductCard from '../Cards/ProductCard';
 import { useCart } from '../../Context/cart';
 
 
-const SearchProductCard = () => {
+const SearchProductCard = ({products}) => {
     const loadingList = new Array(15).fill(null);
-    const {loading, products, addToCart} = useCart();
+    const {loading, addToCart} = useCart();
 
     return (
         <div className='md:px-10 px-4 my-12'>
@@ -18,8 +18,8 @@ const SearchProductCard = () => {
                         </div>
                     ))
                 ) : (
-                    Array.isArray(products) && products.length > 0 ? (
-                        products.map((product) => (
+                    products.length > 0 ? (
+                        products?.map((product) => (
                             <div key={product?._id}
                                 className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:w-[300px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
                                     <ProductCard key={product?._id} product={product} addToCart={addToCart} />

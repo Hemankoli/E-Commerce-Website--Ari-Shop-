@@ -23,7 +23,6 @@ const allowedOrigins = [process.env.FRONTEND_URL];
 // Setup CORS middleware before any routes
 app.use(cors({
   origin: function(origin, callback) {
-    // allow requests with no origin (like curl, Postman)
     if (!origin) return callback(null, true);
     if (!allowedOrigins.includes(origin)) {
       return callback(new Error('Not allowed by CORS'), false);

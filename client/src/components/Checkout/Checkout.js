@@ -166,7 +166,9 @@ const Checkout = () => {
         }]
       });
       toast.success('Order submitted successfully');
-      await deleteCartItem(cartItems?.map(item => ({ product_id: item.product_id })));
+      for (const item of cartItems) {
+        await deleteCartItem(item?.product_id);
+      }
       setSelectedAddressId(null);
       setPlacedModal(true);
       return response?.data;
@@ -177,7 +179,7 @@ const Checkout = () => {
 
   return (
     <div>
-      <div className="px-4 py-10 mt-20 flex flex-col lg:flex-row justify-center lg:space-x-6 space-y-6 lg:space-y-0">
+      <div className="px-4 py-10 mt-32 flex flex-col lg:flex-row justify-center lg:space-x-6 space-y-6 lg:space-y-0">
         {/* Address Section */}
         <div className="w-full lg:w-1/2 p-4 bg-white shadow-md rounded-lg">
           <h2 className="text-lg sm:text-xl font-bold mb-4">Billing Details</h2>
