@@ -1,4 +1,4 @@
-    import React, { useState, useEffect, useRef } from 'react';
+    import { useState, useEffect, useRef } from 'react';
     import { useNavigate } from 'react-router-dom';
     import logo from '../assets/logo.png';
     import { MdMenu, MdClose } from 'react-icons/md';
