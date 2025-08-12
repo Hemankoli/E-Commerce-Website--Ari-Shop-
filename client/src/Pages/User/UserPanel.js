@@ -9,7 +9,7 @@ const UserPanel = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <div className="user-panel">
+    <div className="user-panel mt-20">
       <div className='relative mb-10'>
             <h1 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] uppercase text-white text-lg md:text-3xl font-bold mb-6 text-center">
                 Profile

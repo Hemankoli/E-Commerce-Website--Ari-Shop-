@@ -4,11 +4,7 @@ const Order = require("../../models/Order");
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
-      .populate("user", "name")           // only fetch name from User
-      .populate("product", "productName price") // only fetch productName and price
-      .sort({ createdAt: -1 });           // DESC order by creation date
-
-    res.status(200).json(orders);
+    return res.status(200).json(orders);
   } catch (error) {
     console.error("Error fetching orders:", error);
     res.status(500).json({ message: "Error while fetching orders" });

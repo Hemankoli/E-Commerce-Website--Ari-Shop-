@@ -4,7 +4,7 @@ import { FaSpinner } from 'react-icons/fa6'
 export default function ProductEmpty({key}) {
     return (
         <div key={key}
-            className='relative flex flex-col w-[220px] md:w-[320px] lg:w-[220px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+            className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
             <div className='relative h-48 md:h-60 w-full flex items-center justify-center cursor-pointer bg-slate-100 animate-pulse'>
                 <FaSpinner className='w-full animate-spin' />
                 <div className='absolute top-2 right-2'>

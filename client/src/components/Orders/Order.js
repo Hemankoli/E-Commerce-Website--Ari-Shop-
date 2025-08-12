@@ -26,7 +26,7 @@ const Order = () => {
     },[auth?.token, getOrders])
 
   return (
-    <div className='container'>
+    <div className='mt-20'>
         <div className='row'>
             <div className='col-md-9'>
                 <h1>

@@ -21,14 +21,6 @@ const BannerProduct = () => {
         {
             image: 'https://cottonbrazil.com/wp-content/uploads/2023/09/k-pop-and-fashion-3.webp',
             text: 'Elegant streetwear for every season'
-        },
-        {
-            image: 'https://images.lifestyleasia.com/wp-content/uploads/sites/5/2022/09/05184728/blackpink-1-1.jpeg',
-            text: 'Bold & beautiful — express yourself'
-        },
-        {
-            image: 'https://qph.cf2.quoracdn.net/main-qimg-44e1d71b949a7dbfadd4423170298075',
-            text: 'Shop your idol-inspired outfits'
         }
     ];
 

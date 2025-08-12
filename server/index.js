@@ -14,6 +14,7 @@ const userProductRoute = require('./routes/User/userProductRoute');
 const cartRoute = require('./routes/User/cartRoute');
 const addressRoutes = require('./routes/User/addressRoutes');
 const orderRoutesAdmin = require('./routes/Admin/orderRoute');
+const orderRoutes = require('./routes/User/orderRoutes');
 const connectDB = require('./database/connection');
 
 // Allowed origins for CORS
@@ -54,6 +55,7 @@ app.use("/", orderRoutesAdmin);
 app.use("/", userProductRoute);
 app.use("/", cartRoute);
 app.use("/", addressRoutes);
+app.use("/", orderRoutes);
 
 // Simple test route to verify CORS is working
 app.get('/test-cors', (req, res) => {
@@ -74,7 +76,7 @@ connectDB();
 
 // Start the server
 if (require.main === module) {
-  const PORT = process.env.PORT || 8000;
+  const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => {
     console.log(`✅ Server running at http://localhost:${PORT}`);
   });

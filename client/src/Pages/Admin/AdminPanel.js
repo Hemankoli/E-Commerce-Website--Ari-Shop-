@@ -27,9 +27,9 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-[68px]">
       <div className='flex flex-col lg:flex-row min-h-[calc(100vh-120px)]'>
-        <aside className={`w-full bg-red-400 lg:w-[260px] fixed lg:static z-50 transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        <aside className={`w-full bg-red-400 lg:w-[260px] fixed lg:static z-40 transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
           <div className='p-4 border-b border-red-700'>
             <div className='flex lg:flex-row justify-between items-center'>
               <div className='flex items-center text-white'>

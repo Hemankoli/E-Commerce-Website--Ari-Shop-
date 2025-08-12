@@ -1,39 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import { useRef } from 'react';
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-import toast from 'react-hot-toast';
-import { useAuth } from '../../Context/index';  
 import ArrowButton from '../Buttons/ArrowButton';
 import ProductEmpty from '../Cards/ProductEmpty';
 import ProductCard from '../Cards/ProductCard';
+import { useCart } from '../../Context/cart';
 
 const ProductCardSecond = ({ heading }) => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
     const scrollElement = useRef();
-    const {auth} = useAuth()
-
-    const baseurl = process.env.REACT_APP_BACKEND_URL;
-
+    const {products, loading, addToCart} = useCart();
 
     const loadingList = new Array(15).fill(null)
-
-    // Fetch products from API
-    const handleFetch = useCallback(async () => {
-        setLoading(true);
-        try {
-            const response = await axios.get(`${baseurl}/get-product`);
-            setProducts(response?.data || []);
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
-        setLoading(false);
-    }, [baseurl]);
-
-
-    useEffect(() => {
-        handleFetch();
-    }, [handleFetch]);
 
     // Scroll functionality
     const scrollLeft = () => {
@@ -43,25 +19,8 @@ const ProductCardSecond = ({ heading }) => {
     const scrollRight = () => {
         scrollElement.current.scrollBy({ left: 300, behavior: 'smooth' });
     };
-
-    // Add to Cart functionality
-    const addToCart = async (product_id) => {
-        if(!auth?.token || !auth?.user){
-            toast.error('Please login to add product to cart');
-        }else{
-            try {
-                await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?._id,
-                    product_id,
-                    quantity: 1,
-                });
-                toast.success("Item added to cart!");
-            } catch (error) {
-                console.error('Error adding to cart:', error);
-                toast.error("Failed to add item to cart.");
-            }
-        }
-    };
+    
+    const filteredProducts = products?.filter(prod => prod?.showcase === "trending") || [];
 
     return (
         <div className='md:px-10 px-4 my-12'>
@@ -74,12 +33,17 @@ const ProductCardSecond = ({ heading }) => {
                     { loading ? (
                         loadingList.map((_, index) => {
                             return(
-                                <ProductEmpty key={index} />
+                                <div  key={index} className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+                                    <ProductEmpty key={index} />
+                                </div>
                             )
                         })
                     ) : (
-                        products.map((product) => (
-                            <ProductCard key={product?._id} product={product} addToCart={addToCart} />
+                        filteredProducts?.map((product) => (
+                            <div key={product?._id}
+                                className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:w-[300px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+                                <ProductCard key={product?._id} product={product} addToCart={addToCart} />
+                            </div>
                         ))
                     )}
                         

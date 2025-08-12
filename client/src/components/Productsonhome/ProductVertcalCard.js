@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { FaChevronDown } from "react-icons/fa";
 import toast from 'react-hot-toast';
-import { useAuth } from '../../Context/index';  
 import ProductEmpty from '../Cards/ProductEmpty';
 import ProductCard from '../Cards/ProductCard';
+import { useCart } from '../../Context/cart';
 
 const ProductVerticalCard = ({ heading }) => {
     const [products, setProducts] = useState([]);
@@ -13,7 +13,7 @@ const ProductVerticalCard = ({ heading }) => {
     const [hasMore, setHasMore] = useState(true); 
     const [noMoreProductsShown, setNoMoreProductsShown] = useState(false); 
     const scrollElement = useRef();
-    const {auth} = useAuth() 
+    const {addToCart} = useCart();
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
 
@@ -27,7 +27,7 @@ const ProductVerticalCard = ({ heading }) => {
                 const newProducts = response.data;
                 setProducts(prevProducts => {
                     const existingProductIds = new Set(prevProducts.map(p => p._id));
-                    const filteredProducts = newProducts.filter(product => !existingProductIds.has(product._id));
+                    const filteredProducts = newProducts.filter(product => product?.showcase === 'new' && !existingProductIds.has(product._id));
                     return [...prevProducts, ...filteredProducts];
                 });
                 setHasMore(true);
@@ -48,24 +48,6 @@ const ProductVerticalCard = ({ heading }) => {
         handleFetch(page);
     }, [page, handleFetch]);
 
-    const addToCart = async (product_id) => {
-        if(!auth?.token || !auth?.user){
-            toast.error('Please login to add product to cart');
-        }else{
-            try {
-                await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?._id,
-                    product_id,
-                    quantity: 1,
-                });
-                toast.success("Item added to cart!");
-            } catch (error) {
-                console.error('Error adding to cart:', error);
-                toast.error("Failed to add item to cart.");
-            }
-        }
-    };
-
     const loadMoreProducts = () => {
         if (hasMore) {
             setPage(prevPage => prevPage + 1);
@@ -82,11 +64,16 @@ const ProductVerticalCard = ({ heading }) => {
                     {
                         loading ? (
                             loadingList.map((_, index) => (
-                                <ProductEmpty key={index} />
+                                <div  key={index} className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+                                    <ProductEmpty key={index} />
+                                </div>
                             ))
                         ) : (
                         products.map((product) => (
-                            <ProductCard key={product?._id} product={product} addToCart={addToCart} />
+                            <div key={product?._id}
+                                className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:w-[300px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+                                    <ProductCard key={product?._id} product={product} addToCart={addToCart} />
+                            </div>
                         ))
                         )
                     }

@@ -91,11 +91,11 @@
             };
         }, [showDropdown]);
 
-          useEffect(() => {
-            if (auth?.user) {
-              fetchCartItems(auth.user._id);
+        useEffect(() => {
+            if (auth?.user?.user_id) {
+            fetchCartItems(auth?.user?.user_id);
             }
-          }, [auth?.user, fetchCartItems]);
+        }, [auth?.user?.user_id, fetchCartItems]);
 
         return (
             <header>

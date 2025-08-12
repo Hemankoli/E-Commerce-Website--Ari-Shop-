@@ -1,36 +1,11 @@
-import { useAuth } from '../../Context/index';  
-import toast from 'react-hot-toast';
-import axios from 'axios';
 import ProductEmpty from '../Cards/ProductEmpty';
 import ProductCard from '../Cards/ProductCard';
+import { useCart } from '../../Context/cart';
 
 
-const SearchProductCard = ({ loading, products = [] }) => {
+const SearchProductCard = () => {
     const loadingList = new Array(15).fill(null);
-
-    const {auth} = useAuth() 
-
-    const baseurl = process.env.REACT_APP_BACKEND_URL;  
-
-
-    // Add to Cart functionality
-    const addToCart = async (product_id) => {
-        if(!auth?.token || !auth?.user){
-            toast.error('Please login to add product to cart');
-        }else{
-            try {
-                await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?._id,
-                    product_id,
-                    quantity: 1,
-                });
-                toast.success("Item added to cart!");
-            } catch (error) {
-                console.error('Error adding to cart:', error);
-                toast.error("Failed to add item to cart.");
-            }
-        }
-    };
+    const {loading, products, addToCart} = useCart();
 
     return (
         <div className='md:px-10 px-4 my-12'>
@@ -38,12 +13,17 @@ const SearchProductCard = ({ loading, products = [] }) => {
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:py-6 px-6 lg::px-20 gap-6'>
                 {loading ? (
                     loadingList.map((_, index) => (
-                        <ProductEmpty key={index} />
+                        <div  key={index} className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:max-w-[320px] lg:max-w-[350px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+                            <ProductEmpty key={index} />
+                        </div>
                     ))
                 ) : (
                     Array.isArray(products) && products.length > 0 ? (
                         products.map((product) => (
-                            <ProductCard key={product?._id} product={product} addToCart={addToCart} />
+                            <div key={product?._id}
+                                className='relative flex flex-col w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-2rem)] lg:w-[calc(25%-2rem)] min-w-[160px] md:min-w-[220px] max-w-[220px] md:w-[300px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
+                                    <ProductCard key={product?._id} product={product} addToCart={addToCart} />
+                            </div>
                         ))
                     ) : (
                         <div className='w-full flex justify-center'>

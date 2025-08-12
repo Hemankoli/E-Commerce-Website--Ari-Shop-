@@ -5,6 +5,7 @@ import ProductCardSecond from '../components/Productsonhome/ProductCardSecond';
 import ProductVertcalCard from '../components/Productsonhome/ProductVertcalCard';
 // import ProductByCategory from '../components/Productsonhome/ProductByCategory';
 import { useParams } from 'react-router-dom';
+import ProductByCategory from '../components/Productsonhome/ProductByCategory';
 
 const Home = () => {
 
@@ -27,7 +28,7 @@ const Home = () => {
       
       <BannerProduct />
     
-      {/* <ProductByCategory category={"kpop"} heading={"Top K-POP Products"}/>   */}
+      <ProductByCategory category={"kpop"} heading={"Top K-POP Products"}/>  
 
       <ProductCardFirst category={"kpop"} heading={"BestSelling Products"}/>  
 

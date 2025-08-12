@@ -20,7 +20,7 @@ const AddressPage = () => {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await axios.get(`${baseurl}/addresses/${auth?.user?._id}`);
+        const response = await axios.get(`${baseurl}/addresses/${auth?.user?.user_id}`);
         setAddresses(response?.data);
       } catch (error) {
         console.error('Error fetching addresses:', error);
@@ -40,7 +40,7 @@ const AddressPage = () => {
   // Add new address
   const addAddress = async () => {
     try {
-      const response = await axios.post(`${baseurl}/addresses`, { user_id: auth?.user?._id, ...form});
+      const response = await axios.post(`${baseurl}/addresses`, { user_id: auth?.user?.user_id, ...form});
       setAddresses([...addresses, response?.data]);
       setForm({
         address_line1: '',
@@ -171,12 +171,12 @@ const AddressPage = () => {
         </div>
 
         {/* Display Addresses */}
-        <div className='-mt-2 bg-white shadow-lg w-full px-2 rounded-md' address={addresses}>
+        <div className='-mt-2 bg-white border border-red-300 w-full px-2 rounded overflow-y-auto max-h-[450px]' address={addresses}>
           <h2 className="text-xl font-semibold mb-4 mt-2 text-center">Your Addresses</h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2" >
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
               {
                 addresses.map((address, index) => (
-                  <li key={index} className="p-4 bg-white rounded-md shadow-lg">
+                  <li key={index} className="p-4 bg-white rounded-md shadow shadow-purple-300">
                     <p>{address.address_line1}, {address.address_line2}</p>
                     <p>{address.city}, {address.state}, {address.postal_code}, {address.country}</p>
                     <div className="flex space-x-4 mt-2">

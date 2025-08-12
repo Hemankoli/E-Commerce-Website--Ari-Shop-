@@ -35,7 +35,7 @@ const SearchProduct = () => {
                 <p className='flex justify-center items-center text-lg text-purple-500'>Loading...</p>
             )}
 
-            <div className='relative mb-10'>
+            <div className='relative mb-10 mt-20'>
                 <h1 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] uppercase text-white text-lg md:text-3xl font-bold mb-6 text-center">
                 {`Welcome ${auth?.token && auth?.user?.name ? "to the shopping cart" : "Guest"}`}
                 </h1>

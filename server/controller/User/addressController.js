@@ -75,7 +75,7 @@ exports.getAddresses = async (req, res) => {
   try {
     const addresses = await Address.find({ user_id: userId });
 
-    if (addresses.length === 0) {
+    if (addresses?.length === 0) {
       return res.status(404).json({ message: 'No addresses found' });
     }
 

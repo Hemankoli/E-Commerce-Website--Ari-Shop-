@@ -5,9 +5,9 @@ const { checkAuthenticated, isAdmin } = require('../../middleware/middleware');
 
 
 // get orders to admin
-router.get('/all-orders',checkAuthenticated,isAdmin, orderController.getAllOrders)
+router.get('/all-orders', orderController.getAllOrders)
 
 // update orders status to admin
-router.put('/order-status/:orderId',checkAuthenticated,isAdmin, orderController.orderStatusController)
+router.put('/order-status/:orderId', orderController.orderStatusController)
 
 module.exports = router;

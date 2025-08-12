@@ -15,7 +15,6 @@ const AllUsers = () => {
 
         if (response.status === 200) {
             setAllUsers(response.data || []);
-            console.log(response.data)
         } else {
             toast.error(response.data.message);
         }

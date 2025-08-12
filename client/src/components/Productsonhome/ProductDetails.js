@@ -5,8 +5,9 @@ import curranceySymboy from '../currancySymbol';
 import ProductCardFirst from './ProductCardFirst';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../Context/index';
 import { Helmet } from 'react-helmet-async';
+import { useCart } from '../../Context/cart';
+import ProductCardSecond from './ProductCardSecond';
 
 
 const ProductDetails = () => {
@@ -16,7 +17,7 @@ const ProductDetails = () => {
     const [activeImage, setActiveImage] = useState('');
     const [zoomImageCordinate, setZoomImageCordinate] = useState({ x: 0, y: 0 });
     const [zoomImage, setZoomImage] = useState(false);
-    const {auth} = useAuth()
+    const {addToCart} = useCart();
     const { productId } = useParams();
 
     const baseurl = process.env.REACT_APP_BACKEND_URL;
@@ -59,29 +60,11 @@ const ProductDetails = () => {
         setZoomImage(false);
     };
 
-    // Add to Cart functionality
-    const addToCart = async (product_id) => {
-        if(!auth?.token || !auth?.user){
-            toast.error('Please login to add product to cart');
-        }else{
-            try {
-                await axios.post(`${baseurl}/cart`, {
-                    user_id: auth?.user?._id,
-                    product_id,
-                    quantity: 1,
-                });
-                toast.success("Item added to cart!");
-            } catch (error) {
-                console.error('Error adding to cart:', error);
-                toast.error("Failed to add item to cart.");
-            }
-        }
-    };
 
 
     if (loading) {
         return (
-            <div className='py-4 px-4 lg:py-6 md:px-10'>
+            <div className='py-4 px-4 lg:py-6 md:px-10 mt-20'>
                 <div className='flex flex-col lg:flex-row'>
                     <div className='h-full flex flex-col lg:flex-row-reverse gap-4'>
                         <div className='relative h-[300px] w-[300px] lg:h-96 lg:w-96 bg-slate-200 rounded'>
@@ -124,12 +107,12 @@ const ProductDetails = () => {
     return (
         <>
             <Helmet>
-                <title>{productHemlet.name} - {product.productName}</title>
-                <meta name="description" content={productHemlet.description} />
-                <meta name="keywords" content={`${productHemlet.name}, buy online, ecommerce`} />
-                <meta property="og:title" content={productHemlet.name} />
-                <meta property="og:description" content={productHemlet.description} />
-                <meta property="og:image" content={productHemlet.image} />
+                <title>{`${productHemlet?.name} - ${product?.productName}`}</title>
+                <meta name="description" content={productHemlet?.description} />
+                <meta name="keywords" content={`${productHemlet?.name}, buy online, ecommerce`} />
+                <meta property="og:title" content={productHemlet?.name} />
+                <meta property="og:description" content={productHemlet?.description} />
+                <meta property="og:image" content={productHemlet?.image} />
             </Helmet>
         
             <div className='py-4 px-4 lg:py-6 md:px-10 mt-20'>
@@ -193,7 +176,7 @@ const ProductDetails = () => {
                         </div>
                         
                         <div className='flex items-center gap-3'>
-                            <Link to={'/check_out'}>
+                            <Link to={'/checkout'}>
                                 <button className='border-2 border-purple-500 hover:border-purple-600 px-10 py-2 rounded-lg min-w-[120px] bg-purple-500 hover:bg-purple-600 text-white font-semibold'>
                                     Buy
                                 </button>
@@ -213,7 +196,7 @@ const ProductDetails = () => {
                 </div>
 
                 <ProductCardFirst category={"k-pop"} heading={"Best Selling products"} />
-                <ProductCardFirst category={"k-pop"} heading={"Related Products"} />    
+                <ProductCardSecond category={"k-pop"} heading={"Related Products"} />    
             </div>  
         </>
         

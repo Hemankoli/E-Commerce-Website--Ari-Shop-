@@ -1,13 +1,10 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import currancySymbol from '../currancySymbol'
 import { PiShoppingCartSimpleFill } from 'react-icons/pi'
 
 export default function ProductCard({product, addToCart}) {
     return (
-        <div key={product?._id}
-            className='relative flex flex-col w-[220px] md:w-[320px] lg:w-[220px] h-[320px] md:h-[380px] bg-white hover:shadow-lg hover:scale-105 overflow-hidden transition-all duration-300'>
-
+        <div>
             <Link to={`/product/${product.productName}`} className='relative h-48 md:h-64 w-full flex items-center justify-center cursor-pointer'
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
 
