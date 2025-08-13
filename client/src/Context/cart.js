@@ -64,21 +64,15 @@ export const CartProvider = ({ children }) => {
     // Decrease cart item quantity
   const updateQuantity = async (product_id, action) => {
     try {
-      const response = await fetch(`${baseurl}/cart`, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ product_id, user_id: auth?.user?.user_id, action })
+      const response = await axios.put(`${baseurl}/cart`,{
+        product_id,
+        user_id: auth.user.user_id,
+        action
+      }, {
+        withCredentials: true,
       });
-      if (!response.ok) {
-        console.error("Failed to update quantity");
-        return;
-      }
       await fetchCartItems(auth?.user?.user_id);
-      const responseData =  await response.json()
-      return responseData?.cart;
+      return response.data?.cart;
     } catch (error) {
       console.error('Error decreasing quantity:', error);
     }
@@ -87,17 +81,15 @@ export const CartProvider = ({ children }) => {
   // Delete cart item
   const deleteCartItem = async (product_id) => {
     try {
-      const response = await fetch(`${baseurl}/cart`, {
-        method: "DELETE",
-        credentials: 'include',
-        headers:{
-          "content-type" : 'application/json'
+      const response = await axios.delete(`${baseurl}/cart`, {
+        data: {
+          user_id: auth.user.user_id,
+          product_id
         },
-        body: JSON.stringify({ user_id: auth?.user?.user_id, product_id: product_id })
+        withCredentials: true,
       });
       await fetchCartItems(auth?.user?.user_id);
-      const responseData =  await response.json()
-      return responseData?.cart;
+      return response.data?.cart;
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }

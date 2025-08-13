@@ -22,7 +22,11 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 // Define your routes after CORS setup
 app.use("/", userRoutes);

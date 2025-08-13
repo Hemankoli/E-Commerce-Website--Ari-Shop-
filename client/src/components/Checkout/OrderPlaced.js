@@ -6,7 +6,7 @@ export default function OrderPlaced() {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50">
-      <div className="bg-white rounded-2xl shadow-lg p-6 w-[90%] w-[400px] text-center animate-fadeIn">
+      <div className="bg-white rounded-2xl shadow-lg p-6 w-[90%] md:w-[400px] text-center animate-fadeIn">
         {/* Success Icon */}
         <div className="flex justify-center mb-4">
           <CheckCircleIcon className="w-16 h-16 text-green-500" />
