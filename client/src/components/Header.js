@@ -224,7 +224,7 @@
                     </div>
 
                     {/* mobile version */}
-                    <div className={`lg:hidden fixed inset-0 top-12 z-10  bg-white transition-transform ${showMobileMenu ? 'transform translate-x-0' : 'transform -translate-x-full '} transition-transform duration-300 ease-in-out`}>
+                    <div className={`lg:hidden fixed inset-0 top-20 z-10  bg-white transition-transform ${showMobileMenu ? 'transform translate-x-0' : 'transform -translate-x-full '} transition-transform duration-300 ease-in-out`}>
                         <div className="flex flex-col h-full">
                             <div className="px-4 py-4 flex font-semibold items-center mb-1">
                                 {
